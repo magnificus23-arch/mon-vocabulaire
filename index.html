@@ -395,6 +395,8 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Сохранить
     </button>
+    <button class="btn btn-secondary btn-sm" onclick="syncToCloud()">☁️ В облако</button>
+<button class="btn btn-secondary btn-sm" onclick="syncFromCloud()">⬇️ Из облака</button>
     <label class="btn btn-secondary btn-sm" style="cursor:pointer">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Загрузить
@@ -2028,7 +2030,36 @@ function exportData() {
   a.href=url; a.download=`vocabulaire-${new Date().toISOString().slice(0,10)}.json`; a.click();
   URL.revokeObjectURL(url); showToast('Данные сохранены в файл ✓');
 }
+const SYNC_URL = "https://mon-vocabulaire.tomik4.workers.dev/";
 
+async function syncToCloud() {
+  try {
+    const cloned = JSON.parse(JSON.stringify(db));
+    await fetch(SYNC_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cloned, null, 2),
+    });
+    showToast("💾 Сохранено в облако");
+  } catch (e) {
+    showToast("⚠️ Ошибка синхронизации");
+  }
+}
+
+async function syncFromCloud() {
+  try {
+    const res = await fetch(SYNC_URL);
+    const parsed = await res.json();
+    if (!parsed.lessons || !Array.isArray(parsed.lessons)) throw new Error();
+    db = parsed;
+    if (!db.dailyStats || typeof db.dailyStats !== "object") db.dailyStats = {};
+    save();
+    showView("folders");
+    showToast("☁️ Данные загружены из облака");
+  } catch (e) {
+    showToast("⚠️ Не удалось загрузить из облака");
+  }
+}
 function importData(event) {
   const file=event.target.files[0]; if(!file) return;
   const reader=new FileReader();
