@@ -2458,8 +2458,10 @@ async function checkPassword() {
       body: JSON.stringify({ password: val })
     });
     if (res.ok) {
-      document.getElementById("lock-screen").style.display = "none";
+      const data = await res.json();
+      localStorage.setItem("vocab_token", data.token);
       sessionStorage.setItem("unlocked", "1");
+      document.getElementById("lock-screen").style.display = "none";
     } else {
       document.getElementById("lock-error").style.display = "block";
       document.getElementById("lock-input").value = "";
@@ -2470,12 +2472,27 @@ async function checkPassword() {
   }
 }
 
-(function() {
+(async function() {
   if (sessionStorage.getItem("unlocked") === "1") {
     document.getElementById("lock-screen").style.display = "none";
-  } else {
-    setTimeout(() => document.getElementById("lock-input").focus(), 100);
+    return;
   }
+  const token = localStorage.getItem("vocab_token");
+  if (token) {
+    try {
+      const res = await fetch(SYNC_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token })
+      });
+      if (res.ok) {
+        sessionStorage.setItem("unlocked", "1");
+        document.getElementById("lock-screen").style.display = "none";
+        return;
+      }
+    } catch(e) {}
+  }
+  setTimeout(() => document.getElementById("lock-input").focus(), 100);
 })();
   </script>
 </body>
