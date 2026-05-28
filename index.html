@@ -2039,7 +2039,7 @@ function exportData() {
   a.href=url; a.download=`vocabulaire-${new Date().toISOString().slice(0,10)}.json`; a.click();
   URL.revokeObjectURL(url); showToast('Данные сохранены в файл ✓');
 }
-const SYNC_URL = "https://mon-vocabulaire.tomik4.workers.dev/";
+const SYNC_URL = "https://wet-mantis-87.magnificus23-arch.deno.net";
 
 async function syncToCloud() {
   try {
