@@ -1955,7 +1955,7 @@ function nextWord() {
   showQuizWord();
 }
 
-function stopQuiz() { if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;} showQuizStats(); }
+function stopQuiz() { if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;} showQuizStats(); syncToCloud();}
 
 function showPraiseCard() {
   recordQuizDailyStats(quizState);
@@ -2476,6 +2476,7 @@ async function checkPassword() {
   if (sessionStorage.getItem("unlocked") === "1") {
     document.getElementById("lock-screen").style.display = "none";
     return;
+    syncFromCloud();
   }
   const token = localStorage.getItem("vocab_token");
   if (token) {
@@ -2489,6 +2490,7 @@ async function checkPassword() {
         sessionStorage.setItem("unlocked", "1");
         document.getElementById("lock-screen").style.display = "none";
         return;
+        syncFromCloud();
       }
     } catch(e) {}
   }
