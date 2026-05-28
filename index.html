@@ -2474,9 +2474,9 @@ async function checkPassword() {
 
 (async function() {
   if (sessionStorage.getItem("unlocked") === "1") {
-    document.getElementById("lock-screen").style.display = "none";syncFromCloud();
+    document.getElementById("lock-screen").style.display = "none";
+    setTimeout(syncFromCloud, 300);
     return;
-    
   }
   const token = localStorage.getItem("vocab_token");
   if (token) {
@@ -2488,9 +2488,9 @@ async function checkPassword() {
       });
       if (res.ok) {
         sessionStorage.setItem("unlocked", "1");
-        document.getElementById("lock-screen").style.display = "none";syncFromCloud();
+        document.getElementById("lock-screen").style.display = "none";
+        setTimeout(syncFromCloud, 300);
         return;
-        
       }
     } catch(e) {}
   }
