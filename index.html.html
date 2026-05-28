@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Vocabulaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --duo-green:       #58cc02;
+  --duo-green-dark:  #46a302;
+  --duo-green-light: #d7f5b1;
+  --duo-blue:        #1cb0f6;
+  --duo-blue-dark:   #0a91d1;
+  --duo-blue-light:  #ddf4ff;
+  --duo-red:         #ff4b4b;
+  --duo-red-dark:    #d93636;
+  --duo-red-light:   #ffd9d9;
+  --duo-yellow:      #ffc800;
+  --duo-yellow-light:#fff5cc;
+  --duo-purple:      #ce82ff;
+  --duo-orange:      #ff9600;
+
+  --color-bg:        #f7f7f7;
+  --color-surface:   #ffffff;
+  --color-surface-2: #f0f0f0;
+  --color-border:    #e5e5e5;
+  --color-divider:   #ebebeb;
+  --color-text:      #3c3c3c;
+  --color-text-muted:#777;
+  --color-text-faint:#aaa;
+  --color-primary:   var(--duo-green);
+  --color-primary-dark: var(--duo-green-dark);
+  --color-primary-light: var(--duo-green-light);
+  --color-error:     var(--duo-red);
+  --color-error-light: var(--duo-red-light);
+  --color-success:   var(--duo-green);
+  --color-success-light: var(--duo-green-light);
+  --color-warning:   var(--duo-yellow);
+  --color-warning-light: var(--duo-yellow-light);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 0 rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 0 rgba(0,0,0,0.12);
+  --shadow-lg: 0 6px 20px rgba(0,0,0,0.12);
+
+  --transition: 160ms cubic-bezier(0.16,1,0.3,1);
+
+  --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
+  --space-12:3rem;--space-16:4rem;
+
+  --text-xs: clamp(0.75rem,0.7rem + 0.25vw,0.875rem);
+  --text-sm: clamp(0.875rem,0.8rem + 0.35vw,1rem);
+  --text-base: clamp(1rem,0.95rem + 0.25vw,1.125rem);
+  --text-lg: clamp(1.125rem,1rem + 0.75vw,1.5rem);
+  --text-xl: clamp(1.5rem,1.2rem + 1.25vw,2rem);
+
+  --font-body: 'Nunito Sans', sans-serif;
+  --font-display: 'Nunito', sans-serif;
+}
+[data-theme="dark"] {
+  --color-bg: #111;
+  --color-surface: #1e1e1e;
+  --color-surface-2: #2a2a2a;
+  --color-border: #333;
+  --color-divider: #2c2c2c;
+  --color-text: #f0f0f0;
+  --color-text-muted: #999;
+  --color-text-faint: #555;
+  --duo-green-light: #1a3a00;
+  --duo-red-light: #3a0000;
+  --duo-yellow-light: #3a2e00;
+  --duo-blue-light: #00243a;
+  --color-primary-light: #1a3a00;
+  --color-error-light: #3a0000;
+  --color-success-light: #1a3a00;
+  --color-warning-light: #3a2e00;
+  --shadow-sm: 0 2px 0 rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 0 rgba(0,0,0,0.4);
+  --shadow-lg: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;}
+body{font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);background:var(--color-bg);min-height:100dvh;line-height:1.5;}
+input,button,textarea,select{font:inherit;color:inherit;}
+button{cursor:pointer;background:none;border:none;}
+img{display:block;max-width:100%;}
+:focus-visible{outline:2px solid var(--duo-blue);outline-offset:3px;border-radius:var(--radius-sm);}
+
+/* Header */
+.app-header{
+  background:var(--color-surface);
+  border-bottom:2px solid var(--color-border);
+  padding:var(--space-3) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  gap:var(--space-3);
+}
+.logo{display:flex;align-items:center;gap:var(--space-2);text-decoration:none;color:var(--color-text);cursor:pointer;}
+.logo-text{font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;color:var(--duo-green);}
+.header-actions{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:var(--space-2) var(--space-4);
+  border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:700;
+  border:2px solid transparent;white-space:nowrap;
+  transition:filter var(--transition),transform var(--transition),box-shadow var(--transition);
+  font-family:var(--font-display);
+}
+.btn:active{transform:translateY(2px);}
+.btn-primary{background:var(--duo-green);color:#fff;border-color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);}
+.btn-primary:hover{filter:brightness(1.05);}
+.btn-primary:active{box-shadow:none;}
+.btn-blue{background:var(--duo-blue);color:#fff;border-color:var(--duo-blue-dark);box-shadow:0 4px 0 var(--duo-blue-dark);}
+.btn-blue:hover{filter:brightness(1.05);}
+.btn-blue:active{box-shadow:none;}
+.btn-secondary{background:var(--color-surface);color:var(--color-text);border-color:var(--color-border);box-shadow:0 4px 0 var(--color-border);}
+.btn-secondary:hover{background:var(--color-surface-2);}
+.btn-secondary:active{box-shadow:none;}
+.btn-ghost{color:var(--color-text-muted);border-color:transparent;}
+.btn-ghost:hover{background:var(--color-surface-2);color:var(--color-text);}
+.btn-danger{color:var(--duo-red);border-color:transparent;}
+.btn-danger:hover{background:var(--duo-red-light);color:var(--duo-red-dark);}
+.btn-sm{padding:var(--space-1) var(--space-3);font-size:var(--text-xs);}
+.btn-icon{padding:var(--space-2);border-radius:var(--radius-md);}
+.allons-btn{background:var(--duo-green);color:#fff;border-color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);padding:var(--space-2) var(--space-5);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;border-radius:var(--radius-full);border-width:2px;display:inline-flex;align-items:center;gap:var(--space-2);}
+.allons-btn:hover{filter:brightness(1.05);}
+.allons-btn:active{box-shadow:none;transform:translateY(2px);}
+
+/* Main */
+.main{max-width:960px;margin:0 auto;padding:var(--space-8) var(--space-4);}
+
+/* Lesson grid */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-6);}
+.section-header h1{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;}
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:var(--space-4);}
+.active-ctrl{background:var(--color-surface)!important;box-shadow:var(--shadow-sm);color:var(--color-primary)!important;}
+.lesson-list{display:flex;flex-direction:column;gap:var(--space-2);}
+.lesson-list-row{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);
+  background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-lg);
+  cursor:pointer;transition:all var(--transition);}
+.lesson-list-row:hover{background:var(--color-surface-2);box-shadow:var(--shadow-sm);transform:translateY(-1px);}
+.mastered-lesson{border-color:#d4a900!important;background:linear-gradient(135deg,#fffbe6 0%,var(--color-surface) 100%)!important;}
+.pct-bar{flex:1;height:6px;background:var(--color-surface-offset);border-radius:var(--radius-full);overflow:hidden;min-width:50px;max-width:100px;}
+.pct-fill{height:100%;border-radius:var(--radius-full);transition:width .4s;}
+.lesson-card{
+  background:var(--color-surface);
+  border:2px solid var(--color-border);
+  border-radius:var(--radius-xl);
+  padding:var(--space-5);
+  cursor:pointer;
+  transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition);
+  box-shadow:var(--shadow-sm);
+}
+.lesson-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--duo-green);}
+.lesson-card-num{font-size:var(--text-xs);color:var(--duo-green);font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-1);}
+.lesson-card-title{font-family:var(--font-display);font-weight:800;font-size:var(--text-base);margin-bottom:var(--space-2);}
+.lesson-card-meta{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px var(--space-2);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;}
+.badge-green{background:var(--duo-green-light);color:var(--duo-green-dark);}
+.badge-red{background:var(--duo-red-light);color:var(--duo-red-dark);}
+.badge-blue{background:var(--duo-blue-light);color:var(--duo-blue-dark);}
+.badge-yellow{background:var(--duo-yellow-light);color:#7a5500;}
+.lesson-card-actions{display:flex;gap:var(--space-1);margin-top:var(--space-4);justify-content:flex-end;}
+/* Folders */
+.folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);margin-bottom:var(--space-6);}
+.folder-card{background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-6);cursor:pointer;transition:all var(--transition);position:relative;}
+.folder-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--duo-green);}
+.folder-card-letter{font-family:var(--font-display);font-size:2.2rem;font-weight:900;color:var(--duo-green);line-height:1;margin-bottom:var(--space-1);}
+.folder-card-name{font-family:var(--font-display);font-weight:800;font-size:var(--text-base);margin-bottom:var(--space-3);}
+.folder-card-meta{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
+.folder-card-actions{position:absolute;top:var(--space-3);right:var(--space-3);display:flex;gap:var(--space-1);opacity:0;transition:opacity var(--transition);}
+.folder-card:hover .folder-card-actions{opacity:1;}
+
+/* Lesson detail */
+.lesson-nav{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-6);}
+.lesson-nav h2{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;flex:1;}
+
+/* Sort bar */
+.sort-bar{display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);flex-wrap:wrap;}
+.sort-bar label{font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
+.sort-select{padding:var(--space-1) var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-surface);cursor:pointer;}
+.sort-select:focus{border-color:var(--duo-blue);outline:none;}
+.sort-dir-btn{padding:var(--space-1) var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-surface);}
+.sort-dir-btn:hover{border-color:var(--duo-blue);color:var(--duo-blue);}
+
+/* Words */
+.words-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-3);}
+.words-section-header h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:800;}
+.word-list-header{
+  display:grid;grid-template-columns:2.5rem 1.5fr 0.9fr 1.1fr 1.5fr auto;
+  gap:var(--space-3);padding:var(--space-2) var(--space-4);
+  font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;
+  border-bottom:2px solid var(--color-divider);margin-bottom:var(--space-2);
+}
+.word-list{display:flex;flex-direction:column;gap:var(--space-2);}
+.word-row{
+  display:grid;grid-template-columns:2.5rem 1.5fr 0.9fr 1.1fr 1.5fr auto;
+  gap:var(--space-3);align-items:center;
+  padding:var(--space-3) var(--space-4);
+  background:var(--color-surface);
+  border:2px solid var(--color-border);
+  border-radius:var(--radius-lg);
+}
+.allwords-hdr{display:grid;grid-template-columns:2.5rem 0.55fr 1.1fr 0.75fr 0.9fr 1.1fr auto;gap:var(--space-3);align-items:center;padding:var(--space-2) var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-2);}
+.allwords-row{display:grid;grid-template-columns:2.5rem 0.55fr 1.1fr 0.75fr 0.9fr 1.1fr auto;gap:var(--space-3);align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-1);}
+.word-row.editing{border-color:var(--duo-blue);background:var(--duo-blue-light);}
+.word-num{font-size:var(--text-xs);color:var(--color-text-muted);text-align:center;font-weight:700;}
+.word-fr{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;}
+.word-tr{font-size:var(--text-xs);color:var(--color-text-muted);}
+.word-ru{font-size:var(--text-base);}
+.word-actions{display:flex;gap:var(--space-1);align-items:center;}
+.word-weight{
+  font-size:var(--text-xs);padding:2px var(--space-2);
+  border-radius:var(--radius-full);font-weight:800;
+  display:inline-block;white-space:nowrap;
+}
+.weight-good{background:var(--duo-green-light);color:var(--duo-green-dark);}
+.weight-bad{background:var(--duo-red-light);color:var(--duo-red-dark);}
+.weight-neutral{background:var(--color-surface-2);color:var(--color-text-muted);}
+
+.word-input{
+  background:var(--color-surface);border:2px solid var(--color-border);
+  border-radius:var(--radius-md);padding:var(--space-1) var(--space-2);
+  font-size:var(--text-sm);width:100%;
+}
+.word-input:focus{border-color:var(--duo-blue);outline:none;}
+
+/* New word form */
+.new-word-form{
+  background:var(--duo-blue-light);border:2px dashed var(--duo-blue);
+  border-radius:var(--radius-xl);padding:var(--space-4);margin-top:var(--space-4);display:none;
+}
+.new-word-form.visible{display:block;}
+.new-word-form h4{font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;margin-bottom:var(--space-3);color:var(--duo-blue-dark);}
+.new-word-fields{display:grid;grid-template-columns:2fr 2fr 3fr;gap:var(--space-3);margin-bottom:var(--space-3);}
+.form-group label{display:block;font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1);}
+.form-group input,.modal-input{
+  width:100%;padding:var(--space-2) var(--space-3);
+  background:var(--color-surface);border:2px solid var(--color-border);
+  border-radius:var(--radius-md);font-size:var(--text-sm);
+}
+.form-group input:focus,.modal-input:focus{border-color:var(--duo-blue);outline:none;}
+.form-actions{display:flex;gap:var(--space-2);}
+
+/* Quiz */
+.quiz-panel{
+  position:fixed;inset:0;background:transparent;
+  display:none;align-items:center;justify-content:center;
+  z-index:10;padding:var(--space-4);
+}
+.quiz-panel.active{display:flex;}
+.quiz-box{
+  background:var(--color-surface);border:2px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8);
+  max-width:560px;width:100%;box-shadow:var(--shadow-lg);
+  max-height:90vh;overflow-y:auto;
+}
+.quiz-box h2{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;margin-bottom:var(--space-6);}
+.quiz-setup-row{display:flex;flex-direction:column;gap:var(--space-4);margin-bottom:var(--space-6);}
+.quiz-setup-row>div>label.section-label{font-size:var(--text-sm);font-weight:800;margin-bottom:var(--space-2);display:block;font-family:var(--font-display);}
+.radio-group{display:flex;gap:var(--space-3);}
+.radio-group label{font-size:var(--text-sm);display:flex;align-items:center;gap:var(--space-1);cursor:pointer;font-weight:600;}
+input[type="text"].quiz-input{
+  padding:var(--space-2) var(--space-3);background:var(--color-surface-2);
+  border:2px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:var(--text-sm);width:100%;
+}
+input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
+.checkbox-label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);cursor:pointer;font-weight:600;}
+.checkbox-label input{width:18px;height:18px;cursor:pointer;accent-color:var(--duo-green);}
+
+/* Quiz game */
+.quiz-progress{font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3);display:flex;justify-content:space-between;align-items:center;font-weight:700;}
+.quiz-progress-bar{height:8px;background:var(--color-surface-2);border-radius:var(--radius-full);margin-bottom:var(--space-6);overflow:hidden;}
+.quiz-progress-fill{height:100%;background:var(--duo-green);border-radius:var(--radius-full);transition:width 0.4s ease;}
+.quiz-word-btn{
+  width:100%;padding:var(--space-6);
+  font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;
+  background:var(--color-surface-2);
+  border:2px solid var(--color-border);border-radius:var(--radius-xl);
+  margin-bottom:var(--space-4);
+  transition:all var(--transition);
+  box-shadow:var(--shadow-sm);
+  text-align:center; user-select:none;
+}
+.quiz-word-btn.correct{background:var(--duo-green-light);border-color:var(--duo-green);color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);}
+.quiz-word-btn.wrong{background:var(--duo-red-light);border-color:var(--duo-red);color:var(--duo-red-dark);box-shadow:0 4px 0 var(--duo-red-dark);}
+.quiz-word-btn.revealed{background:var(--duo-yellow-light);border-color:var(--duo-yellow);color:#7a5500;box-shadow:0 4px 0 #c09000;}
+.quiz-answer-row{display:flex;gap:var(--space-2);margin-bottom:var(--space-3);}
+.quiz-answer-row input{
+  flex:1;padding:var(--space-3);
+  background:var(--color-surface-2);border:2px solid var(--color-border);
+  border-radius:var(--radius-lg);font-size:var(--text-base);font-weight:600;
+}
+.quiz-answer-row input:focus{border-color:var(--duo-blue);outline:none;background:var(--duo-blue-light);}
+.quiz-article-btns{display:none;gap:var(--space-2);margin-bottom:var(--space-2);}
+.quiz-article-btns.visible{display:flex;}
+.btn-article-un{background:rgba(85,145,199,0.13);border:1.5px solid rgba(85,145,199,0.35);color:var(--color-text);border-radius:var(--radius-md);padding:var(--space-2) var(--space-5);font-size:var(--text-sm);font-weight:700;cursor:pointer;transition:background var(--transition),border-color var(--transition);}
+.btn-article-un:hover{background:rgba(85,145,199,0.25);border-color:rgba(85,145,199,0.6);}
+.btn-article-une { background: rgba(210,100,90,0.11); border: 1.5px solid rgba(210,100,90,0.32); color: var(--color-text); border-radius: var(--radius-md); padding: var(--space-2) var(--space-5); font-size: var(--text-sm); font-weight: 700; cursor: pointer; transition: background var(--transition), border-color var(--transition); }
+.btn-article-une:hover { background: rgba(230,170,130,0.32); border-color: rgba(210,150,100,0.65); }
+.quiz-backdrop{position:fixed;inset:0;background:rgba(240,237,230,0.92);backdrop-filter:blur(2px);z-index:9;}
+[data-theme="dark"] .quiz-backdrop{background:rgba(23,22,20,0.93);}
+.correct-answer{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);min-height:1.5em;font-weight:600;}
+.quiz-row-hidden{display:none !important;}
+.quiz-controls{display:flex;gap:var(--space-2);justify-content:space-between;flex-wrap:wrap;margin-top:var(--space-2);}
+
+/* Quiz stats — word list */
+.stats-summary{display:flex;gap:var(--space-4);margin-bottom:var(--space-6);flex-wrap:wrap;}
+.stat-pill{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-weight:800;font-size:var(--text-sm);}
+.stat-pill-green{background:var(--duo-green-light);color:var(--duo-green-dark);}
+.stat-pill-red{background:var(--duo-red-light);color:var(--duo-red-dark);}
+.stat-pill-blue{background:var(--duo-blue-light);color:var(--duo-blue-dark);}
+.quiz-result-list{display:flex;flex-direction:column;gap:var(--space-2);max-height:340px;overflow-y:auto;margin-bottom:var(--space-6);}
+.quiz-result-row{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4);
+  background:var(--color-surface-2);border-radius:var(--radius-lg);
+  border:2px solid var(--color-border);
+}
+.quiz-result-row .word-fr{font-family:var(--font-display);font-weight:800;}
+.quiz-result-row .word-ru{color:var(--color-text-muted);font-size:var(--text-sm);}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:300;padding:var(--space-4);}
+.modal-overlay.active{display:flex;}
+.modal{background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);max-width:420px;width:100%;box-shadow:var(--shadow-lg);}
+.modal h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4);}
+.modal .form-group{margin-bottom:var(--space-4);}
+.modal-actions{display:flex;gap:var(--space-2);justify-content:flex-end;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:var(--space-16) var(--space-8);color:var(--color-text-muted);}
+.empty-state-icon{font-size:3rem;margin-bottom:var(--space-4);}
+.empty-state p{max-width:36ch;margin:0 auto var(--space-6);font-size:var(--text-sm);font-weight:600;}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:var(--space-6);right:var(--space-6);z-index:400;
+  background:var(--color-text);color:var(--color-bg);
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:700;box-shadow:var(--shadow-lg);
+  opacity:0;transform:translateY(8px);
+  transition:all 0.2s ease;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* Theme toggle */
+.theme-toggle{padding:var(--space-2);border-radius:var(--radius-md);color:var(--color-text-muted);}
+.theme-toggle:hover{background:var(--color-surface-2);color:var(--color-text);}
+
+/* Nav tabs */
+.nav-tabs{display:flex;gap:var(--space-2);margin-bottom:var(--space-6);}
+.nav-tab{padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:800;font-family:var(--font-display);color:var(--color-text-muted);border:2px solid transparent;transition:all var(--transition);}
+.nav-tab:hover{background:var(--color-surface-2);}
+.nav-tab.active{background:var(--duo-green-light);color:var(--duo-green-dark);border-color:var(--duo-green);}
+
+@media(max-width:600px){
+  .word-row{grid-template-columns:1.5rem 1fr 1fr auto;gap:var(--space-2);padding:var(--space-2);}
+  .word-tr,.word-list-header{display:none;}
+  .new-word-fields{grid-template-columns:1fr;}
+  .app-header{padding:var(--space-3);}
+  .header-actions{gap:var(--space-1);}
+}
+    .toolbar-row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4);}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo" onclick="showView('folders')">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="logo">
+      <rect width="32" height="32" rx="10" fill="#58cc02"/>
+      <text x="5" y="23" font-family="Nunito,sans-serif" font-weight="900" font-size="18" fill="white">fr</text>
+    </svg>
+    <span class="logo-text">vocabulaire</span>
+  </div>
+  <div class="header-actions">
+    <button class="allons-btn" onclick="quizFixedLessonIds=null;openQuizSetup()">Вперед! →</button>
+    <button class="btn btn-secondary btn-sm" onclick="exportData()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Сохранить
+    </button>
+    <label class="btn btn-secondary btn-sm" style="cursor:pointer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Загрузить
+      <input type="file" accept=".json" onchange="importData(event)" style="display:none">
+    </label>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Тема">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- FOLDERS VIEW -->
+  <div id="view-folders" style="display:none">
+    <div class="nav-tabs" style="align-items:center">
+      <button class="nav-tab active" onclick="showView('folders')">📁 Папки</button>
+      <button class="nav-tab" onclick="showView('allwords')">Все слова</button>
+      <button class="nav-tab" onclick="showView('stats')">Статистика</button>
+      <button class="btn btn-ghost btn-sm" onclick="openInfoModal()" style="margin-left:auto;display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">ℹ️ Инфо</button>
+      <button class="btn btn-ghost btn-sm" onclick="openSettingsModal()" style="display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">⚙️ Настройки</button>
+    </div>
+    <div class="section-header"><h1>Мои папки</h1></div>
+    <div id="folders-main-content"></div>
+  </div>
+
+  <!-- LESSONS VIEW -->
+  <div id="view-lessons" style="display:none">
+    <div class="nav-tabs" style="align-items:center">
+      <button class="nav-tab active" onclick="showView('lessons')">📚 Уроки</button>
+      <button class="nav-tab" onclick="showView('allwords')">📖 Все слова</button>
+      <button class="nav-tab" onclick="showView('stats')">📈 Статистика</button>
+      <button class="btn btn-ghost btn-sm" onclick="openInfoModal()" style="margin-left:auto;display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">ℹ️ Инфо</button>
+      <button class="btn btn-ghost btn-sm" onclick="openSettingsModal()" style="display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">⚙️ Настройки</button>
+    </div>
+    <div class="section-header">
+      <h1>Мои уроки</h1>
+    </div>
+    <div class="toolbar-row">
+      <button class="btn btn-secondary btn-sm" onclick="showView('folders')">📁 Папки</button>
+      <button class="btn btn-primary btn-sm" onclick="openCreateFolder()">＋ Новая папка</button>
+      <div style="display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px">
+        <button class="btn btn-ghost btn-sm active-ctrl" id="lsort-num" onmousedown="event.preventDefault()" onclick="setLessonsSort('num')" style="font-size:var(--text-xs);font-weight:700">По номеру</button>
+        <button class="btn btn-ghost btn-sm" id="lsort-pct" onmousedown="event.preventDefault()" onclick="setLessonsSort('pct')" style="font-size:var(--text-xs);font-weight:700">По освоению</button>
+      </div>
+      <div style="display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px">
+        <button class="btn btn-ghost btn-sm active-ctrl" id="lview-cards" onmousedown="event.preventDefault()" onclick="setLessonsView('cards')" style="font-size:var(--text-xs)">⊞ Карточки</button>
+        <button class="btn btn-ghost btn-sm" id="lview-list" onmousedown="event.preventDefault()" onclick="setLessonsView('list')" style="font-size:var(--text-xs)">☰ Список</button>
+      </div>
+    </div>
+    <div class="lesson-grid" id="lesson-grid"></div>
+    <div class="empty-state" id="lessons-empty" style="display:none">
+      <div class="empty-state-icon">📚</div>
+      <p>Уроков пока нет. Создайте первый урок, чтобы начать учить слова.</p>
+      <button class="btn btn-primary" onclick="openCreateLesson()">Создать урок</button>
+    </div>
+  </div>
+
+  <!-- ALL WORDS VIEW -->
+  <div id="view-allwords" style="display:none">
+    <div class="nav-tabs" style="align-items:center">
+      <button class="nav-tab" onclick="showView('lessons')">📚 Уроки</button>
+      <button class="nav-tab active" onclick="showView('allwords')">📖 Все слова</button>
+      <button class="nav-tab" onclick="showView('stats')">📈 Статистика</button>
+      <button class="btn btn-ghost btn-sm" onclick="openInfoModal()" style="margin-left:auto;display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">ℹ️ Инфо</button>
+      <button class="btn btn-ghost btn-sm" onclick="openSettingsModal()" style="display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">⚙️ Настройки</button>
+    </div>
+    <div class="section-header">
+      <h1>Все слова</h1>
+      <span id="allwords-count" style="font-size:var(--text-sm);color:var(--color-text-muted);font-weight:700"></span>
+    </div>
+    <div class="sort-bar">
+      <label>Сортировка:</label>
+      <select class="sort-select" id="allwords-sort" onchange="renderAllWords()">
+        <option value="num">По номеру</option>
+        <option value="alpha">По алфавиту (фр.)</option>
+        <option value="weight">По весу</option>
+        <option value="lesson">По уроку</option>
+      </select>
+      <button class="sort-dir-btn" id="allwords-dir-btn" onclick="toggleSortDir('allwords')">↓ Убыв.</button>
+    </div>
+    <div class="allwords-hdr">
+      <span>#</span><span>Урок</span><span>Французское</span><span>Ч.речи</span><span>Транскрипция</span><span>Перевод</span><span>Вес</span>
+    </div>
+    <div class="word-list" id="allwords-list"></div>
+    <div class="empty-state" id="allwords-empty" style="display:none">
+      <div class="empty-state-icon">✏️</div>
+      <p>Слов пока нет. Добавьте слова в уроки.</p>
+    </div>
+  </div>
+
+
+  <!-- STATS VIEW -->
+  <div id="view-stats" style="display:none">
+    <div class="nav-tabs" style="align-items:center">
+      <button class="nav-tab" onclick="showView('lessons')">📚 Уроки</button>
+      <button class="nav-tab" onclick="showView('allwords')">📖 Все слова</button>
+      <button class="nav-tab active" onclick="showView('stats')">📈 Статистика</button>
+      <button class="btn btn-ghost btn-sm" onclick="openInfoModal()" style="margin-left:auto;display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">ℹ️ Инфо</button>
+      <button class="btn btn-ghost btn-sm" onclick="openSettingsModal()" style="display:flex;align-items:center;gap:4px;font-size:var(--text-xs);font-weight:700;border:2px solid var(--color-border);border-radius:var(--radius-full);padding:var(--space-1) var(--space-3)">⚙️ Настройки</button>
+    </div>
+    <div class="section-header">
+      <h1>Статистика</h1>
+    </div>
+
+    <div id="stats-today-summary" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);margin-bottom:var(--space-5);box-shadow:var(--shadow-sm)"></div>
+
+    <div style="display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-5)">
+      <label style="font-size:var(--text-sm);font-weight:700;color:var(--color-text-muted)">С:</label>
+      <input type="date" id="stats-date-from" class="word-input" style="width:auto;font-size:var(--text-sm);padding:var(--space-2) var(--space-3)" oninput="renderStatsChart()">
+      <label style="font-size:var(--text-sm);font-weight:700;color:var(--color-text-muted)">По:</label>
+      <input type="date" id="stats-date-to" class="word-input" style="width:auto;font-size:var(--text-sm);padding:var(--space-2) var(--space-3)" oninput="renderStatsChart()">
+      <button class="btn btn-ghost btn-sm" onclick="statsSetRange(7)">7 дней</button>
+      <button class="btn btn-ghost btn-sm" onclick="statsSetRange(30)">30 дней</button>
+      <button class="btn btn-ghost btn-sm" onclick="statsSetRange(90)">3 месяца</button>
+      <button class="btn btn-ghost btn-sm" onclick="statsSetRange(0)">Всё время</button>
+    </div>
+
+    <div style="position:relative;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm);min-height:260px">
+      <canvas id="stats-chart" style="width:100%;height:380px;display:block"></canvas><div id="stats-chart-fallback" style="display:none;width:100%"></div>
+      <div id="stats-empty" style="display:none;text-align:center;padding:var(--space-12);color:var(--color-text-muted);font-size:var(--text-sm)">
+        За выбранный период нет данных.<br>Пройдите квиз, чтобы появилась статистика.
+      </div>
+    </div>
+
+    <div style="display:flex;gap:var(--space-6);margin-top:var(--space-4);flex-wrap:wrap;font-size:var(--text-xs);color:var(--color-text-muted)">
+      <span><span style="display:inline-block;width:12px;height:12px;background:#4a90d9;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Слов (FR→RU)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;background:#7ec8a0;border-radius:2px;margin-right:4px;vertical-align:middle"></span>Слов (RU→FR)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border:2px solid #e8821a;border-radius:2px;margin-right:4px;vertical-align:middle"></span>% верно (FR→RU)</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border:2px solid #a44ccb;border-radius:2px;margin-right:4px;vertical-align:middle"></span>% верно (RU→FR)</span>
+    </div>
+  </div>
+
+  <!-- LESSON DETAIL VIEW -->
+  <div id="view-lesson" style="display:none">
+    <div class="lesson-nav">
+      <button class="btn btn-ghost btn-icon" onclick="showView('lessons')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <h2 id="lesson-detail-title"></h2>
+      <button class="btn btn-ghost btn-sm" onclick="openRenameLesson()" title="Переименовать">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Переименовать
+      </button>
+    </div>
+
+    <div class="words-section-header">
+      <h3>Слова</h3>
+      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary btn-sm" onclick="openLessonQuizSetup()" title="Квиз по этому уроку">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Квиз по уроку
+        </button>
+        <button class="btn btn-blue btn-sm" onclick="toggleAddWord()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Добавить слово
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="resetLessonWeights(currentLessonId)" title="Сбросить все веса урока до 1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Вес=1
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт из CSV">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Импорт CSV
+        </button>
+        <input type="file" id="csv-import-input" accept=".csv" style="display:none">
+        <button class="btn btn-ghost btn-sm" onclick="exportLessonCSV()" title="Экспорт в CSV">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Экспорт CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="sort-bar">
+      <label>Сортировка:</label>
+      <select class="sort-select" id="lesson-sort" onchange="renderWords()">
+        <option value="num">По порядку</option>
+        <option value="alpha">По алфавиту</option>
+        <option value="weight">По весу</option>
+      </select>
+      <button class="sort-dir-btn" id="lesson-dir-btn" onclick="toggleSortDir('lesson')">↓ Убыв.</button>
+    </div>
+
+    <div class="word-list-header">
+      <span>#</span><span>Французское</span><span>Ч.речи</span><span>Транскрипция</span><span>Перевод</span><span></span>
+    </div>
+    <div class="word-list" id="word-list"></div>
+
+    <div class="new-word-form" id="new-word-form">
+      <h4>➕ Новое слово</h4>
+      <div class="new-word-fields" style="grid-template-columns:2fr 1.4fr 1.6fr 2fr;">
+        <div class="form-group">
+          <label>Французское слово</label>
+          <input type="text" id="new-fr" placeholder="bonjour" onkeydown="handleNewWordKey(event)">
+        </div>
+        <div class="form-group">
+          <label>Часть речи</label>
+          <select id="new-pos" class="word-input" style="width:100%;font-size:var(--text-sm)">
+<option value="">— не указано —</option>
+<option value="n.m.">n.m. — сущ. муж.</option>
+<option value="n.f.">n.f. — сущ. жен.</option>
+<option value="adj.">adj. — прилагательное</option>
+<option value="adj.m.">adj.m. — прил. муж.</option>
+<option value="adj.f.">adj.f. — прил. жен.</option>
+<option value="v.">v. — глагол</option>
+<option value="v.tr.">v.tr. — глагол переходный</option>
+<option value="v.intr.">v.intr. — глагол непереходный</option>
+<option value="v.pron.">v.pron. — глагол возвратный</option>
+<option value="adv.">adv. — наречие</option>
+<option value="prép.">prép. — предлог</option>
+<option value="conj.">conj. — союз</option>
+<option value="conj.coord.">conj.coord. — союз сочинит.</option>
+<option value="conj.subord.">conj.subord. — союз подчинит.</option>
+<option value="interj.">interj. — междометие</option>
+<option value="pron.">pron. — местоимение</option>
+<option value="art.déf.">art.déf. — артикль опред.</option>
+<option value="art.ind.">art.ind. — артикль неопред.</option>
+<option value="adj.num.">adj.num. — числительное</option>
+</select>
+        </div>
+        <div class="form-group">
+          <label>Транскрипция</label>
+          <input type="text" id="new-tr" placeholder="[bɔ̃ʒuʁ]" onkeydown="handleNewWordKey(event)">
+        </div>
+        <div class="form-group">
+          <label>Перевод на русский</label>
+          <input type="text" id="new-ru" placeholder="привет" onkeydown="handleNewWordKey(event)">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary btn-sm" onclick="addWord()">Добавить</button>
+        <button class="btn btn-secondary btn-sm" onclick="toggleAddWord()">Отмена</button>
+      </div>
+    </div>
+
+    <div class="empty-state" id="words-empty" style="display:none;padding:var(--space-12)">
+      <div class="empty-state-icon">✏️</div>
+      <p>Слов пока нет. Добавьте первое слово.</p>
+    </div>
+  </div>
+
+  <div style="text-align:right;padding:var(--space-4) var(--space-6) var(--space-2);color:var(--color-text-faint);font-size:var(--text-xs);font-weight:700;letter-spacing:0.04em">@magnificus23</div>
+<!-- CSV Import Modal -->
+<div class="modal-overlay" id="modal-csv-import">
+  <div class="modal" style="max-width:480px;width:100%">
+    <h3>Импорт CSV</h3>
+    <div id="csv-import-choice">
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3)">Как вы хотите импортировать слова?</p>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-4)">
+        <button class="btn btn-primary" onclick="csvImportChooseFile()">📂 Загрузить CSV-файл</button>
+        <button class="btn btn-secondary" onclick="csvImportChooseText()">📋 Вставить текст</button>
+      </div>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-secondary" onclick="closeModal('modal-csv-import')">Отмена</button>
+      </div>
+    </div>
+    <div id="csv-import-text-area" style="display:none;flex-direction:column;gap:var(--space-3)">
+      <p style="font-size:var(--text-xs);color:var(--color-text-muted)">Формат: <code>французское, ч.речи, транскрипция, перевод, вес</code> — по одному слову на строку</p>
+      <textarea id="csv-import-textarea" rows="10" style="width:100%;padding:var(--space-3);background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);font-family:var(--font-body);resize:vertical;color:var(--color-text);outline:none" placeholder="bonjour,,бонжур,привет
+merci,,мерси,спасибо
+chat,n.m.,ша,кот"></textarea>
+      <div style="display:flex;gap:var(--space-2);justify-content:flex-end">
+        <button class="btn btn-secondary" onclick="csvImportBackToChoice()">← Назад</button>
+        <button class="btn btn-primary" onclick="csvImportFromText()">Вставить</button>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<!-- Create/Rename Lesson Modal -->
+<div class="modal-overlay" id="modal-lesson">
+  <div class="modal">
+    <h3 id="modal-lesson-title">Новый урок</h3>
+    <div class="form-group">
+      <label style="font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--space-1);display:block" id="modal-num-label">Номер урока (напр. A1)</label>
+      <input type="text" class="modal-input" id="lesson-num-input" placeholder="A1" style="width:120px" onkeydown="if(event.key==='Enter')saveLessonModal()">
+    </div>
+    <div class="form-group">
+      <label style="font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--space-1);display:block">Название</label>
+      <input type="text" class="modal-input" id="lesson-name-input" placeholder="Приветствия" onkeydown="if(event.key==='Enter')saveLessonModal()">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-lesson')">Отмена</button>
+      <button class="btn btn-primary" onclick="saveLessonModal()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Quiz Panel -->
+<div class="quiz-backdrop" id="quiz-backdrop" style="display:none"></div>
+<div class="quiz-panel" id="quiz-panel">
+  <!-- Setup -->
+  <div class="quiz-box" id="quiz-setup">
+    <h2>Allons-y! 🇫🇷</h2>
+    <div class="quiz-setup-row">
+      <div>
+        <label class="section-label">Показывать слова на:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="quiz-lang" value="fr" checked> 🇫🇷 Французском</label>
+          <label><input type="radio" name="quiz-lang" value="ru"> 🇷🇺 Русском</label>
+        </div>
+      </div>
+      <div>
+        <label class="section-label">Уроки <span style="font-weight:400;color:var(--color-text-muted)">(пусто = все)</span></label>
+        <input type="text" class="quiz-input" id="quiz-lessons-input" placeholder="1, 2, 5-8 или пусто">
+        <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)">Можно: 1 · 1,3,5 · 2-4 · 1,3-5,7</div>
+      </div>
+      <div>
+        <label class="section-label">Фокус на сложных <span style="font-weight:400;color:var(--color-text-muted)">(пусто = все слова)</span></label>
+        <div style="display:flex;align-items:center;gap:var(--space-2)">
+          <input type="number" class="quiz-input" id="quiz-focus-n" min="1" placeholder="кол-во слов" style="width:160px">
+          <span style="font-size:var(--text-xs);color:var(--color-text-muted)">слов с наим. весом</span>
+        </div>
+        <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)"> </div>
+      </div>
+      <div>
+        <label class="section-label">Исключить слова с весом ≥ <span style="font-weight:400;color:var(--color-text-muted)"> </span></label>
+        <input type="number" class="quiz-input" id="quiz-exclude-above" min="0.1" max="2" step="0.1" placeholder="нет лимита" style="width:100px">
+      </div>
+    </div>
+    <div class="quiz-setup-row" style="margin-bottom:var(--space-4);flex-direction:column;gap:var(--space-3)">
+      <label class="checkbox-label" style="font-family:var(--font-display);font-size:var(--text-sm);font-weight:800">
+        <input type="checkbox" id="quiz-autoplay" style="width:18px;height:18px;cursor:pointer;accent-color:var(--duo-green)">
+        🔊 Автовоспроизведение <span style="font-size:var(--text-xs);color:var(--color-text-muted);font-weight:400">— произносить слово при каждом нажатии Enter</span>
+      </label>
+      <label class="checkbox-label" style="font-family:var(--font-display);font-size:var(--text-sm);font-weight:800">
+        <input type="checkbox" id="quiz-study-mode" style="width:18px;height:18px;cursor:pointer;accent-color:var(--duo-blue)">
+        📖 Режим изучения <span style="font-size:var(--text-xs);color:var(--color-text-muted);font-weight:400">— мягкое изменение весов для новых слов</span>
+      </label>
+    </div>
+    <div class="quiz-setup-row" style="margin-bottom:var(--space-4);align-items:flex-start;gap:var(--space-4)">
+      <div>
+        <label class="section-label">Режим квиза</label>
+        <div class="radio-group" id="quiz-mode-radios">
+          <label><input type="radio" name="quiz-mode" value="flow" checked onchange="onQuizModeChange()"> 🌊 Поток</label>
+          <label><input type="radio" name="quiz-mode" value="timer" onchange="onQuizModeChange()"> ⏱ Таймер</label>
+          <label><input type="radio" name="quiz-mode" value="stack" onchange="onQuizModeChange()"> 📦 Стопка слов</label>
+        </div>
+      </div>
+      <div id="quiz-mode-extra" style="display:none;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5)">
+        <input type="number" class="quiz-input" id="quiz-mode-value" min="1" style="width:90px">
+        <span id="quiz-mode-unit" style="font-size:var(--text-xs);color:var(--color-text-muted)"></span>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2);justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeQuiz()">Отмена</button>
+      <button class="btn btn-primary" onclick="startQuiz()">Начать</button>
+    </div>
+  </div>
+
+  <!-- Game -->
+  <div class="quiz-box" id="quiz-game" style="display:none">
+    <div class="quiz-progress">
+      <span id="quiz-prog-text">Слово 1</span>
+      <span id="quiz-score-text">✓ 0 · ✗ 0</span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+    <div id="quiz-timer-display" style="display:none;text-align:right;font-size:var(--text-base);font-weight:900;color:var(--color-text-muted);margin-bottom:var(--space-2);letter-spacing:0.04em"></div>
+    <div class="quiz-word-btn" id="quiz-word-btn"></div>
+    <div class="quiz-answer-row">
+      <input type="text" id="quiz-answer-input" placeholder="Введите перевод и нажмите ↵"
+        onkeydown="handleQuizKey(event)"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <button class="btn btn-primary btn-sm" id="btn-submit-ans"
+        onmousedown="event.preventDefault()"
+        onclick="submitAnswer()">↵</button>
+    </div>
+<div class="quiz-article-btns" id="quiz-article-btns">
+  <button class="btn-article-un" onmousedown="event.preventDefault()" onclick="insertArticle('un ')">un</button>
+  <button class="btn-article-une" onmousedown="event.preventDefault()" onclick="insertArticle('une ')">une</button>
+</div>
+    <div class="correct-answer" id="quiz-correct-answer"></div>
+    <div class="quiz-controls">
+      <button class="btn btn-danger btn-sm"
+        onmousedown="event.preventDefault()"
+        onclick="stopQuiz()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Стоп
+      </button>
+      <div style="display:flex;gap:var(--space-2)">
+        <button class="btn btn-secondary btn-sm" id="btn-speak-quiz"
+          onmousedown="event.preventDefault()"
+          onclick="speakCurrentQuizWord()" title="Произнести">🔊</button>
+        <button class="btn btn-primary btn-sm" id="btn-next"
+          onmousedown="event.preventDefault()"
+          onclick="nextWord()" style="display:none">Следующее →</button>
+        <button class="btn btn-secondary btn-sm" id="btn-reveal"
+          onmousedown="event.preventDefault()"
+          onclick="revealAnswer()">Показать ответ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="quiz-box" id="quiz-stats" style="display:none">
+    <h2>Результаты 🎯</h2>
+    <div class="stats-summary" id="quiz-stats-summary"></div>
+    <div class="quiz-result-list" id="quiz-result-list"></div>
+    <div style="display:flex;gap:var(--space-2);justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeQuiz()">Закрыть</button>
+      <button class="btn btn-primary" onclick="quizFixedLessonIds=null;openQuizSetup()">Ещё раз</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+let db = { lessons: [], folders: [], nextLessonId: 1, nextFolderId: 1, nextWordId: 1, dailyStats: {} };
+let currentFolderLetter = null;
+let currentLessonId = null;
+let lessonModalMode = 'create'; // 'create' | 'rename'
+let sortState = { lesson: { by:'num', dir:-1 }, allwords: { by:'num', dir:-1 } };
+let quizState = null;
+let lessonsSort="num";
+let lessonsViewMode="cards";
+const PRAISE_PHRASES = ["Ты разнёсла этот квиз в багетную крошку!", "Французский уже слегка тебя побаивается.", "Très bien! Даже сова бы кивнула с уважением.", "Слова капитулируют. Продолжай наступление.", "Ого. Это уже не учёба, это стиль.", "Сегодня мозг говорит тебе: merci.", "Ты звучишь всё ближе к маленькому парижскому чуду.", "Квиз повержен. Круассан заслужен.", "Словарь в восторге от твоих решений.", "Это было подозрительно хорошо.", "Французские слова выстроились в очередь, чтобы запомниться тобой.", "Ещё немного — и начнёшь спорить с Duolingo о методике.", "Magnifique! Ошибки нервно вышли из чата.", "Ты не учишь слова. Ты их приручаешь.", "Очень сильно. Очень красиво. Очень по-французски.", "Если бы у памяти были аплодисменты, сейчас был бы овационный зал.", "Сова довольна. И это немного пугает.", "Слова усвоены настолько, что уже сами тебя вспоминают.", "Вот это темп. Бонжур, дисциплина!", "Похоже, сегодня у тебя режим monstre sacré.", "Серьёзно? Ты опять победила квиз?", "С такой точностью можно открывать мини-академию французского.", "Это не повторение, это элегантная доминация.", "Très chic. Très smart. Très ты.", "Слова пытались запутать тебя, но передумали.", "Великолепно. Даже произношение где-то внутри улыбнулось.", "Сегодня твоя память работает как швейцарские часы, но с французским акцентом.", "Ещё одна блестящая победа над хаосом слов.", "Париж где-то незаметно одобрительно поднял бровь.", "Мозг сказал: ещё. Я сказал: bravo.", "Ты уверенно превращаешь сложное в знакомое.", "Кто тут главный по словам? Очевидно, ты.", "Уровень: baguettemancer.", "Словам уже неловко быть для тебя сложными.", "Слишком хорошо. Почти незаконно.", "Эта партия квиза закончилась твоим триумфом.", "У тебя явно роман с французской лексикой.", "Нейроны танцуют cancan.", "Да это просто словесный фейерверк.", "Квиз сказал oui и сдался.", "Ты снова доказала, что регулярность — магия.", "Так держать. Это уже красивый навык, а не случайность.", "Вау. Очень уверенная работа.", "Если бы слова могли краснеть, они бы уже это сделали.", "Отлично. Ты прошла это как будто так и было задумано.", "Память прокачана. Французский принят.", "Твои повторения сегодня были особенно меткими.", "Квиз закрыт, вопросы исчерпаны, ты великолепна.", "На сегодня французский официально приручён.", "Сильное выступление. Сова ставит лайк мысленно."];
+
+function save() { try { localStorage.setItem('mon_vocabulaire', JSON.stringify(db)); } catch(e){} }
+function load() {
+  try { const s=localStorage.getItem('mon_vocabulaire'); if(s) db=JSON.parse(s); } catch(e){}
+  if(!db.dailyStats||typeof db.dailyStats!=='object') db.dailyStats={};
+  if(!db.folders) db.folders=[];
+  if(!db.nextFolderId) db.nextFolderId=1;
+  db.lessons.forEach(l => {
+    if(!l.folder) l.folder='A';
+    if(typeof l.num === 'number') l.num = 'A' + l.num;
+  });
+  const usedLetters = new Set(db.lessons.map(l=>l.folder).filter(Boolean));
+  usedLetters.forEach(letter => {
+    if(!db.folders.find(f=>f.letter===letter))
+      db.folders.push({id: db.nextFolderId++, letter, name:''});
+  });
+  db.folders.sort((a,b)=>a.letter.localeCompare(b.letter));
+}
+
+
+// ===== STATISTICS =====
+let statsChart = null;
+function getDayKey(ts){ const d = ts ? new Date(ts) : new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function ensureDailyStats(){ if(!db.dailyStats||typeof db.dailyStats!=='object') db.dailyStats={}; }
+function recordQuizDailyStats(state){
+  ensureDailyStats();
+  if(!state) return;
+  const total = (state.correct||0) + (state.wrong||0) + (state.skipped||0);
+  if(!total) return;
+  const day = getDayKey();
+  const dir = state.lang === 'ru' ? 'ru' : 'fr';
+  const row = db.dailyStats[day] || { frWords:0, frCorrect:0, ruWords:0, ruCorrect:0 };
+  row[dir+'Words'] = total;
+  row[dir+'Correct'] = state.correct||0;
+  db.dailyStats[day] = row;
+  save();
+}
+function renderTodaySummary(){
+  ensureDailyStats();
+  const el = document.getElementById('stats-today-summary');
+  if(!el) return;
+  const row = db.dailyStats[getDayKey()] || { frWords:0, frCorrect:0, ruWords:0, ruCorrect:0 };
+  const parts = [];
+  if(row.frWords) parts.push(`FR→RU: ${row.frWords} сл., ${Math.round((row.frCorrect||0)/row.frWords*100)}% верно`);
+  if(row.ruWords) parts.push(`RU→FR: ${row.ruWords} сл., ${Math.round((row.ruCorrect||0)/row.ruWords*100)}% верно`);
+  const total = (row.frWords||0) + (row.ruWords||0);
+  el.innerHTML = `<div style="font-size:var(--text-lg);font-weight:800;margin-bottom:var(--space-2)">Сегодня:</div><div style="font-size:var(--text-base)">${total ? 'всего слов: '+total+' · '+parts.join(' · ') : 'Сегодня данных пока нет.'}</div>`;
+}
+function statsSetRange(days){
+  ensureDailyStats();
+  const to = new Date();
+  let from = new Date();
+  if(days > 0){ from.setDate(from.getDate() - days + 1); }
+  else {
+    const keys = Object.keys(db.dailyStats).sort();
+    from = keys.length ? new Date(keys[0] + 'T00:00:00') : new Date(to.getFullYear(), to.getMonth(), to.getDate()-29);
+  }
+  document.getElementById('stats-date-from').value = getDayKey(from);
+  document.getElementById('stats-date-to').value = getDayKey(to);
+  renderStatsChart();
+}
+function initStatsView(){
+  renderTodaySummary();
+  const fromEl = document.getElementById('stats-date-from');
+  const toEl = document.getElementById('stats-date-to');
+  if(!fromEl.value || !toEl.value) statsSetRange(7);
+  else renderStatsChart();
+}
+
+function renderStatsSvgFallback(labels, frWords, ruWords, frPct, ruPct){
+  const wrap = document.getElementById('stats-chart-fallback');
+  if(!wrap) return;
+  const empty = !(frWords.some(v=>v>0) || ruWords.some(v=>v>0));
+  if(empty){ wrap.innerHTML=''; wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  const W = 900, H = 360, ml = 46, mr = 46, mt = 16, mb = 42;
+  const pw = W - ml - mr, ph = H - mt - mb;
+  const maxWords = Math.max(1, ...frWords.map((v,i)=>v + (ruWords[i]||0)));
+  const n = labels.length || 1;
+  const band = pw / n;
+  const barW = Math.max(8, band * 0.58);
+  const x = i => ml + i*band + (band-barW)/2;
+  const yWords = v => mt + ph - (v/maxWords)*ph;
+  const yPct = v => mt + ph - (v/100)*ph;
+  let g = '';
+  for(let t=0;t<=4;t++){
+    const val = Math.round(maxWords*t/4);
+    const y = mt + ph - ph*t/4;
+    g += `<line x1="${ml}" y1="${y}" x2="${W-mr}" y2="${y}" stroke="rgba(0,0,0,.08)"/>`;
+    g += `<text x="${ml-8}" y="${y+4}" text-anchor="end" font-size="11" fill="#777">${val}</text>`;
+  }
+  for(let t=0;t<=4;t++){
+    const val = t*25;
+    const y = yPct(val);
+    g += `<text x="${W-mr+8}" y="${y+4}" text-anchor="start" font-size="11" fill="#777">${val}%</text>`;
+  }
+  let bars='';
+  for(let i=0;i<n;i++){
+    const fw=frWords[i]||0, rw=ruWords[i]||0;
+    const y1=yWords(fw), h1=mt+ph-y1;
+    const y2=yWords(fw+rw), h2=y1-y2;
+    bars += `<rect x="${x(i)}" y="${y1}" width="${barW}" height="${Math.max(0,h1)}" rx="4" fill="#4a90d9"/>`;
+    bars += `<rect x="${x(i)}" y="${y2}" width="${barW}" height="${Math.max(0,h2)}" rx="4" fill="#7ec8a0"/>`;
+    bars += `<text x="${x(i)+barW/2}" y="${H-16}" text-anchor="middle" font-size="10" fill="#777">${labels[i]||''}</text>`;
+  }
+  const makePath=(arr, color)=>{
+    let d='';
+    arr.forEach((v,i)=>{ if(v===null||v===undefined) return; const cx=ml+i*band+band/2, cy=yPct(v); d += (d?' L ':'M ')+cx+' '+cy; });
+    return d ? `<path d="${d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+  };
+  const dots=(arr,color)=> arr.map((v,i)=> v===null||v===undefined ? '' : `<circle cx="${ml+i*band+band/2}" cy="${yPct(v)}" r="3" fill="${color}"/>`).join('');
+  wrap.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" height="360" aria-label="Статистика по дням">${g}${bars}${makePath(frPct,'#e8821a')}${makePath(ruPct,'#a44ccb')}${dots(frPct,'#e8821a')}${dots(ruPct,'#a44ccb')}</svg>`;
+}
+
+function renderStatsChart(){
+  ensureDailyStats();
+  renderTodaySummary();
+  const fromVal = document.getElementById('stats-date-from').value;
+  const toVal = document.getElementById('stats-date-to').value;
+  if(!fromVal || !toVal) return;
+  const labels = [];
+  const frWords = [], ruWords = [], frPct = [], ruPct = [];
+  let cur = new Date(fromVal + 'T00:00:00');
+  const end = new Date(toVal + 'T00:00:00');
+  while(cur <= end){
+    const key = getDayKey(cur);
+    const p = key.split('-');
+    const row = db.dailyStats[key] || {};
+    labels.push(p[2]+'.'+p[1]);
+    frWords.push(row.frWords || 0);
+    ruWords.push(row.ruWords || 0);
+    frPct.push(row.frWords ? Math.round((row.frCorrect||0)/row.frWords*100) : null);
+    ruPct.push(row.ruWords ? Math.round((row.ruCorrect||0)/row.ruWords*100) : null);
+    cur.setDate(cur.getDate()+1);
+  }
+  const hasData = frWords.some(v=>v>0) || ruWords.some(v=>v>0);
+  const empty = document.getElementById('stats-empty');
+  const canvas = document.getElementById('stats-chart');
+  const fallback = document.getElementById('stats-chart-fallback');
+  empty.style.display = hasData ? 'none' : 'block';
+  if(!hasData){
+    canvas.style.display = 'none';
+    fallback.style.display = 'none';
+    if(statsChart){ statsChart.destroy(); statsChart=null; }
+    return;
+  }
+  const canUseChart = typeof Chart !== 'undefined' && location.protocol !== 'file:';
+  if(!canUseChart){
+    canvas.style.display = 'none';
+    if(statsChart){ statsChart.destroy(); statsChart=null; }
+    renderStatsSvgFallback(labels, frWords, ruWords, frPct, ruPct);
+    return;
+  }
+  fallback.style.display = 'none';
+  canvas.style.display = 'block';
+  if(statsChart){ statsChart.destroy(); statsChart=null; }
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
+  const textColor = isDark ? '#aaa' : '#666';
+  statsChart = new Chart(canvas, {
+    type:'bar',
+    data:{ labels, datasets:[
+      {label:'FR to RU', data:frWords, backgroundColor:'#4a90d9', yAxisID:'yWords', stack:'words', order:2},
+      {label:'RU to FR', data:ruWords, backgroundColor:'#7ec8a0', yAxisID:'yWords', stack:'words', order:2},
+      {label:'% FR to RU', data:frPct, type:'line', borderColor:'#e8821a', backgroundColor:'transparent', borderWidth:2.5, pointRadius:3, tension:0.3, spanGaps:true, yAxisID:'yPct', order:1},
+      {label:'% RU to FR', data:ruPct, type:'line', borderColor:'#a44ccb', backgroundColor:'transparent', borderWidth:2.5, pointRadius:3, tension:0.3, spanGaps:true, yAxisID:'yPct', order:1}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{
+      x:{stacked:true, grid:{color:gridColor}, ticks:{color:textColor, maxTicksLimit:16, maxRotation:45}},
+      yWords:{type:'linear', position:'left', stacked:true, beginAtZero:true, grid:{color:gridColor}, ticks:{color:textColor, precision:0}, title:{display:true, text:'Слов', color:textColor}},
+      yPct:{type:'linear', position:'right', min:0, max:100, grid:{drawOnChartArea:false}, ticks:{color:textColor, callback:v=>v+'%'}, title:{display:true, text:'% верно', color:textColor}}
+    }}
+  });
+}
+
+// ===== VIEWS =====
+function showView(name) {
+  ['view-folders','view-lessons','view-allwords','view-lesson','view-stats'].forEach(id=>{
+    document.getElementById(id).style.display='none';
+  });
+  if (name === 'folders') {
+    document.getElementById('view-folders').style.display='block';
+    renderFoldersView();
+  } else if (name === 'lessons') {
+    document.getElementById('view-lessons').style.display='block';
+    renderLessons();
+  } else if (name === 'allwords') {
+    document.getElementById('view-allwords').style.display='block';
+    renderAllWords();
+  } else if (name === 'stats') {
+    document.getElementById('view-stats').style.display='block';
+    initStatsView();
+  } else if (name === 'lesson') {
+    document.getElementById('view-lesson').style.display='block';
+    renderWords();
+  }
+}
+
+// ===== LESSONS =====
+function getLessonPct(l){
+  if(!l.words.length)return 0;
+  return Math.round(l.words.filter(w=>w.weight>getThresh('threshMastered',1.5)).length/l.words.length*100);
+}
+function setLessonsSort(mode){
+  lessonsSort=mode;
+  document.getElementById("lsort-num").classList.toggle("active-ctrl",mode==="num");
+  document.getElementById("lsort-pct").classList.toggle("active-ctrl",mode==="pct");
+  renderLessons();
+}
+function setLessonsView(mode){
+  lessonsViewMode=mode;
+  document.getElementById("lview-cards").classList.toggle("active-ctrl",mode==="cards");
+  document.getElementById("lview-list").classList.toggle("active-ctrl",mode==="list");
+  renderLessons();
+}
+function parseLessonNum(numStr) {
+  const m = String(numStr||'').match(/^([A-Za-z])(\d+)$/);
+  if(m) return {letter:m[1].toUpperCase(), n:parseInt(m[2])};
+  const n = parseInt(numStr);
+  return {letter:'A', n: isNaN(n)?0:n};
+}
+function lessonSortKey(l) {
+  const p = parseLessonNum(l.num);
+  return p.letter + String(p.n).padStart(6,'0');
+}
+
+function renderFoldersView() {
+  const el = document.getElementById('folders-main-content');
+  const folders = [...db.folders].sort((a,b)=>a.letter.localeCompare(b.letter));
+  if (!folders.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📁</div><p>Папок пока нет</p><button class="btn btn-primary" onclick="openCreateFolder()">Создать папку</button></div>`;
+    return;
+  }
+  let out = `<div class="toolbar-row">
+    <button class="btn btn-secondary btn-sm" onclick="currentFolderLetter='__all__';showView('lessons')">📖 Все уроки</button>
+    <button class="btn btn-primary btn-sm" onclick="openCreateFolder()">＋ Новая папка</button>
+  </div><div class="folder-grid">`;
+  folders.forEach(f => {
+    const lessons = db.lessons.filter(l=>l.folder===f.letter);
+    const wc = lessons.reduce((s,l)=>s+l.words.length,0);
+    const good = lessons.reduce((s,l)=>s+l.words.filter(w=>w.weight>getThresh('threshMastered',1.5)).length,0);
+    const bad = lessons.reduce((s,l)=>s+l.words.filter(w=>w.weight<getThresh('threshHard',0.5)).length,0);
+    out += `<div class="folder-card" onclick="openFolder('${f.letter}')">
+      <div class="folder-card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openRenameFolder('${f.letter}')" title="Переименовать">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteFolder('${f.letter}')" title="Удалить">🗑</button>
+      </div>
+      <div class="folder-card-letter">${f.letter}</div>
+      <div class="folder-card-name">${esc(f.name)}</div>
+      <div class="folder-card-meta">
+        <span class="badge badge-blue">${lessons.length} ур.</span>
+        <span class="badge badge-green">${wc} сл.</span>
+        ${good?`<span class="badge badge-green">✓${good}</span>`:''}
+        ${bad?`<span class="badge badge-red">✗${bad}</span>`:''}
+      </div>
+    </div>`;
+  });
+  out += `</div>`;
+  el.innerHTML = out;
+}
+
+function renderLessons() {
+  const grid = document.getElementById('lesson-grid');
+  const empty = document.getElementById('lessons-empty');
+  empty.style.display='none';
+
+  if(currentFolderLetter === null) {
+    const folders = [...db.folders].sort((a,b)=>a.letter.localeCompare(b.letter));
+    const toolbar = `<div class='toolbar-row'>
+      <button class='btn btn-secondary btn-sm' onclick='currentFolderLetter="__all__";renderLessons()'>📖 Все уроки</button>
+      <button class='btn btn-primary btn-sm' onclick='openCreateFolder()'>＋ Новая папка</button></div>`;
+    if(!folders.length){
+      grid.className='lesson-grid';
+      grid.innerHTML=toolbar;
+      empty.style.display='block';
+      return;
+    }
+    grid.className='folder-grid';
+    grid.innerHTML = toolbar + folders.map(f => {
+      const lessons = db.lessons.filter(l=>l.folder===f.letter);
+      const wc = lessons.reduce((s,l)=>s+l.words.length,0);
+      const good = lessons.reduce((s,l)=>s+l.words.filter(w=>w.weight>getThresh('threshMastered',1.5)).length,0);
+      const bad = lessons.reduce((s,l)=>s+l.words.filter(w=>w.weight<getThresh('threshHard',0.5)).length,0);
+      const lcount = lessons.length;
+      return `<div class='folder-card' onclick='openFolder("${f.letter}")'>
+        <div class='folder-card-actions'>
+          <button class='btn btn-ghost btn-sm' onclick='event.stopPropagation();openRenameFolder("${f.letter}")' title='Переименовать'>✏️</button>
+          <button class='btn btn-danger btn-sm' onclick='event.stopPropagation();deleteFolder("${f.letter}")' title='Удалить'>🗑</button>
+        </div>
+        <div class='folder-card-letter'>${f.letter}</div>
+        <div class='folder-card-name'>${esc(f.name)||'<span style="color:var(--color-text-faint);font-style:italic">без названия</span>'}</div>
+        <div class='folder-card-meta' style='margin-bottom:var(--space-3)'>
+          <span class='badge badge-blue'>${lcount} ${lcount===1?'урок':lcount<5?'урока':'уроков'}</span>
+          <span class='badge badge-blue'>${wc} ${wordForm(wc)}</span>
+          ${bad?`<span class='badge badge-red'>⚠ ${bad}</span>`:''}
+          ${good?`<span class='badge badge-green'>★ ${good}</span>`:''}
+        </div>
+        <button class='btn btn-primary btn-sm' onclick='event.stopPropagation();openFolderQuizSetup("${f.letter}")'>▶ Квиз папки</button>
+      </div>`;
+    }).join('');
+    return;
+  }
+
+  let _ls = currentFolderLetter==='__all__'
+    ? [...db.lessons]
+    : db.lessons.filter(l=>l.folder===currentFolderLetter);
+  _ls.sort((a,b)=>lessonSortKey(a).localeCompare(lessonSortKey(b)));
+
+  const backBtn = `<div class='toolbar-row'>
+    ${currentFolderLetter!=='__all__' ? `<button class='btn btn-primary btn-sm' onclick='openCreateLesson()'>+ Новый урок</button>
+    <button class='btn btn-secondary btn-sm' onclick='openFolderQuizSetup(currentFolderLetter)'>▶ Квиз папки</button>` : ''}
+  </div>`
+
+  grid.className = lessonsViewMode==='list' ? 'lesson-list' : 'lesson-grid';
+  grid.innerHTML = backBtn + (_ls.length ? _ls.map(l => {
+    const wc = l.words.length;
+    const bad = l.words.filter(w=>w.weight<getThresh('threshHard',0.5)).length;
+    const good = l.words.filter(w=>w.weight>getThresh('threshMastered',1.5)).length;
+    const pct = getLessonPct(l);
+    const isMastered = wc>0 && pct===100;
+    const masteredCls = isMastered ? ' mastered-lesson' : '';
+    const pctColor = isMastered ? '#d4a900' : 'var(--duo-green)';
+    const pctBar = wc ? `<div class='pct-bar'><div class='pct-fill' style='width:${pct}%;background:${pctColor}'></div></div>` : '';
+    const pctLabel = wc ? `<span style='font-size:var(--text-xs);font-weight:700;color:${isMastered?'#b07700':'var(--color-text-muted)'}'>${pct}%</span>` : '';
+    const actBtns = `<button class='btn btn-ghost btn-sm' onclick='event.stopPropagation();openRenameLesson(${l.id})' title='Переименовать'>✏️</button>`
+                  + `<button class='btn btn-danger btn-sm' onclick='event.stopPropagation();deleteLesson(${l.id})' title='Удалить'>🗑</button>`;
+    if(lessonsViewMode==='list'){
+      return `<div class='lesson-list-row${masteredCls}' onclick='openLesson(${l.id})'>
+        <div style='font-weight:900;font-family:var(--font-display);min-width:3rem;color:var(--color-text-muted);font-size:var(--text-sm)'>${l.num||l.id}</div>
+        <div style='flex:1;font-weight:700;font-size:var(--text-sm)'>${esc(l.name)}</div>
+        <span class='badge badge-blue' style='white-space:nowrap'>${wc} ${wordForm(wc)}</span>
+        ${bad?`<span class='badge badge-red'>⚠ ${bad}</span>`:''}
+        ${good?`<span class='badge badge-green'>★ ${good}</span>`:''}
+        ${pctLabel}${pctBar}
+        <div style='display:flex;gap:var(--space-1)'>${actBtns}</div>
+      </div>`;
+    }
+    return `<div class='lesson-card${masteredCls}' onclick='openLesson(${l.id})'>
+      <div class='lesson-card-num'>Урок ${l.num||l.id}</div>
+      <div class='lesson-card-title'>${esc(l.name)}</div>
+      <div style='display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2)'>${pctBar}${pctLabel}</div>
+      <div class='lesson-card-meta'>
+        <span class='badge badge-blue'>${wc} ${wordForm(wc)}</span>
+        ${bad?`<span class='badge badge-red'>⚠ ${bad} сложных</span>`:''}
+        ${good?`<span class='badge badge-green'>★ ${good} освоено</span>`:''}
+      </div>
+      <div class='lesson-card-actions'>${actBtns}</div>
+    </div>`;
+  }).join('') : '<div style="color:var(--color-text-muted);padding:var(--space-8);text-align:center">Уроков пока нет</div>');
+}
+
+function wordForm(n) {
+  if(n%100>=11&&n%100<=19) return 'слов';
+  const r=n%10; if(r===1) return 'слово'; if(r>=2&&r<=4) return 'слова'; return 'слов';
+}
+
+// Create / Rename lesson modal
+// ===== FOLDERS =====
+function openCreateFolder() {
+  lessonModalMode = 'folder:create';
+  document.getElementById('modal-lesson-title').textContent = 'Новая папка';
+  document.getElementById('lesson-num-input').value = '';
+  document.getElementById('lesson-name-input').value = '';
+  if(document.getElementById('modal-num-label'))
+    document.getElementById('modal-num-label').textContent = 'Буква папки (A–Z)';
+  openModal('modal-lesson');
+  setTimeout(()=>document.getElementById('lesson-num-input').focus(), 80);
+}
+function openRenameFolder(letter) {
+  const f = db.folders.find(x=>x.letter===letter);
+  if(!f) return;
+  lessonModalMode = 'folder:rename:'+letter;
+  document.getElementById('modal-lesson-title').textContent = 'Переименовать папку';
+  document.getElementById('lesson-num-input').value = f.letter;
+  document.getElementById('lesson-name-input').value = f.name||'';
+  if(document.getElementById('modal-num-label'))
+    document.getElementById('modal-num-label').textContent = 'Буква папки (A–Z)';
+  openModal('modal-lesson');
+  setTimeout(()=>{ const inp=document.getElementById('lesson-num-input'); inp.focus(); inp.select(); }, 80);
+}
+function saveFolderModal() {
+  const letter = document.getElementById('lesson-num-input').value.trim().toUpperCase();
+  const name = document.getElementById('lesson-name-input').value.trim();
+  if(!letter || !/^[A-Z]$/.test(letter)){showToast('Буква папки — одна заглавная латинская буква A-Z');return;}
+  if(lessonModalMode==='folder:create'){
+    if(db.folders.find(f=>f.letter===letter)){showToast('Папка '+letter+' уже существует');return;}
+    db.folders.push({id:db.nextFolderId++,letter,name});
+    db.folders.sort((a,b)=>a.letter.localeCompare(b.letter));
+    save(); closeModal('modal-lesson'); renderLessons(); showToast('Папка создана');
+  } else {
+    const oldLetter = lessonModalMode.split(':')[2];
+    const f = db.folders.find(x=>x.letter===oldLetter);
+    if(letter!==oldLetter && db.folders.find(x=>x.letter===letter)){showToast('Папка '+letter+' уже существует');return;}
+    if(f){f.letter=letter;f.name=name;}
+    db.lessons.forEach(l=>{
+      if(l.folder===oldLetter){
+        l.folder=letter;
+        l.num=String(l.num).replace(/^[A-Z]/i,letter);
+      }
+    });
+    db.folders.sort((a,b)=>a.letter.localeCompare(b.letter));
+    save(); closeModal('modal-lesson'); renderLessons(); showToast('Папка обновлена');
+  }
+}
+function deleteFolder(letter) {
+  const count = db.lessons.filter(l=>l.folder===letter).length;
+  if(count>0 && !confirm('В папке '+letter+' есть '+count+' уроков. Удалить папку и все уроки?')) return;
+  db.lessons = db.lessons.filter(l=>l.folder!==letter);
+  db.folders = db.folders.filter(f=>f.letter!==letter);
+  save(); renderLessons(); showToast('Папка удалена');
+}
+function openFolder(letter) {
+  currentFolderLetter = letter;
+  showView('lessons');
+}
+function openFolderQuizSetup(letter) {
+  const lessonIds = db.lessons.filter(l=>l.folder===letter).map(l=>l.id);
+  if(!lessonIds.length){showToast('В этой папке нет уроков со словами');return;}
+  quizFixedLessonIds = lessonIds;
+  openQuizSetup();
+  const title = document.getElementById('quiz-title');
+  if(title) title.textContent = 'Квиз: папка '+letter;
+}
+
+
+function openCreateLesson() {
+  lessonModalMode = 'create';
+  document.getElementById('modal-lesson-title').textContent = 'Новый урок';
+  document.getElementById('lesson-name-input').value = '';
+  document.getElementById('modal-num-label') && (document.getElementById('modal-num-label').textContent = 'Номер урока (напр. A1)');
+  const folder = (currentFolderLetter && currentFolderLetter!=='__all__') ? currentFolderLetter : 'A';
+  const folderLessons = db.lessons.filter(l=>l.folder===folder);
+  const usedNums = new Set(folderLessons.map(l=>{ const m=String(l.num||'').match(/\d+$/); return m?parseInt(m[0]):0; }));
+  let next=1; while(usedNums.has(next)) next++;
+  document.getElementById('lesson-num-input').value = folder + next;
+  openModal('modal-lesson');
+  setTimeout(()=>document.getElementById('lesson-num-input').focus(), 80);
+}
+
+function openRenameLesson(id) {
+  const lid = id !== undefined ? id : currentLessonId;
+  if (!lid) return;
+  lessonModalMode = 'rename:' + lid;
+  const l = db.lessons.find(x=>x.id===lid);
+  document.getElementById('modal-lesson-title').textContent = 'Переименовать урок';
+  document.getElementById('lesson-name-input').value = l ? l.name : '';
+  document.getElementById('lesson-num-input').value = l ? (l.num||l.id) : '';
+  openModal('modal-lesson');
+  setTimeout(()=>{ const inp=document.getElementById('lesson-num-input'); inp.focus(); inp.select(); }, 80);
+}
+
+function saveLessonModal() {
+  if(lessonModalMode==='folder:create'||lessonModalMode.startsWith('folder:rename:')){saveFolderModal();return;}
+  const name = document.getElementById('lesson-name-input').value.trim();
+  const numRaw = document.getElementById('lesson-num-input').value.trim().toUpperCase();
+  if(!numRaw){showToast('Введите номер урока (напр. A1)');return;}
+  if(!name){showToast('Введите название');return;}
+  const parsed = numRaw.match(/^([A-Z])(\d+)$/);
+  if(!parsed){showToast('Номер урока должен быть вида A1, B2 и т.п.');return;}
+  const folderLetter = parsed[1];
+  if(!db.folders.find(f=>f.letter===folderLetter)){
+    db.folders.push({id:db.nextFolderId++,letter:folderLetter,name:''});
+    db.folders.sort((a,b)=>a.letter.localeCompare(b.letter));
+  }
+  if(lessonModalMode==='create'){
+    const conflict = db.lessons.find(l=>String(l.num).toUpperCase()===numRaw);
+    if(conflict){showToast('Урок '+numRaw+' уже существует');return;}
+    const id = db.nextLessonId++;
+    db.lessons.push({id, num:numRaw, folder:folderLetter, name, words:[]});
+    save(); closeModal('modal-lesson'); renderLessons(); showToast('Урок создан');
+  } else {
+    const lid = parseInt(lessonModalMode.split(':')[1]);
+    const l = db.lessons.find(x=>x.id===lid);
+    const conflict = db.lessons.find(x=>x.id!==lid && String(x.num).toUpperCase()===numRaw);
+    if(conflict){showToast('Урок '+numRaw+' уже существует');return;}
+    if(l){l.num=numRaw;l.folder=folderLetter;l.name=name;save();closeModal('modal-lesson');}
+    if(currentLessonId===lid)
+      document.getElementById('lesson-detail-title').textContent=`Урок ${numRaw} — ${name}`;
+    renderLessons(); showToast('Урок обновлён');
+  }
+}
+
+function deleteLesson(id) {
+  db.lessons = db.lessons.filter(l=>l.id!==id);
+  save(); renderLessons(); showToast('Урок удалён');
+}
+
+// ===== LESSON DETAIL =====
+function openLesson(id) {
+  currentLessonId = id;
+  const l = db.lessons.find(x=>x.id===id);
+  document.getElementById('lesson-detail-title').textContent = `Урок ${l.num||l.id} — ${l.name}`;
+  document.getElementById('new-word-form').classList.remove('visible');
+  showView('lesson');
+}
+
+function getSortedWords(words, sortId) {
+  const s = sortState[sortId] || { by:'num', dir:-1 };
+  const arr = [...words];
+  arr.sort((a,b) => {
+    let va, vb;
+    if (s.by === 'alpha') { va=a.fr.toLowerCase(); vb=b.fr.toLowerCase(); }
+    else if (s.by === 'weight') { va=a.weight; vb=b.weight; }
+    else { va=a.id; vb=b.id; }
+    if (va < vb) return s.dir;
+    if (va > vb) return -s.dir;
+    return 0;
+  });
+  return arr;
+}
+
+function toggleSortDir(sortId) {
+  sortState[sortId].dir *= -1;
+  const btn = document.getElementById(sortId+'-dir-btn');
+  btn.textContent = sortState[sortId].dir === -1 ? '↓ Убыв.' : '↑ Возр.';
+  if (sortId === 'lesson') renderWords();
+  else renderAllWords();
+}
+
+function renderWords() {
+  const l = db.lessons.find(x=>x.id===currentLessonId);
+  if (!l) return;
+  const list = document.getElementById('word-list');
+  const empty = document.getElementById('words-empty');
+  if (!l.words.length) { list.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  const sortBy = document.getElementById('lesson-sort').value;
+  sortState.lesson.by = sortBy;
+  const sorted = getSortedWords(l.words, 'lesson');
+  list.innerHTML = sorted.map((w,i) => renderWordRow(w, i+1)).join('');
+}
+
+function renderWordRow(w, num) {
+  const wc = w.weight > getThresh('threshMastered',1.5) ? 'weight-good' : w.weight < getThresh('threshHard',0.5) ? 'weight-bad' : 'weight-neutral';
+  return `<div class="word-row" id="word-row-${w.id}">
+    <span class="word-num">${num}</span>
+    <span class="word-fr" id="wd-fr-${w.id}">${esc(w.fr)}</span>
+    <span class="word-tr" id="wd-pos-${w.id}" style="font-style:italic;color:var(--color-text-muted)">${esc(w.pos||'')}</span>
+    <span class="word-tr" id="wd-tr-${w.id}">${esc(w.tr)}</span>
+    <span class="word-ru" id="wd-ru-${w.id}">${renderRuCell(w.ru)}</span>
+    <div class="word-actions">
+      <span class="word-weight ${wc}" title="Нажми для редактирования веса" style="cursor:pointer" onclick="promptWeightEdit(${w.id},this)">${w.weight.toFixed(2)}</span>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="speakWord('${esc(w.fr)}')" title="Произнести">🔊</button>
+      <button class="btn btn-ghost btn-icon btn-sm" onclick="editWord(${w.id})" title="Редактировать">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+      <button class="btn btn-danger btn-icon btn-sm" onclick="deleteWord(${w.id})" title="Удалить">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </button>
+    </div>
+  </div>`;
+}
+
+function editWord(id) {
+  const l = db.lessons.find(x=>x.id===currentLessonId);
+  const w = l.words.find(x=>x.id===id);
+  const row = document.getElementById('word-row-'+id);
+  row.classList.add('editing');
+  document.getElementById('wd-fr-'+id).innerHTML = `<input class="word-input" id="ef-${id}" value="${esc(w.fr)}" style="width:100%">`;
+  document.getElementById('wd-pos-'+id).innerHTML = buildPosSelect('ep-'+id, w.pos||'');
+  document.getElementById('wd-tr-'+id).innerHTML = `<input class="word-input" id="et-${id}" value="${esc(w.tr)}" style="width:100%">`;
+  document.getElementById('wd-ru-'+id).innerHTML = `<input class="word-input" id="er-${id}" value="${esc(w.ru)}" style="width:100%">`;
+  row.querySelector('.word-actions').innerHTML = `
+    <button class="btn btn-primary btn-sm" onclick="saveWordInline(${id})">Сохр.</button>
+    <button class="btn btn-secondary btn-sm" onclick="renderWords()">✕</button>`;
+  document.getElementById('ef-'+id).focus();
+}
+
+function saveWordInline(id) {
+  const l = db.lessons.find(x=>x.id===currentLessonId);
+  const w = l.words.find(x=>x.id===id);
+  const fr = document.getElementById('ef-'+id)?.value.trim();
+  const tr = document.getElementById('et-'+id)?.value.trim();
+  const pos = document.getElementById('ep-'+id)?.value||'';
+  const ru = document.getElementById('er-'+id)?.value.trim();
+  if (!fr||!ru) { showToast('Заполните французское слово и перевод'); return; }
+  w.fr=fr; w.tr=tr||''; w.pos=pos; w.ru=ru;
+  save(); renderWords(); showToast('Сохранено');
+}
+
+function deleteWord(id) {
+  const l = db.lessons.find(x=>x.id===currentLessonId);
+  l.words = l.words.filter(w=>w.id!==id);
+  save(); renderWords(); showToast('Слово удалено');
+}
+
+function toggleAddWord() {
+  const f = document.getElementById('new-word-form');
+  f.classList.toggle('visible');
+  if (f.classList.contains('visible')) setTimeout(()=>document.getElementById('new-fr').focus(), 50);
+}
+
+function handleNewWordKey(e) { if(e.key==='Enter'){e.preventDefault();addWord();} }
+
+function addWord() {
+  const fr=document.getElementById('new-fr').value.trim();
+  const tr=document.getElementById('new-tr').value.trim();
+  const pos=document.getElementById('new-pos').value.trim();
+  const ru=document.getElementById('new-ru').value.trim();
+  if(!fr||!ru){showToast('Заполните французское слово и перевод');return;}
+  const l=db.lessons.find(x=>x.id===currentLessonId);
+  l.words.push({id:db.nextWordId++,fr,tr:tr||'',pos:pos||'',ru,weight:1.0,streak:0,history:[],lastSeen:null});
+  document.getElementById('new-fr').value='';
+  document.getElementById('new-tr').value='';
+  document.getElementById('new-pos').value='';
+  document.getElementById('new-ru').value='';
+  document.getElementById('new-fr').focus();
+  save(); renderWords();
+}
+
+// ===== ALL WORDS VIEW =====
+function renderAllWords() {
+  const sortBy = document.getElementById('allwords-sort').value;
+  sortState.allwords.by = sortBy;
+  const allWords = db.lessons.flatMap(l => l.words.map(w => ({...w, lessonId:l.id, lessonNum:l.num||l.id, lessonName:l.name})));
+  document.getElementById('allwords-count').textContent = allWords.length + ' ' + wordForm(allWords.length);
+  const list = document.getElementById('allwords-list');
+  const empty = document.getElementById('allwords-empty');
+  if (!allWords.length) { list.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  const sorted = getSortedWords(allWords, 'allwords');
+  list.innerHTML = sorted.map((w,i) => {
+    const wc = w.weight > getThresh('threshMastered',1.5) ? 'weight-good' : w.weight < getThresh('threshHard',0.5) ? 'weight-bad' : 'weight-neutral';
+    return `<div class="word-row" style="grid-template-columns:2.5rem 0.6fr 1fr 1fr 0.8fr 0.6fr 1fr auto">
+      <span class="word-num">${i+1}</span>
+      <span style="font-size:var(--text-xs);color:var(--duo-green-dark);font-weight:700">${w.lessonNum}. ${esc(w.lessonName)}</span>
+      <span class="word-fr">${esc(w.fr)}</span>
+      <span class="word-tr" style="font-style:italic;color:var(--color-text-muted)">${esc(w.pos||'')}</span>
+      <span class="word-tr">${esc(w.tr)}</span>
+      <span class="word-ru">${renderRuCell(w.ru)}</span>
+      <div class="word-actions">
+        <span class="word-weight ${wc}">${w.weight.toFixed(2)}</span>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="speakWord('${esc(w.fr)}')" title="Произнести">🔊</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== SPEECH =====
+function speakWord(word) {
+  if(!('speechSynthesis' in window)){showToast('Синтез речи не поддерживается');return;}
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='fr-FR';u.rate=0.85;
+  const voices=speechSynthesis.getVoices();
+  const v=voices.find(v=>v.lang.startsWith('fr'));
+  if(v) u.voice=v;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+
+// ===== QUIZ =====
+function parseLessonsInput(str) {
+  if(!str.trim()) return null;
+  const ids=new Set();
+  str.split(',').forEach(p=>{
+    p=p.trim();
+    const r=p.match(/^(\d+)\s*[-–]\s*(\d+)$/);
+    if(r){const a=+r[1],b=+r[2];for(let i=Math.min(a,b);i<=Math.max(a,b);i++)ids.add(i);}
+    else if(/^\d+$/.test(p)) ids.add(+p);
+  });
+  return ids;
+}
+
+
+let quizFixedLessonIds = null;
+function openLessonQuizSetup(){
+  if(currentLessonId==null) return;
+  quizFixedLessonIds = [currentLessonId];
+  openQuizSetup();
+}
+
+function openQuizSetup() {
+  ['quiz-setup','quiz-game','quiz-stats'].forEach((id,i)=>{
+    document.getElementById(id).style.display = i===0 ? 'block' : 'none';
+  });
+  const lessonInput = document.getElementById('quiz-lessons-input');
+  const lessonBlock = lessonInput ? lessonInput.closest('div') : null;
+  const title = document.querySelector('#quiz-setup h2');
+  if (quizFixedLessonIds && quizFixedLessonIds.length) {
+    if (lessonBlock) { lessonBlock.style.display = 'none'; lessonBlock.classList.add('quiz-row-hidden'); lessonBlock.hidden = true; }
+    if (lessonInput) lessonInput.value = '';
+    if (title) title.textContent = 'Квиз по уроку';
+  } else {
+    if (lessonBlock) { lessonBlock.style.display = ''; lessonBlock.classList.remove('quiz-row-hidden'); lessonBlock.hidden = false; }
+    if (title) title.textContent = 'Allons-y! 🇫🇷';
+  }
+  document.getElementById('quiz-panel').classList.add('active');
+  document.getElementById('quiz-backdrop').style.display='block';
+}
+
+function resetLessonWeights(lessonId) {
+  const lesson = db.lessons.find(l => l.id === lessonId);
+  if (!lesson) return;
+  lesson.words.forEach(w => { w.weight = 1; });
+  save();
+  renderWords();
+  showToast('Веса сброшены до 1');
+}
+function closeQuiz() {
+  document.getElementById('quiz-panel').classList.remove('active');
+  document.getElementById('quiz-backdrop').style.display='none';
+  // blur input to hide keyboard when closing quiz
+  const inp=document.getElementById('quiz-answer-input');
+  if(inp){ inp.readOnly=false; inp.style.opacity='1'; inp.blur(); }
+  quizState=null;
+  quizFixedLessonIds=null;
+}
+
+function onQuizModeChange() {
+  const mode = document.querySelector('input[name="quiz-mode"]:checked').value;
+  const extra = document.getElementById('quiz-mode-extra');
+  const inp = document.getElementById('quiz-mode-value');
+  const unit = document.getElementById('quiz-mode-unit');
+  if(mode === 'timer'){
+    extra.style.display='flex'; inp.value=60; inp.min=30; inp.step=30; inp.placeholder='сек';
+    unit.textContent='сек. (шаг 30)';
+  } else if(mode === 'stack'){
+    extra.style.display='flex'; inp.value=30; inp.min=1; inp.placeholder='слов';
+    unit.textContent='слов';
+  } else {
+    extra.style.display='none';
+  }
+}
+
+let quizTimerInterval = null;
+
+function startQuizTimer(totalSec) {
+  let remaining = totalSec;
+  const disp = document.getElementById('quiz-timer-display');
+  disp.style.display='block';
+  function tick(){
+    if(!quizState){clearInterval(quizTimerInterval);return;}
+    const m=Math.floor(remaining/60), s=remaining%60;
+    const color = remaining>totalSec*0.4?'var(--color-text-muted)':remaining>totalSec*0.15?'var(--duo-orange,#e07b00)':'var(--duo-red)';
+    disp.style.color=color;
+    disp.textContent='⏱ '+m+':'+String(s).padStart(2,'0');
+    if(remaining<=0){
+      clearInterval(quizTimerInterval);
+      quizTimerInterval=null;
+      // если пользователь уже пишет — даём дописать, ставим флаг
+      const inp = document.getElementById('quiz-answer-input');
+      if(inp && inp.value.trim().length > 0){
+        quizState.timerExpired = true;
+        disp.textContent='⏱ 0:00 — допишите слово…';
+        disp.style.color='var(--duo-red)';
+      } else {
+        showTimerEnd();
+      }
+      return;
+    }
+    remaining--;
+  }
+  tick();
+  quizTimerInterval = setInterval(tick, 1000);
+}
+
+function showTimerEnd() {
+  if(!quizState) return;
+  recordQuizDailyStats(quizState);
+  const phrase = PRAISE_PHRASES[Math.floor(Math.random()*PRAISE_PHRASES.length)];
+  const mode = quizState.quizMode;
+  const isTimer = mode==='timer';
+  const title = isTimer ? '⏱ Время вышло!' : '📦 Стопка завершена!';
+  const sub = isTimer ? 'Квиз остановлен по таймеру' : `Пройдено ${quizState.stackDone||0} из ${quizState.stackLimit} слов`;
+  document.getElementById('quiz-stats-summary').innerHTML = `
+    <span class="stat-pill stat-pill-blue">${sub}</span>
+    <span class="stat-pill stat-pill-green">✓ ${quizState.correct} правильно</span>
+    <span class="stat-pill stat-pill-red">✗ ${quizState.wrong+quizState.skipped} ошибок</span>
+  `;
+  document.getElementById('quiz-result-list').innerHTML = `
+    <div style="padding:var(--space-8);text-align:center;background:var(--duo-green-light);border:2px solid var(--duo-green);border-radius:var(--radius-xl);">
+      <div style="font-size:3rem;margin-bottom:var(--space-3)">${isTimer?'⏱':'📦'}</div>
+      <div style="font-family:var(--font-display);font-weight:900;font-size:var(--text-xl);color:var(--duo-green-dark);margin-bottom:var(--space-3)">${title}</div>
+      <div style="font-size:var(--text-base);font-weight:700;color:var(--color-text);max-width:28ch;margin:0 auto">${phrase}</div>
+    </div>`;
+  document.getElementById('quiz-game').style.display='none';
+  document.getElementById('quiz-stats').style.display='block';
+}
+
+function startQuiz() {
+  const lang=document.querySelector('input[name="quiz-lang"]:checked').value;
+  const lessonInput=document.getElementById('quiz-lessons-input').value;
+  const focusN = parseInt(document.getElementById('quiz-focus-n').value) || 0;
+  let lessons=db.lessons;
+  if (quizFixedLessonIds && quizFixedLessonIds.length) {
+    lessons = lessons.filter(l => quizFixedLessonIds.includes(l.id));
+  } else {
+    const lessonIds=parseLessonsInput(lessonInput);
+    if(lessonIds) lessons=lessons.filter(l=>lessonIds.has(l.num||l.id));
+  }
+  let words=lessons.flatMap(l=>l.words.map(w=>({...w,lessonId:l.id})));
+  const excludeAboveRaw=parseFloat(document.getElementById('quiz-exclude-above').value);
+  const excludeAbove=(!isNaN(excludeAboveRaw)&&excludeAboveRaw>0)?excludeAboveRaw:999;
+  words=words.filter(w=>w.weight<excludeAbove);
+  if(focusN>0){
+    words=words.slice().sort((a,b)=>a.weight-b.weight).slice(0,focusN);
+  }
+  if(!words.length){showToast('Нет слов для квиза (все освоены или уроки пусты)');return;}
+  words=words.sort(()=>Math.random()-0.5);
+  const quizMode = document.querySelector('input[name="quiz-mode"]:checked').value;
+  const modeVal = parseInt(document.getElementById('quiz-mode-value').value)||0;
+  const stackLimit = quizMode==='stack' ? (modeVal>0?modeVal:30) : 0;
+  const timerSec = quizMode==='timer' ? (modeVal>=30?modeVal:60) : 0;
+  if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;}
+  document.getElementById('quiz-timer-display').style.display='none';
+  quizState={words,lang,index:0,correct:0,wrong:0,skipped:0,answered:false,streak:{},seenWords:[],excludeAbove,quizMode,stackLimit,stackDone:0};
+  document.getElementById('quiz-setup').style.display='none';
+  document.getElementById('quiz-game').style.display='block';
+  showQuizWord();
+  if(quizMode==='timer') startQuizTimer(timerSec);
+}
+
+function getEligibleQuizWords() {
+  if (!quizState) return [];
+  return quizState.words.filter(w => {
+    let dbWord=null;
+    for(const l of db.lessons){const f=l.words.find(x=>x.id===w.id);if(f){dbWord=f;break;}}
+    if(!dbWord) return false;
+    return dbWord.weight < quizState.excludeAbove;
+  }).map(w => {
+    let dbWord=null;
+    for(const l of db.lessons){const f=l.words.find(x=>x.id===w.id);if(f){dbWord=f;break;}}
+    return {...dbWord, lessonId:w.lessonId};
+  });
+}
+
+function pickWeightedWord(words) {
+  const weighted = words.map(w => ({w, chance: Math.max(0.05, 2.05 - w.weight)}));
+  const total = weighted.reduce((s,x)=>s+x.chance,0);
+  let r = Math.random()*total;
+  for(const item of weighted){
+    r -= item.chance;
+    if(r <= 0) return item.w;
+  }
+  return weighted[weighted.length-1].w;
+}
+
+function showQuizWord() {
+  const eligible = getEligibleQuizWords();
+  if (!eligible.length) { showPraiseCard(); return; }
+  const w = pickWeightedWord(eligible);
+  quizState.currentWordId = w.id;
+  const btn=document.getElementById('quiz-word-btn');
+  btn.className='quiz-word-btn';
+  btn.dataset.quizpos=w.pos||'';
+  const _wt=quizState.lang==='fr'?w.fr:w.ru;
+  btn.innerHTML=`<div>${_wt}</div>`;
+  if(quizState.lang==='fr'&&w.pos){const pt=document.createElement('div');pt.className='qpos';pt.style.cssText='font-size:var(--text-xs);font-weight:600;opacity:0.55;margin-top:4px';pt.textContent=w.pos;btn.appendChild(pt);}
+  const ainp=document.getElementById('quiz-answer-input');
+  ainp.value='';
+  ainp.readOnly=false;
+  ainp.disabled=false;
+  ainp.style.opacity='1';
+  document.getElementById('quiz-correct-answer').textContent='';
+  document.getElementById('quiz-correct-answer').style.color='';
+  document.getElementById('btn-reveal').style.display='';
+  document.getElementById('btn-next').style.display='none';
+  quizState.answered=false;
+  updateQuizProgress();
+  const _artBtns = document.getElementById('quiz-article-btns');
+  if (_artBtns) _artBtns.className = 'quiz-article-btns' + (quizState.lang==='ru' ? ' visible' : '');
+  setTimeout(()=>{ ainp.focus(); ainp.removeAttribute('readonly'); },20);
+}
+
+function updateQuizProgress() {
+  const total=quizState.correct+quizState.wrong+quizState.skipped;
+  document.getElementById('quiz-prog-text').textContent=`Слово ${total+1}`;
+  document.getElementById('quiz-score-text').textContent=`✓ ${quizState.correct} · ✗ ${quizState.wrong+quizState.skipped}`;
+  // fill based on correct ratio
+  const pct = total > 0 ? Math.round(quizState.correct/total*100) : 0;
+  document.getElementById('quiz-progress-fill').style.width=pct+'%';
+}
+
+function normalize(s){return String(s||'').trim().toLowerCase().replace(/['’`]/g,"'").replace(/ё/g,'е').replace(/[.,!?;:'"«»]/g,'').replace(/\s+/g,' ');}
+function stripAccents(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function normLoose(s){return stripAccents(normalize(s));}
+
+function getHomonymTranslations(word) {
+  const displayKey = normalize(quizState.lang==='fr' ? word.fr : word.ru);
+  const translations = [];
+  const seen = new Set();
+  for (const qw of quizState.words) {
+    const qDisplay = normalize(quizState.lang==='fr' ? qw.fr : qw.ru);
+    if (qDisplay === displayKey) {
+      const tr = quizState.lang==='fr' ? qw.ru : qw.fr;
+      if (!seen.has(tr)) { seen.add(tr); translations.push(tr); }
+    }
+  }
+  return translations.join(' / ');
+}
+
+function stripParens(s){return String(s||'').replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim()}
+function checkTranslation(input,word) {
+  const u = normalize(input), uL = normLoose(input);
+  const dk = normalize(quizState.lang==='fr' ? word.fr : word.ru);
+  const ac = [];
+
+  for (const qw of quizState.words) {
+    if (normalize(quizState.lang==='fr' ? qw.fr : qw.ru) === dk) {
+      (quizState.lang==='fr' ? qw.ru : qw.fr).split(/[,;\/]/).forEach(v => {
+        const raw = String(v || '').trim();
+        if (!raw) return;
+
+        const n = normalize(raw);
+        if (n) ac.push(n);
+
+        const withoutParens = stripParens(raw);
+        const np = normalize(withoutParens);
+        if (np && np !== n) ac.push(np);
+      });
+    }
+  }
+
+  const uniq = [...new Set(ac.filter(Boolean))];
+
+  if (uniq.some(v => v === u || (v.includes(u) && u.length >= 3))) return {correct:true, typo:false};
+
+  const isRuToFr = quizState.lang === 'ru';
+  if (isRuToFr && uniq.some(v => normLoose(v) === uL || (normLoose(v).includes(uL) && uL.length >= 3))) {
+    return {correct:true, typo:true};
+  }
+
+  return {correct:false, typo:false};
+}
+
+function insertArticle(art) {
+  const inp = document.getElementById('quiz-answer-input');
+  if (!inp || inp.readOnly) return;
+  inp.value = art + inp.value.replace(/^(un|une)\s*/i, '');
+  inp.focus();
+  inp.setSelectionRange(inp.value.length, inp.value.length);
+}
+let _tabPressCount = 0;
+let _tabTimer = null;
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Tab') return;
+  const panel = document.getElementById('quiz-panel');
+  if (!panel || !panel.classList.contains('active')) return;
+  const inp = document.getElementById('quiz-answer-input');
+  if (!inp || inp.readOnly) return;
+  if (!quizState || quizState.lang !== 'ru') return;
+  e.preventDefault();
+  tabPressCount++;
+  if (tabTimer) clearTimeout(tabTimer);
+  tabTimer = setTimeout(function() {
+    if (tabPressCount === 1) insertArticle('un');
+    else insertArticle('une');
+    tabPressCount = 0;
+    tabTimer = null;
+  }, 280);
+}, true);
+
+function handleQuizKey(e) {
+  if(e.key==='Enter'){
+    e.preventDefault();
+    if(quizState){
+      if(quizState.answered){
+        if(document.getElementById('quiz-autoplay')?.checked) speakCurrentQuizWord();
+        nextWord();
+      } else {
+        submitAnswer();
+        if(document.getElementById('quiz-autoplay')?.checked) speakCurrentQuizWord();
+      }
+    }
+  }
+  if(quizState && quizState.answered && e.key==='ArrowRight'){e.preventDefault();nextWord();}
+}
+
+function submitAnswer() {
+  if(quizState.answered){nextWord();return;}
+  const input=document.getElementById('quiz-answer-input').value;
+  if(!input.trim()){revealAnswer();return;}
+  const current = quizState.words.find(x=>x.id===quizState.currentWordId) || quizState.words[0];
+  const _r=checkTranslation(input,current);
+  markAnswer(_r.correct,false,_r.typo);
+}
+
+
+function getQuizMetaLine(w){
+  const parts = [];
+  if (w && w.tr) parts.push('[' + w.tr + ']');
+  const allTr = getHomonymTranslations(w);
+  if (allTr) parts.push(allTr);
+  return parts.join(' · ');
+}
+
+function revealAnswer() {
+  if(quizState.answered) return;
+  markAnswer(false,true);
+}
+
+function markAnswer(isCorrect,revealed,typo) {
+  const w=quizState.words.find(x=>x.id===quizState.currentWordId) || quizState.words[0];
+  const btn=document.getElementById('quiz-word-btn');
+  btn.classList.remove('wrong','correct','revealed');
+  quizState.answered=true;
+  if(quizState.quizMode==='stack'){ quizState.stackDone=(quizState.stackDone||0)+1; if(quizState.stackDone>=quizState.stackLimit){setTimeout(()=>{if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;}showTimerEnd();},800);} }
+  if(quizState.timerExpired){ setTimeout(()=>showTimerEnd(), 800); }
+  const qInp=document.getElementById('quiz-answer-input');
+  qInp.setAttribute('readonly','readonly');
+  qInp.style.opacity='0.6';
+  document.getElementById('btn-reveal').style.display='none';
+  document.getElementById('btn-next').style.display='';
+  // collect homonym siblings (same display text)
+  const displayKey = normalize(quizState.lang==='fr' ? w.fr : w.ru);
+  const homonymIds = quizState.words
+    .filter(qw => normalize(quizState.lang==='fr' ? qw.fr : qw.ru) === displayKey)
+    .map(qw => qw.id);
+
+  if(revealed){
+    if(quizState.lang==='ru'&&btn.dataset.quizpos&&!btn.querySelector('.qpos')){
+      const pt=document.createElement('div');pt.className='qpos';
+      pt.style.cssText='font-size:var(--text-xs);font-weight:600;opacity:0.55;margin-top:4px';
+      pt.textContent=btn.dataset.quizpos;btn.appendChild(pt);}
+    btn.classList.add('revealed');
+    quizState.skipped++;
+    // show all homonym translations
+    const allTr = getHomonymTranslations(w);
+    document.getElementById('quiz-correct-answer').textContent = getQuizMetaLine(w);
+    homonymIds.forEach(id=>updateWordWeight(id,false));
+  } else if(isCorrect){
+    if(quizState.lang==='ru'&&btn.dataset.quizpos&&!btn.querySelector('.qpos')){
+      const pt=document.createElement('div');pt.className='qpos';
+      pt.style.cssText='font-size:var(--text-xs);font-weight:600;opacity:0.55;margin-top:4px';
+      pt.textContent=btn.dataset.quizpos;btn.appendChild(pt);}
+    btn.classList.add('correct');
+    quizState.correct++;
+    homonymIds.forEach(id=>updateWordWeight(id,true));
+    const ca=document.getElementById('quiz-correct-answer');
+    ca.textContent = getQuizMetaLine(w);
+    if(typo && quizState.lang==='ru'){
+      ca.textContent='⚠️ Правильно, но проверь написание: '+w.fr+' · '+getQuizMetaLine(w);
+      ca.style.color='var(--color-text-muted)';
+    }
+  } else {
+    if(quizState.lang==='ru'&&btn.dataset.quizpos&&!btn.querySelector('.qpos')){
+      const pt=document.createElement('div');pt.className='qpos';
+      pt.style.cssText='font-size:var(--text-xs);font-weight:600;opacity:0.55;margin-top:4px';
+      pt.textContent=btn.dataset.quizpos;btn.appendChild(pt);}
+    btn.classList.add('wrong');
+    quizState.wrong++;
+    const allTr = getHomonymTranslations(w);
+    document.getElementById('quiz-correct-answer').textContent = getQuizMetaLine(w);
+    homonymIds.forEach(id=>updateWordWeight(id,false));
+  }
+  // track seen
+  if(!quizState.seenWords.find(x=>x.id===w.id)) quizState.seenWords.push(w);
+  updateQuizProgress();
+  const remaining = getEligibleQuizWords();
+  if (!remaining.length) {
+    document.getElementById('btn-next').style.display = 'none';
+    qInp.blur();
+    setTimeout(()=>showPraiseCard(), 40);
+    return;
+  }
+  // keep keyboard open: re-focus input (readonly so user can't type until next word)
+  setTimeout(()=>{ document.getElementById('quiz-answer-input').focus(); },20);
+}
+
+function updateWordWeight(wordId,correct) {
+  let dbWord=null;
+  for(const l of db.lessons){const f=l.words.find(w=>w.id===wordId);if(f){dbWord=f;break;}}
+  if(!dbWord) return;
+  const streak=quizState.streak[wordId]||0;
+  let nextStreak = correct ? Math.max(0, streak) + 1 : Math.min(0, streak) - 1;
+  quizState.streak[wordId] = nextStreak;
+
+  const studyMode = document.getElementById('quiz-study-mode') && document.getElementById('quiz-study-mode').checked;
+  const cfg = db.settings || {};
+
+  if(correct){
+    if(nextStreak >= 5){
+      dbWord.weight = 2.0;
+    } else {
+      let mult;
+      if(studyMode){
+        mult = streak <= 0 ? (cfg.studyCorrect0 ?? 1.1) : streak === 1 ? (cfg.studyCorrect1 ?? 1.1) : (cfg.studyCorrect2 ?? 1.3);
+      } else {
+        mult = streak <= 0 ? (cfg.normCorrect0 ?? 1.2) : streak === 1 ? (cfg.normCorrect1 ?? 1.5) : (cfg.normCorrect2 ?? 2.0);
+      }
+      dbWord.weight = Math.max(0.01, Math.min(2.0, dbWord.weight * mult));
+    }
+  } else {
+    let mult;
+    if(studyMode){
+      mult = streak >= 0 ? (cfg.studyWrong0 ?? 1.0) : streak === -1 ? (cfg.studyWrong1 ?? 1.0) : (cfg.studyWrong2 ?? 0.95);
+    } else {
+      mult = streak >= 0 ? (cfg.normWrong0 ?? 0.9) : streak === -1 ? (cfg.normWrong1 ?? 0.8) : (cfg.normWrong2 ?? 0.3);
+    }
+    dbWord.weight = Math.max(0.01, Math.min(2.0, dbWord.weight * mult));
+  }
+
+  dbWord.lastSeen=Date.now();
+  dbWord.history=(dbWord.history||[]);
+  dbWord.history.push({ts:Date.now(),correct,weight:dbWord.weight});
+  if(dbWord.history.length>5) dbWord.history=dbWord.history.slice(-5);
+  save();
+}
+
+
+function promptWeightEdit(wordId, el) {
+  const cur = parseFloat(el.textContent);
+  const input = document.createElement('input');
+  input.type='number'; input.step='0.01'; input.min='0.01'; input.max='2';
+  input.value=cur.toFixed(2);
+  input.style.cssText='width:56px;font-size:var(--text-xs);font-weight:800;border:2px solid var(--duo-blue);border-radius:var(--radius-full);padding:1px 6px;text-align:center;background:var(--color-surface);color:var(--color-text);';
+  el.replaceWith(input);
+  input.focus(); input.select();
+  function commit(){
+    setWordWeightManual(wordId, input.value);
+    renderWords();
+  }
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter'){e.preventDefault();commit();} if(e.key==='Escape'){renderWords();} });
+}
+
+function setWordWeightManual(wordId, val) {
+  const v = parseFloat(val);
+  if(isNaN(v)) return;
+  for(const l of db.lessons){
+    const w=l.words.find(x=>x.id===wordId);
+    if(w){ w.weight=Math.max(0.01,Math.min(2.0,v)); save(); return; }
+  }
+}
+
+function nextWord() {
+  showQuizWord();
+}
+
+function stopQuiz() { if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;} showQuizStats(); }
+
+function showPraiseCard() {
+  recordQuizDailyStats(quizState);
+  const phrase = PRAISE_PHRASES[Math.floor(Math.random()*PRAISE_PHRASES.length)];
+  document.getElementById('quiz-stats-summary').innerHTML = `
+    <span class="stat-pill stat-pill-green">🎉 Все слова достигли порога</span>
+    <span class="stat-pill stat-pill-blue">✓ ${quizState.correct} правильно</span>
+    <span class="stat-pill stat-pill-red">✗ ${quizState.wrong+quizState.skipped} ошибок</span>
+  `;
+  document.getElementById('quiz-result-list').innerHTML = `
+    <div style="padding:var(--space-8);text-align:center;background:var(--duo-green-light);border:2px solid var(--duo-green);border-radius:var(--radius-xl);">
+      <div style="font-size:3rem;margin-bottom:var(--space-3)">🏆</div>
+      <div style="font-family:var(--font-display);font-weight:900;font-size:var(--text-xl);color:var(--duo-green-dark);margin-bottom:var(--space-3)">Серия завершена!</div>
+      <div style="font-size:var(--text-base);font-weight:700;color:var(--color-text);max-width:28ch;margin:0 auto">${phrase}</div>
+    </div>`;
+  document.getElementById('quiz-game').style.display='none';
+  document.getElementById('quiz-stats').style.display='block';
+}
+
+function showQuizStats() {
+  recordQuizDailyStats(quizState);
+  const s=quizState||{correct:0,wrong:0,skipped:0,seenWords:[]};
+  const total=s.correct+s.wrong+s.skipped;
+
+  document.getElementById('quiz-stats-summary').innerHTML=`
+    <span class="stat-pill stat-pill-blue">📊 ${total} слов</span>
+    <span class="stat-pill stat-pill-green">✓ ${s.correct} правильно</span>
+    <span class="stat-pill stat-pill-red">✗ ${s.wrong+s.skipped} ошибок</span>
+  `;
+
+  // build word list from seen words with current weights from db
+  const seen=(s.seenWords||[]).map(qw=>{
+    let dbW=null;
+    for(const l of db.lessons){const f=l.words.find(w=>w.id===qw.id);if(f){dbW=f;break;}}
+    return dbW||qw;
+  });
+  // sort by weight desc
+  seen.sort((a,b)=>b.weight-a.weight);
+
+  document.getElementById('quiz-result-list').innerHTML = seen.length
+    ? seen.map(w=>{
+        const wc=w.weight>=2.0?'weight-mastered':w.weight>=1.0?'weight-good':'weight-bad';
+        const col=w.weight>=1.0?'var(--duo-green-dark)':'var(--duo-red-dark)';
+        return `<div class="quiz-result-row">
+          <div>
+            <span class="word-fr" style="color:${col}">${esc(w.fr)}</span>
+            ${w.tr?`<span style="font-size:var(--text-xs);color:var(--color-text-muted);margin-left:6px">${esc(w.tr)}</span>`:''}
+          </div>
+          <span class="word-ru">${esc(w.ru)}</span>
+          <span class="word-weight ${wc}">${w.weight.toFixed(2)}</span>
+        </div>`;
+      }).join('')
+    : '<div style="color:var(--color-text-muted);font-size:var(--text-sm);padding:var(--space-4)">Нет данных</div>';
+
+  document.getElementById('quiz-game').style.display='none';
+  document.getElementById('quiz-stats').style.display='block';
+}
+
+function speakCurrentQuizWord() {
+  if (!quizState) return;
+  const w = quizState.words.find(x=>x.id===quizState.currentWordId) || quizState.words[0];
+  if (!w) return;
+  // always speak French word regardless of quiz direction
+  speakWord(w.fr);
+}
+
+// ===== EXPORT / IMPORT =====
+function exportData() {
+  const cloned = JSON.parse(JSON.stringify(db));
+  for (const l of cloned.lessons) {
+    for (const w of l.words) {
+      if (typeof w.weight === 'number') w.weight = Math.round(w.weight * 100) / 100;
+      if (Array.isArray(w.history)) {
+        w.history = w.history.map(h => ({...h, weight: typeof h.weight === 'number' ? Math.round(h.weight * 100) / 100 : h.weight}));
+      }
+    }
+  }
+  const blob=new Blob([JSON.stringify(cloned,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`vocabulaire-${new Date().toISOString().slice(0,10)}.json`; a.click();
+  URL.revokeObjectURL(url); showToast('Данные сохранены в файл ✓');
+}
+
+function importData(event) {
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const parsed=JSON.parse(e.target.result);
+      if(!parsed.lessons||!Array.isArray(parsed.lessons)){showToast('Неверный формат файла');return;}
+      // confirm blocked in iframe — proceed directly
+      db=parsed; if(!db.dailyStats||typeof db.dailyStats!=='object') db.dailyStats={}; save();
+      showView('lessons'); showToast(`Загружено: ${db.lessons.length} уроков ✓`);
+    }catch(err){showToast('Ошибка чтения файла');}
+  };
+  reader.readAsText(file); event.target.value='';
+}
+
+// ===== UTILS =====
+
+function buildPosSelect(elemId, current) {
+  const vals = ["", "n.m.", "n.f.", "adj.", "adj.m.", "adj.f.", "v.", "v.tr.", "v.intr.", "v.pron.", "adv.", "prép.", "conj.", "conj.coord.", "conj.subord.", "interj.", "pron.", "art.déf.", "art.ind.", "adj.num."];
+  const labs = ["— не указано —", "n.m. — сущ. муж.", "n.f. — сущ. жен.", "adj. — прилагательное", "adj.m. — прил. муж.", "adj.f. — прил. жен.", "v. — глагол", "v.tr. — глагол переходный", "v.intr. — глагол непереходный", "v.pron. — глагол возвратный", "adv. — наречие", "prép. — предлог", "conj. — союз", "conj.coord. — союз сочинит.", "conj.subord. — союз подчинит.", "interj. — междометие", "pron. — местоимение", "art.déf. — артикль опред.", "art.ind. — артикль неопред.", "adj.num. — числительное"];
+  let h = '<select class="word-input" id="'+elemId+'" style="width:100%;font-size:var(--text-sm)">';
+  for(let i=0;i<vals.length;i++){
+    h+='<option value="'+vals[i]+'"'+(vals[i]===current?' selected':'')+'>'+labs[i]+'</option>';
+  }
+  h+='</select>';
+  return h;
+}
+function splitTranslations(ru){
+  return ru.split(/[;,\/]/).map(t=>t.trim()).filter(Boolean);
+}
+function renderRuCell(ru){
+  const parts=splitTranslations(ru);
+  if(parts.length<=1) return esc(ru);
+  return parts.map((p,i)=>`<span style="display:block;${i>0?'color:var(--color-text-muted);font-size:0.97em':''}">${esc(p)}</span>`).join('');
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function openModal(id){document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+function toggleTheme(){
+  const h=document.documentElement;
+  h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)closeModal(el.id);});
+});
+
+load();
+document.addEventListener('DOMContentLoaded', function(){
+  showView('folders');
+  var inp = document.getElementById('csv-import-input');
+  if(inp) inp.addEventListener('change', importLessonCSV);
+});
+// fallback if DOM already ready when script runs
+if(document.readyState === 'complete' || document.readyState === 'interactive'){
+  showView('folders');
+  var inp = document.getElementById('csv-import-input');
+  if(inp) inp.addEventListener('change', importLessonCSV);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>speechSynthesis.getVoices());}
+
+function exportLessonCSV() {
+  const l = db.lessons.find(x => x.id === currentLessonId);
+  if (!l) return;
+  const rows = [['французское', 'часть речи', 'транскрипция', 'перевод', 'вес']];
+  l.words.forEach(w => {
+    rows.push([w.fr, w.pos||'', w.tr||'', w.ru, (w.weight!==undefined?w.weight:1.0)]);
+  });
+  const csv = rows.map(r => r.map(cell => {
+    const c = String(cell).replace(/"/g, '""');
+    return /[",\n\r]/.test(c) ? '"'+c+'"' : c;
+  }).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (l.name||'урок')+'.csv';
+  a.click();
+}
+
+function openCsvImportModal() {
+  document.getElementById('csv-import-choice').style.display = 'block';
+  document.getElementById('csv-import-text-area').style.display = 'none';
+  document.getElementById('modal-csv-import').classList.add('active');
+}
+
+function csvImportChooseFile() {
+  closeModal('modal-csv-import');
+  document.getElementById('csv-import-input').click();
+}
+
+function csvImportChooseText() {
+  document.getElementById('csv-import-choice').style.display = 'none';
+  document.getElementById('csv-import-text-area').style.display = 'flex';
+  setTimeout(() => document.getElementById('csv-import-textarea').focus(), 50);
+}
+
+function csvImportBackToChoice() {
+  document.getElementById('csv-import-choice').style.display = 'block';
+  document.getElementById('csv-import-text-area').style.display = 'none';
+}
+
+function csvImportFromText() {
+  const text = document.getElementById('csv-import-textarea').value.trim();
+  if (!text) { showToast('Поле пустое'); return; }
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) { showToast('Нет данных для импорта'); return; }
+  const l = db.lessons.find(x => x.id === currentLessonId);
+  if (!l) return;
+  let added = 0, skipped = 0;
+  const first = lines[0].toLowerCase();
+  const startIdx = (first.includes('французск') || first.includes('fr') || first.includes('слово')) ? 1 : 0;
+  for (let i = startIdx; i < lines.length; i++) {
+    const cols = lines[i].includes('\t') ? lines[i].split('\t') : parseCSVLine(lines[i]);
+    const fr = (cols[0]||'').trim();
+    const pos = (cols[1]||'').trim();
+    const tr  = (cols[2]||'').trim();
+    const ru  = (cols[3]||'').trim();
+    const weightRaw = parseFloat((cols[4]||'').trim());
+    const weight = (!isNaN(weightRaw) && weightRaw > 0) ? Math.min(2.0, Math.max(0.01, weightRaw)) : 1.0;
+    if (!fr || !ru) { skipped++; continue; }
+    l.words.push({id:db.nextWordId++, fr, pos, tr, ru, weight, streak:0, history:[], lastSeen:null});
+    added++;
+  }
+  save();
+  openLesson(currentLessonId);
+  document.getElementById('csv-import-textarea').value = '';
+  closeModal('modal-csv-import');
+  showToast(`Импортировано: ${added} слов${skipped ? ', пропущено: '+skipped : ''}`);
+}
+
+function importLessonCSV(event) {
+  const file = (event && event.target ? event.target : document.getElementById('csv-import-input')).files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result.replace(/^\uFEFF/,'');
+    const lines = text.split(/\r?\n/).filter(l => l.trim());
+    if (!lines.length) { showToast('Файл пустой'); return; }
+    const l = db.lessons.find(x => x.id === currentLessonId);
+    if (!l) return;
+    let added = 0, skipped = 0;
+    // detect if first row is header
+    const first = lines[0].toLowerCase();
+    const startIdx = (first.includes('французск') || first.includes('fr') || first.includes('слово')) ? 1 : 0;
+    for (let i = startIdx; i < lines.length; i++) {
+      const cols = parseCSVLine(lines[i]);
+      const fr = (cols[0]||'').trim();
+      const pos = (cols[1]||'').trim();
+      const tr  = (cols[2]||'').trim();
+      const ru  = (cols[3]||'').trim();
+      const weightRaw = parseFloat((cols[4]||'').trim());
+      const weight = (!isNaN(weightRaw) && weightRaw > 0) ? Math.min(2.0, Math.max(0.01, weightRaw)) : 1.0;
+      if (!fr || !ru) { skipped++; continue; }
+      l.words.push({id:db.nextWordId++, fr, pos, tr, ru, weight, streak:0, history:[], lastSeen:null});
+      added++;
+    }
+    save();
+    openLesson(currentLessonId);
+    var inp2 = document.getElementById('csv-import-input'); if(inp2) inp2.value='';
+    showToast(`Импортировано: ${added} слов${skipped ? ', пропущено: '+skipped : ''}`);
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) {
+      if (ch === '"' && line[i+1] === '"') { cur += '"'; i++; }
+      else if (ch === '"') inQ = false;
+      else cur += ch;
+    } else {
+      if (ch === '"') inQ = true;
+      else if (ch === ',') { result.push(cur); cur = ''; }
+      else cur += ch;
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+</script>
+
+  <!-- Info Modal -->
+  <div id="info-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:var(--space-4)" onclick="if(event.target===this)closeInfoModal()">
+    <div style="background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-6);max-width:600px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto">
+      <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4)">ℹ️ Справка</h3>
+
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-2);color:var(--color-primary)">📋 Промпт для составления словаря с ИИ</div>
+        <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3)">Приложите текст и отправьте этот промпт ИИ-ассистенту — он подготовит CSV-файл, который можно импортировать в урок.</p>
+        <pre id="ai-prompt-text" style="background:var(--color-surface-2);border:2px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4);font-size:var(--text-xs);line-height:1.6;white-space:pre-wrap;word-break:break-word;font-family:var(--font-body);color:var(--color-text);margin-bottom:var(--space-2)">Извлеки из приложенного текста лексику и на ее основе подготовь словарь для человека, изучающего язык. Словарь нужен в виде файла в формате CSV с пятью столбцами, оформленного по образцу:
+французское	часть речи	транскрипция	перевод	вес
+Parler	v.	paʁ.le	Говорить	1
+
+Корректные варианты записи частей речи: n.m., n.f., adj., adj.m., adj.f., v., v.tr., v.intr., v.pron., adv., prép., conj., interj., pron., art.déf., art.ind., adj.num. 
+Каждое существительное запиши вместе с неопределенным артиклем в соответствии с его грамматическим родом, например, "une voiture". Если встречается слово с определенным артиклем, замени его на неопределенный. Транскрипции нужны корректные именно для французского языка в соответствии с IPA. Вес каждого слова = 1 по умолчанию. В файле CSV в качестве разделителя используй запятую. Файл должен содержать заголовок с названием столбцов. Не включай в словарь такие отдельные слова, как артикли и местоимения. Пришли не просто текст, а именно CSV файл, доступный к скачиванию.</pre>
+        <button id="copy-prompt-btn" onclick="copyAiPrompt()" style="display:flex;align-items:center;gap:6px;font-size:var(--text-xs);font-weight:700;font-family:var(--font-display);background:var(--color-primary);color:#fff;border:none;border-radius:var(--radius-full);padding:var(--space-2) var(--space-4);cursor:pointer;transition:background 0.2s">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copy-prompt-label">Скопировать промпт</span>
+        </button>
+      </div>
+
+      <div style="border-top:2px solid var(--color-divider);padding-top:var(--space-4);margin-bottom:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--color-primary)">📖 Как пользоваться приложением</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div><strong style="color:var(--color-text)">Уроки</strong> — создавайте тематические уроки и добавляйте слова вручную или импортируйте из CSV.</div>
+          <div><strong style="color:var(--color-text)">Вес слова</strong> — от 0.01 до 2.0. Слова с низким весом (трудные) попадаются чаще. Порог «сложное» &lt; 0.5, «освоенное» &gt; 1.5.</div>
+          <div><strong style="color:var(--color-text)">Тренировка</strong> — нажмите «Вперед!» для тренировки по всем урокам или ▶ внутри урока. Правильный ответ повышает вес, ошибка — снижает.</div>
+          <div><strong style="color:var(--color-text)">Импорт CSV</strong> — формат: французское, часть речи, транскрипция, перевод, вес. Используйте промпт выше для генерации файла с помощью ИИ.</div>
+          <div><strong style="color:var(--color-text)">Сохранение</strong> — данные хранятся в браузере. «Сохранить» / «Загрузить» для резервной копии в JSON.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" onclick="closeInfoModal()">Понятно</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Settings Modal -->
+<div id="settings-modal" style="display:none;position:fixed;inset:0;z-index:200;background:oklch(0 0 0/0.5);align-items:center;justify-content:center;padding:var(--space-4)" onclick="if(event.target===this)closeSettingsModal()">
+  <div style="background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-6);max-width:540px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto">
+    <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-2)">⚙️ Настройки множителей весов</h3>
+    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-4)">Три значения для каждого случая: стрик 0, стрик 1 (или −1), стрик 2+ (или −2+).</p>
+    <div style="display:grid;gap:var(--space-3)">
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--duo-green-dark)">✅ Правильно — обычный режим</div>
+        <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 0:</label>
+          <input id="s-normCorrect0" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 1:</label>
+          <input id="s-normCorrect1" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 2+:</label>
+          <input id="s-normCorrect2" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+        </div>
+      </div>
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--duo-red-dark)">❌ Неправильно — обычный режим</div>
+        <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 0:</label>
+          <input id="s-normWrong0" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик −1:</label>
+          <input id="s-normWrong1" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик −2+:</label>
+          <input id="s-normWrong2" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+        </div>
+      </div>
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--duo-blue-dark)">📖 Правильно — режим изучения</div>
+        <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 0:</label>
+          <input id="s-studyCorrect0" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 1:</label>
+          <input id="s-studyCorrect1" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 2+:</label>
+          <input id="s-studyCorrect2" type="number" step="0.01" min="0.1" max="5" style="width:74px" class="quiz-input">
+        </div>
+      </div>
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--color-warning)">📖 Неправильно — режим изучения</div>
+        <div style="display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик 0:</label>
+          <input id="s-studyWrong0" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик −1:</label>
+          <input id="s-studyWrong1" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+          <label style="font-size:var(--text-xs);color:var(--color-text-muted);min-width:56px">Стрик −2+:</label>
+          <input id="s-studyWrong2" type="number" step="0.01" min="0.01" max="2" style="width:74px" class="quiz-input">
+        </div>
+      </div>
+    </div>
+      <div style="background:var(--color-surface-2);border-radius:var(--radius-lg);padding:var(--space-4)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-3);color:var(--color-text)">🏷 Пороги классификации слов</div>
+        <div style="display:flex;gap:var(--space-4);align-items:center;flex-wrap:wrap">
+          <div>
+            <label style="font-size:var(--text-xs);color:var(--color-text-muted);display:block;margin-bottom:4px">⚠️ Сложное — вес ниже:</label>
+            <input id="s-threshHard" type="number" step="0.05" min="0.01" max="1.99" style="width:90px" class="quiz-input">
+          </div>
+          <div>
+            <label style="font-size:var(--text-xs);color:var(--color-text-muted);display:block;margin-bottom:4px">★ Освоено — вес выше:</label>
+            <input id="s-threshMastered" type="number" step="0.05" min="0.01" max="2" style="width:90px" class="quiz-input">
+          </div>
+        </div>
+        <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)">Влияет на значки в уроках и цвет весов в таблице слов</div>
+      </div>
+    <div style="display:flex;gap:var(--space-2);justify-content:flex-end;margin-top:var(--space-5)">
+      <button class="btn btn-ghost" onclick="resetSettings()">↩ По умолчанию</button>
+      <button class="btn btn-secondary" onclick="closeSettingsModal()">Отмена</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const WEIGHT_DEFAULTS = {
+  normCorrect0:1.2, normCorrect1:1.5, normCorrect2:2.0,
+  normWrong0:0.9,   normWrong1:0.8,   normWrong2:0.3,
+  studyCorrect0:1.1, studyCorrect1:1.1, studyCorrect2:1.3,
+  studyWrong0:1.0,   studyWrong1:1.0,   studyWrong2:0.95,
+  threshHard:0.5, threshMastered:1.5
+};
+function getThresh(key, def){ return (db.settings&&db.settings[key]!==undefined)?db.settings[key]:def; }
+
+
+function openSettingsModal() {
+  const cfg = db.settings || {};
+  for(const key of Object.keys(WEIGHT_DEFAULTS)){
+    const el = document.getElementById('s-'+key);
+    if(el) el.value = (cfg[key] !== undefined ? cfg[key] : WEIGHT_DEFAULTS[key]).toFixed(2);
+  }
+  const m = document.getElementById('settings-modal');
+  m.style.display = 'flex';
+}
+
+function closeSettingsModal() {
+  document.getElementById('settings-modal').style.display = 'none';
+}
+
+function saveSettings() {
+  if(!db.settings) db.settings = {};
+  for(const key of Object.keys(WEIGHT_DEFAULTS)){
+    const el = document.getElementById('s-'+key);
+    if(el){ const v = parseFloat(el.value); if(!isNaN(v)) db.settings[key] = v; }
+  }
+  save();
+  closeSettingsModal();
+}
+
+function resetSettings() {
+  if(confirm('Сбросить все множители к значениям по умолчанию?')){
+    db.settings = {...WEIGHT_DEFAULTS};
+    save();
+    openSettingsModal();
+  }
+}
+</script>
+
+  <script>
+  function openInfoModal() {
+    document.getElementById('info-modal').style.display = 'flex';
+  }
+  function closeInfoModal() {
+    document.getElementById('info-modal').style.display = 'none';
+  }
+  function copyAiPrompt() {
+    var text = document.getElementById('ai-prompt-text').textContent;
+    var label = document.getElementById('copy-prompt-label');
+    var btn = document.getElementById('copy-prompt-btn');
+    function onSuccess() {
+      label.textContent = '✓ Скопировано!';
+      btn.style.background = '#437a22';
+      setTimeout(function() {
+        label.textContent = 'Скопировать промпт';
+        btn.style.background = '';
+      }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onSuccess).catch(function() { fallbackCopy(text, onSuccess); });
+    } else {
+      fallbackCopy(text, onSuccess);
+    }
+  }
+  function fallbackCopy(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); cb(); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+  </script>
+</body>
+</html>
