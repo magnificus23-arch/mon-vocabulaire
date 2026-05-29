@@ -2418,14 +2418,14 @@ function resetSettings() {
     var text = document.getElementById('ai-prompt-text').textContent;
     var label = document.getElementById('copy-prompt-label');
     var btn = document.getElementById('copy-prompt-btn');
-    function onSuccess() {
-      label.textContent = '✓ Скопировано!';
-      btn.style.background = '#437a22';
-      setTimeout(function() {
-        label.textContent = 'Скопировать промпт';
-        btn.style.background = '';
-      }, 2000);
-    }
+function onSuccess() {
+  label.textContent = "Скопировано!";
+  btn.style.background = "#437a22";
+  setTimeout(function() {
+    label.textContent = "Скопировать промпт";
+    btn.style.background = "var(--color-primary)";
+  }, 2000);
+}
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(onSuccess).catch(function() { fallbackCopy(text, onSuccess); });
     } else {
