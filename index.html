@@ -1124,7 +1124,13 @@ function renderLessons() {
   let _ls = currentFolderLetter==='__all__'
     ? [...db.lessons]
     : db.lessons.filter(l=>l.folder===currentFolderLetter);
-  _ls.sort((a,b)=>lessonSortKey(a).localeCompare(lessonSortKey(b)));
+  _ls.sort((a,b)=>{
+  if (lessonsSort === 'pct') {
+    const diff = getLessonPct(b) - getLessonPct(a);
+    if (diff !== 0) return diff;
+  }
+  return lessonSortKey(a).localeCompare(lessonSortKey(b));
+});
 
   const backBtn = `<div class='toolbar-row'>
     ${currentFolderLetter!=='__all__' ? `<button class='btn btn-primary btn-sm' onclick='openCreateLesson()'>+ Новый урок</button>
