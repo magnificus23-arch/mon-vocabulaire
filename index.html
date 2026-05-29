@@ -400,22 +400,33 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
     <span class="logo-text">vocabulaire</span>
   </div>
   <div class="header-actions">
-    <button class="allons-btn" onclick="quizFixedLessonIds=null;openQuizSetup()">Вперед! →</button>
-    <button class="btn btn-secondary btn-sm" onclick="exportData()">
+  <button class="btn btn-ghost btn-icon" onclick="toggleHeaderMenu()" id="hamburger-btn" title="Меню">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div id="header-menu" style="display:none;position:absolute;top:100%;right:var(--space-4);background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);padding:var(--space-2);min-width:180px;z-index:200;display:none;flex-direction:column;gap:var(--space-1)">
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="quizFixedLessonIds=null;openQuizSetup();toggleHeaderMenu()">🎯 Allons-y!</button>
+    <button class="btn btn-ghost btn-sm cloud-btn" style="justify-content:flex-start" onclick="syncToCloud();toggleHeaderMenu()">☁️ В облако</button>
+    <button class="btn btn-ghost btn-sm cloud-btn" style="justify-content:flex-start" onclick="syncFromCloud();toggleHeaderMenu()">⬇️ Из облака</button>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="exportData();toggleHeaderMenu()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Сохранить
+      Сохранить JSON
     </button>
-    <button class="btn btn-secondary btn-sm cloud-btn" onclick="syncToCloud()">☁️ В облако</button>
-<button class="btn btn-secondary btn-sm cloud-btn" onclick="syncFromCloud()">⬇️ Из облака</button>
-    <label class="btn btn-secondary btn-sm" style="cursor:pointer">
+    <label class="btn btn-ghost btn-sm" style="justify-content:flex-start;cursor:pointer">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Загрузить
+      Загрузить JSON
       <input type="file" accept=".json" onchange="importData(event)" style="display:none">
     </label>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Тема">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
+    <div style="height:1px;background:var(--color-divider);margin:var(--space-1) 0"></div>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="showView('allwords');toggleHeaderMenu()">📋 Все слова</button>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="showView('stats');toggleHeaderMenu()">📊 Статистика</button>
+    <div style="height:1px;background:var(--color-divider);margin:var(--space-1) 0"></div>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="openInfoModal();toggleHeaderMenu()">ℹ️ Инфо</button>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="openSettingsModal();toggleHeaderMenu()">⚙️ Настройки</button>
+    <button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="toggleTheme();toggleHeaderMenu()">🌙 Тема</button>
   </div>
+</div>
 </header>
 
 <main class="main">
@@ -2512,6 +2523,20 @@ async function checkPassword() {
   }
   setTimeout(() => document.getElementById("lock-input").focus(), 100);
 })();
+    function toggleHeaderMenu() {
+  const menu = document.getElementById("header-menu");
+  const isOpen = menu.style.display === "flex";
+  menu.style.display = isOpen ? "none" : "flex";
+}
+
+// Закрыть меню при клике вне него
+document.addEventListener("click", function(e) {
+  const menu = document.getElementById("header-menu");
+  const btn = document.getElementById("hamburger-btn");
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});
   </script>
 </body>
 </html>
