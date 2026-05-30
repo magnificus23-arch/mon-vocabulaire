@@ -737,6 +737,7 @@ chat,n.m.,ша,кот"></textarea>
           <label><input type="radio" name="quiz-mode" value="flow" checked onchange="onQuizModeChange()"> 🌊 Поток</label>
           <label><input type="radio" name="quiz-mode" value="timer" onchange="onQuizModeChange()"> ⏱ Таймер</label>
           <label><input type="radio" name="quiz-mode" value="stack" onchange="onQuizModeChange()"> 📦 Стопка слов</label>
+          <label><input type="radio" name="quiz-mode" value="test" onchange="onQuizModeChange()"> 🏁test!</label>
         </div>
       </div>
       <div id="quiz-mode-extra" style="display:none;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5)">
@@ -1543,14 +1544,25 @@ function onQuizModeChange() {
   const extra = document.getElementById('quiz-mode-extra');
   const inp = document.getElementById('quiz-mode-value');
   const unit = document.getElementById('quiz-mode-unit');
-  if(mode === 'timer'){
-    extra.style.display='flex'; inp.value=60; inp.min=30; inp.step=30; inp.placeholder='сек';
-    unit.textContent='сек. (шаг 30)';
-  } else if(mode === 'stack'){
-    extra.style.display='flex'; inp.value=30; inp.min=1; inp.placeholder='слов';
-    unit.textContent='слов';
+
+  if (mode === 'timer') {
+    extra.style.display = 'flex';
+    inp.value = 60;
+    inp.min = 30;
+    inp.step = 30;
+    inp.placeholder = '';
+    unit.textContent = 'сек. (мин. 30)';
+  } else if (mode === 'stack') {
+    extra.style.display = 'flex';
+    inp.value = 30;
+    inp.min = 1;
+    inp.step = 1;
+    inp.placeholder = '';
+    unit.textContent = 'слов';
   } else {
-    extra.style.display='none';
+    extra.style.display = 'none';
+    inp.value = '';
+    inp.placeholder = '';
   }
 }
 
@@ -1591,9 +1603,20 @@ function showTimerEnd() {
   recordQuizDailyStats(quizState);
   const phrase = PRAISE_PHRASES[Math.floor(Math.random()*PRAISE_PHRASES.length)];
   const mode = quizState.quizMode;
-  const isTimer = mode==='timer';
-  const title = isTimer ? '⏱ Время вышло!' : '📦 Стопка завершена!';
-  const sub = isTimer ? 'Квиз остановлен по таймеру' : `Пройдено ${quizState.stackDone||0} из ${quizState.stackLimit} слов`;
+  const isTimer = mode === 'timer';
+  const isTest = mode === 'test';
+
+  const title = isTimer
+    ? 'Temps écoulé !'
+    : isTest
+      ? 'Test terminé !'
+      : 'Pile terminée !';
+
+  const sub = isTimer
+    ? `${quizState.stackDone || 0} / ${quizState.stackLimit || '∞'}`
+    : isTest
+      ? `${quizState.correct + quizState.wrong + quizState.skipped} / ${quizState.words.length}`
+      : `${quizState.stackDone || 0} / ${quizState.stackLimit}`;
   document.getElementById('quiz-stats-summary').innerHTML = `
     <span class="stat-pill stat-pill-blue">${sub}</span>
     <span class="stat-pill stat-pill-green">✓ ${quizState.correct} правильно</span>
@@ -1670,7 +1693,18 @@ function pickWeightedWord(words) {
 function showQuizWord() {
   const eligible = getEligibleQuizWords();
   if (!eligible.length) { showPraiseCard(); return; }
-  const w = pickWeightedWord(eligible);
+    let w;
+
+  if (quizState.quizMode === 'test') {
+    const unseen = eligible.filter(x => !quizState.seenWords.find(s => s.id === x.id));
+    if (!unseen.length) {
+      showPraiseCard();
+      return;
+    }
+    w = unseen[Math.floor(Math.random() * unseen.length)];
+  } else {
+    w = pickWeightedWord(eligible);
+  }
   quizState.currentWordId = w.id;
   const btn=document.getElementById('quiz-word-btn');
   btn.className='quiz-word-btn';
@@ -1705,6 +1739,20 @@ function showQuizWord() {
 }
 
 function updateQuizProgress() {
+  const totalAnswered = quizState.correct + quizState.wrong + quizState.skipped;
+  const totalAll = quizState.words.length;
+
+  if (quizState.quizMode === 'test') {
+    document.getElementById('quiz-prog-text').textContent = `${Math.min(totalAnswered + 1, totalAll)} / ${totalAll}`;
+  } else {
+    document.getElementById('quiz-prog-text').textContent = totalAnswered + 1;
+  }
+
+  document.getElementById('quiz-score-text').textContent = `${quizState.correct} / ${quizState.wrong + quizState.skipped}`;
+
+  const pct = totalAll > 0 ? Math.round((totalAnswered / totalAll) * 100) : 0;
+  document.getElementById('quiz-progress-fill').style.width = pct + '%';
+}
   const total=quizState.correct+quizState.wrong+quizState.skipped;
   document.getElementById('quiz-prog-text').textContent=`Слово ${total+1}`;
   document.getElementById('quiz-score-text').textContent=`✓ ${quizState.correct} · ✗ ${quizState.wrong+quizState.skipped}`;
