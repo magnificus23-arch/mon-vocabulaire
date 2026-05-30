@@ -1753,13 +1753,6 @@ function updateQuizProgress() {
   const pct = totalAll > 0 ? Math.round((totalAnswered / totalAll) * 100) : 0;
   document.getElementById('quiz-progress-fill').style.width = pct + '%';
 }
-  const total=quizState.correct+quizState.wrong+quizState.skipped;
-  document.getElementById('quiz-prog-text').textContent=`Слово ${total+1}`;
-  document.getElementById('quiz-score-text').textContent=`✓ ${quizState.correct} · ✗ ${quizState.wrong+quizState.skipped}`;
-  // fill based on correct ratio
-  const pct = total > 0 ? Math.round(quizState.correct/total*100) : 0;
-  document.getElementById('quiz-progress-fill').style.width=pct+'%';
-}
 
 function normalize(s){return String(s||'').trim().toLowerCase().replace(/['’`]/g,"'").replace(/ё/g,'е').replace(/[.,!?;:'"«»]/g,'').replace(/\s+/g,' ');}
 function stripAccents(s){
