@@ -1662,6 +1662,7 @@ function startQuiz() {
   document.getElementById('quiz-setup').style.display='none';
   document.getElementById('quiz-game').style.display='block';
   showQuizWord();
+  updateQuizProgress();
   if(quizMode==='timer') startQuizTimer(timerSec);
 }
 
@@ -1739,19 +1740,46 @@ function showQuizWord() {
 }
 
 function updateQuizProgress() {
-  const totalAnswered = quizState.correct + quizState.wrong + quizState.skipped;
-  const totalAll = quizState.words.length;
+  if (!quizState) return;
 
-  if (quizState.quizMode === 'test') {
-    document.getElementById('quiz-prog-text').textContent = `${Math.min(totalAnswered + 1, totalAll)} / ${totalAll}`;
+  const totalAnswered = quizState.correct + quizState.wrong + quizState.skipped;
+  const mode = quizState.quizMode;
+  const hasWeightLimit = quizState.excludeAbove < 999;
+
+  // определяем, нужен ли прогрессбар вообще
+  const showBar = mode === 'stack' || mode === 'test' || hasWeightLimit;
+
+  const bar = document.getElementById('quiz-progress-bar');
+  const fill = document.getElementById('quiz-progress-fill');
+  const prog = document.getElementById('quiz-prog-text');
+
+  if (!showBar) {
+    // поток/таймер без ограничения — просто счётчик слов, бар скрыт
+    if (bar) bar.style.display = 'none';
+    if (fill) fill.style.width = '0%';
+    prog.textContent = totalAnswered + 1;
   } else {
-    document.getElementById('quiz-prog-text').textContent = totalAnswered + 1;
+    if (bar) bar.style.display = '';
+
+    let total;
+    if (mode === 'stack') {
+      total = quizState.stackLimit;
+    } else if (mode === 'test') {
+      total = quizState.words.length;
+    } else {
+      // flow/timer с ограничением по весу — знаменатель меняется в процессе
+      const eligible = getEligibleQuizWords();
+      total = (eligible ? eligible.length : 0) + totalAnswered;
+    }
+
+    total = Math.max(total, 1);
+    const pct = Math.round((totalAnswered / total) * 100);
+    if (fill) fill.style.width = pct + '%';
+    prog.textContent = `${totalAnswered + 1} / ${total}`;
   }
 
-  document.getElementById('quiz-score-text').textContent = `${quizState.correct} / ${quizState.wrong + quizState.skipped}`;
-
-  const pct = totalAll > 0 ? Math.round((totalAnswered / totalAll) * 100) : 0;
-  document.getElementById('quiz-progress-fill').style.width = pct + '%';
+  document.getElementById('quiz-score-text').textContent =
+    `${quizState.correct} / ${quizState.wrong + quizState.skipped}`;
 }
 
 function normalize(s){return String(s||'').trim().toLowerCase().replace(/['’`]/g,"'").replace(/ё/g,'е').replace(/[.,!?;:'"«»]/g,'').replace(/\s+/g,' ');}
