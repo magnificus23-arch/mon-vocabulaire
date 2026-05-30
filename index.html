@@ -569,6 +569,9 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Экспорт CSV
         </button>
+        <button class="btn btn-ghost btn-sm" onclick="openDuplicatesModal()" title="Удалить дубли">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/></svg>
+</button>
       </div>
     </div>
 
@@ -641,7 +644,24 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
   </div>
 
   <div style="text-align:right;padding:var(--space-4) var(--space-6) var(--space-2);color:var(--color-text-faint);font-size:var(--text-xs);font-weight:700;letter-spacing:0.04em">@magnificus23</div>
-<!-- CSV Import Modal -->
+<!-- Duplicates Modal -->
+<div class="modal-overlay" id="modal-duplicates">
+  <div class="modal" style="max-width:560px;width:100%">
+    <h3>Дубли в уроке</h3>
+    <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-4)">
+      Французские слова, которые уже есть в других уроках. Снимите галочку, если хотите оставить слово.
+    </p>
+    <div id="dup-list" style="display:flex;flex-direction:column;gap:var(--space-2);max-height:360px;overflow-y:auto;margin-bottom:var(--space-4)"></div>
+    <p id="dup-none" style="display:none;color:var(--color-text-muted);font-size:var(--text-sm);text-align:center;padding:var(--space-8)">
+      🎉 Дублей не найдено!
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-duplicates')">Закрыть</button>
+      <button class="btn btn-danger" id="btn-delete-dups" onclick="deleteCheckedDuplicates()">Удалить отмеченные</button>
+    </div>
+  </div>
+</div>
+  <!-- CSV Import Modal -->
 <div class="modal-overlay" id="modal-csv-import">
   <div class="modal" style="max-width:480px;width:100%">
     <h3>Импорт CSV</h3>
@@ -1513,7 +1533,81 @@ function openQuizSetup() {
   document.getElementById('quiz-panel').classList.add('active');
   document.getElementById('quiz-backdrop').style.display='block';
 }
+function openDuplicatesModal() {
+  if (!currentLessonId) return;
+  const lesson = db.lessons.find(l => l.id === currentLessonId);
+  if (!lesson) return;
 
+  // собираем все слова из других уроков: fr → [{ru, lessonNum, lessonName}]
+  const otherMap = {};
+  for (const l of db.lessons) {
+    if (l.id === currentLessonId) continue;
+    for (const w of l.words) {
+      const key = normalize(w.fr);
+      if (!otherMap[key]) otherMap[key] = [];
+      otherMap[key].push({ ru: w.ru, tr: w.tr, lessonNum: l.num || l.id, lessonName: l.name });
+    }
+  }
+
+  // ищем дубли в текущем уроке
+  const dups = [];
+  for (const w of lesson.words) {
+    const key = normalize(w.fr);
+    if (otherMap[key]) {
+      dups.push({ word: w, others: otherMap[key] });
+    }
+  }
+
+  const list = document.getElementById('dup-list');
+  const none = document.getElementById('dup-none');
+  const delBtn = document.getElementById('btn-delete-dups');
+
+  if (!dups.length) {
+    list.innerHTML = '';
+    none.style.display = 'block';
+    delBtn.style.display = 'none';
+  } else {
+    none.style.display = 'none';
+    delBtn.style.display = '';
+    list.innerHTML = dups.map(d => {
+      const othersHtml = d.others.map(o =>
+        `<span style="display:block;font-size:var(--text-xs);color:var(--color-text-muted)">
+          <b>${esc(o.lessonNum)}${o.lessonName ? ' ' + esc(o.lessonName) : ''}</b>:
+          ${esc(o.ru)}${o.tr ? ' <i>(' + esc(o.tr) + ')</i>' : ''}
+        </span>`
+      ).join('');
+      return `<label style="display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3);
+        background:var(--color-surface-2);border-radius:var(--radius-md);cursor:pointer;">
+        <input type="checkbox" checked data-dup-id="${d.word.id}"
+          style="margin-top:3px;width:16px;height:16px;accent-color:var(--duo-red);flex-shrink:0">
+        <div style="flex:1;min-width:0">
+          <div style="font-family:var(--font-display);font-weight:800">${esc(d.word.fr)}</div>
+          <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-1)">
+            Текущий урок: ${esc(d.word.ru)}${d.word.tr ? ' <i>(' + esc(d.word.tr) + ')</i>' : ''}
+          </div>
+          <div style="font-size:var(--text-xs)">Также в:</div>
+          ${othersHtml}
+        </div>
+      </label>`;
+    }).join('');
+  }
+
+  openModal('modal-duplicates');
+}
+
+function deleteCheckedDuplicates() {
+  if (!currentLessonId) return;
+  const checkboxes = document.querySelectorAll('#dup-list input[type="checkbox"]:checked');
+  const idsToDelete = new Set([...checkboxes].map(cb => parseInt(cb.dataset.dupId)));
+  if (!idsToDelete.size) { showToast('Нет отмеченных слов'); return; }
+  const lesson = db.lessons.find(l => l.id === currentLessonId);
+  if (!lesson) return;
+  lesson.words = lesson.words.filter(w => !idsToDelete.has(w.id));
+  save();
+  renderWords();
+  closeModal('modal-duplicates');
+  showToast(`Удалено: ${idsToDelete.size}`);
+}
 function resetLessonWeights(lessonId) {
   const lesson = db.lessons.find(l => l.id === lessonId);
   if (!lesson) return;
