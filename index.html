@@ -1523,12 +1523,19 @@ function resetLessonWeights(lessonId) {
 }
 function closeQuiz() {
   document.getElementById('quiz-panel').classList.remove('active');
-  document.getElementById('quiz-backdrop').style.display='none';
-  // blur input to hide keyboard when closing quiz
-  const inp=document.getElementById('quiz-answer-input');
-  if(inp){ inp.readOnly=false; inp.style.opacity='1'; inp.blur(); }
-  quizState=null;
-  quizFixedLessonIds=null;
+  document.getElementById('quiz-backdrop').style.display = 'none';
+
+  // Не трогаем readOnly/opacity, чтобы не ломать мобилку
+  const inp = document.getElementById('quiz-answer-input');
+  if (inp) {
+    // Только снимаем readonly и возвращаем нормальный вид
+    inp.readOnly = false;
+    inp.disabled = false;
+    inp.style.opacity = 1;
+  }
+
+  quizState = null;
+  quizFixedLessonIds = null;
 }
 
 function onQuizModeChange() {
@@ -1671,20 +1678,30 @@ function showQuizWord() {
   const _wt=quizState.lang==='fr'?w.fr:w.ru;
   btn.innerHTML=`<div>${_wt}</div>`;
   if(quizState.lang==='fr'&&w.pos){const pt=document.createElement('div');pt.className='qpos';pt.style.cssText='font-size:var(--text-xs);font-weight:600;opacity:0.55;margin-top:4px';pt.textContent=w.pos;btn.appendChild(pt);}
-  const ainp=document.getElementById('quiz-answer-input');
-  ainp.value='';
-  ainp.readOnly=false;
-  ainp.disabled=false;
-  ainp.style.opacity='1';
-  document.getElementById('quiz-correct-answer').textContent='';
-  document.getElementById('quiz-correct-answer').style.color='';
-  document.getElementById('btn-reveal').style.display='';
-  document.getElementById('btn-next').style.display='none';
-  quizState.answered=false;
-  updateQuizProgress();
-  const _artBtns = document.getElementById('quiz-article-btns');
-  if (_artBtns) _artBtns.className = 'quiz-article-btns' + (quizState.lang==='ru' ? ' visible' : '');
-  setTimeout(()=>{ ainp.focus(); ainp.removeAttribute('readonly'); },20);
+    const ainp = document.getElementById('quiz-answer-input');
+  if (ainp) {
+    ainp.value = '';
+    ainp.readOnly = false;
+    ainp.disabled = false;
+    ainp.style.opacity = 1;
+  }
+
+  document.getElementById('quiz-correct-answer').textContent = '';
+  document.getElementById('quiz-correct-answer').style.color = '';
+  document.getElementById('btn-reveal').style.display = '';
+  document.getElementById('btn-next').style.display = 'none';
+  quizState.answered = false;
+
+  const artBtns = document.getElementById('quiz-article-btns');
+  if (artBtns) {
+    artBtns.className = 'quiz-article-btns' + (quizState.lang === 'ru' ? ' visible' : '');
+  }
+
+  setTimeout(() => {
+    if (ainp) {
+      ainp.focus();
+    }
+  }, 20);
 }
 
 function updateQuizProgress() {
