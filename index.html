@@ -725,8 +725,8 @@ chat,n.m.,ша,кот"></textarea>
       <div>
         <label class="section-label">Уроки <span style="font-weight:400;color:var(--color-text-muted)">(пусто = все)</span></label>
         <input type="text" class="quiz-input" id="quiz-lessons-input" placeholder="1, 2, 5-8 или пусто">
-        <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)">Можно: 1 · 1,3,5 · 2-4 · 1,3-5,7</div>
-      </div>
+<div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)">
+  Примеры: A1 — один урок, A — вся папка, A1,B3 — несколько, A1-B2 — диапазон</div>
       <div>
         <label class="section-label">Фокус на сложных <span style="font-weight:400;color:var(--color-text-muted)">(пусто = все слова)</span></label>
         <div style="display:flex;align-items:center;gap:var(--space-2)">
@@ -1498,15 +1498,50 @@ function speakWord(word) {
 
 // ===== QUIZ =====
 function parseLessonsInput(str) {
-  if(!str.trim()) return null;
-  const ids=new Set();
-  str.split(',').forEach(p=>{
-    p=p.trim();
-    const r=p.match(/^(\d+)\s*[-–]\s*(\d+)$/);
-    if(r){const a=+r[1],b=+r[2];for(let i=Math.min(a,b);i<=Math.max(a,b);i++)ids.add(i);}
-    else if(/^\d+$/.test(p)) ids.add(+p);
-  });
-  return ids;
+  if (!str.trim()) return null;
+  const ids = new Set();
+
+  // Разбираем токен: A1, B, A1-C1, A-C и т.п.
+  function expandToken(token) {
+    token = token.trim().toUpperCase();
+    const rangeMatch = token.match(/^([A-Z]?\d*)[-–]([A-Z]?\d*)$/);
+    if (rangeMatch) {
+      const from = rangeMatch[1], to = rangeMatch[2];
+      // Собираем все уроки, которые попадают в диапазон
+      db.lessons.forEach(l => {
+        const num = String(l.num).toUpperCase();
+        if (numInRange(num, from, to)) ids.add(l.id);
+      });
+    } else if (/^[A-Z]$/.test(token)) {
+      // Только буква — вся папка
+      db.lessons.forEach(l => { if (String(l.folder).toUpperCase() === token) ids.add(l.id); });
+    } else {
+      // Конкретный урок, например A1
+      const lesson = db.lessons.find(l => String(l.num).toUpperCase() === token);
+      if (lesson) ids.add(lesson.id);
+    }
+  }
+
+  // Проверяет, попадает ли код урока num в диапазон [from, to]
+  function numInRange(num, from, to) {
+    return lessonCodeCompare(num, from) >= 0 && lessonCodeCompare(num, to) <= 0;
+  }
+
+  // Сравнивает два кода уроков: A1 < A2 < B1 < C1
+  function lessonCodeCompare(a, b) {
+    const pa = parseCode(a), pb = parseCode(b);
+    if (pa.letter < pb.letter) return -1;
+    if (pa.letter > pb.letter) return 1;
+    return pa.n - pb.n;
+  }
+
+  function parseCode(code) {
+    const m = String(code).match(/^([A-Z]?)(\d*)$/);
+    return { letter: m ? (m[1] || '') : '', n: m && m[2] ? parseInt(m[2]) : 0 };
+  }
+
+  str.split(',').forEach(p => expandToken(p.trim()));
+  return ids.size ? ids : null;
 }
 
 
@@ -2501,6 +2536,7 @@ Parler	v.	paʁ.le	Говорить	1
       <div><strong style="color:var(--color-text)">Экспорт CSV</strong> — кнопка CSV ↓ сохраняет все слова урока в файл для резервной копии или переноса.</div>
       <div>Слово можно редактировать прямо в таблице — нажмите на нужное поле. Вес можно изменить вручную, нажав на значок веса рядом со словом (диапазон 0.01–2.0).</div>
     </div>
+          <div><strong style="color:var(--color-text)">Удаление дублей</strong> — кнопка с иконкой двух пересекающихся кругов в панели урока. Находит слова с одинаковым французским словом внутри урока, показывает их списком с чекбоксами — вы сами выбираете, какие именно удалить.</div>
   </div>
 
   <!-- КВИЗ -->
@@ -2550,22 +2586,12 @@ Parler	v.	paʁ.le	Говорить	1
 
   <!-- СИНХРОНИЗАЦИЯ -->
   <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">☁️ Синхронизация и резервные копии</div>
+    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">💾 Резервные копии (JSON)</div>
     <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div>Данные автоматически загружаются из облака при открытии сайта и сохраняются в облако после каждого квиза.</div>
-      <div>Принудительно синхронизировать можно через меню: <strong style="color:var(--color-text)">↑ облако</strong> (сохранить) и <strong style="color:var(--color-text)">↓ облако</strong> (загрузить).</div>
-      <div><strong style="color:var(--color-text)">Экспорт JSON</strong> — сохраняет полную резервную копию всех данных на устройство. <strong style="color:var(--color-text)">Импорт JSON</strong> — восстанавливает из файла.</div>
-    </div>
-  </div>
-
-  <div style="display:flex;justify-content:flex-end">
-    <button class="btn btn-primary" onclick="closeInfoModal()">Понятно!</button>
-  </div>
-</div>
-
-      <div style="display:flex;justify-content:flex-end">
-        <button class="btn btn-primary" onclick="closeInfoModal()">Понятно</button>
-      </div>
+      <div><strong style="color:var(--color-text)">Экспорт JSON</strong> — сохраняет полную резервную копию всех данных (слова, папки, уроки, веса, статистика) в один файл на устройство. Делайте это регулярно — это единственный способ не потерять данные при смене браузера или устройства.</div>
+      <div><strong style="color:var(--color-text)">Импорт JSON</strong> — восстанавливает данные из файла. <strong style="color:var(--duo-red-dark)">Внимание:</strong> импорт полностью заменяет текущие данные в браузере.</div>
+      <div><strong style="color:var(--color-text)">Ручное редактирование JSON</strong> — файл можно открыть в любом текстовом редакторе. Структура: объект с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">lessons</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">folders</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">dailyStats</code>. Каждый урок содержит массив <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">words</code> — список слов с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">fr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">pos</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">tr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">ru</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">w</code> (вес, число). Можно добавлять, редактировать и удалять слова прямо в файле, после чего импортировать обратно.</div>
+      <div>Удобный способ массово добавить слова: попросить ИИ сгенерировать нужный фрагмент JSON в правильном формате и вставить его в файл перед импортом.</div>
     </div>
   </div>
 
