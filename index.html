@@ -2136,9 +2136,11 @@ function nextWord() {
   showQuizWord();
 }
 
-function stopQuiz() { if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;} showQuizStats(); syncToCloud();}
+function stopQuiz() {
+  if (quizState) quizState.finished = true; if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;} showQuizStats(); syncToCloud();}
 
 function showPraiseCard() {
+  if (quizState) quizState.finished = true;
   recordQuizDailyStats(quizState);
   syncToCloud();
   const phrase = PRAISE_PHRASES[Math.floor(Math.random()*PRAISE_PHRASES.length)];
@@ -2720,6 +2722,26 @@ document.addEventListener("click", function(e) {
   const btn = document.getElementById("hamburger-btn");
   if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
     menu.style.display = "none";
+  }
+});
+    // Принудительный фокус на мобильных во время квиза
+function enforceMobileKeyboard() {
+  if (!quizState || quizState.finished) return;
+  const inp = document.getElementById('quiz-answer-input');
+  if (inp && !inp.disabled && !inp.readOnly) {
+    inp.focus();
+  }
+}
+
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') {
+    setTimeout(enforceMobileKeyboard, 300);
+  }
+});
+
+document.getElementById('quiz-game').addEventListener('click', function(e) {
+  if (e.target.id !== 'quiz-answer-input') {
+    setTimeout(enforceMobileKeyboard, 50);
   }
 });
   </script>
