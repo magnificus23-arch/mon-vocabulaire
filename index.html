@@ -868,6 +868,8 @@ function recordQuizDailyStats(state) {
   if (!state) return;
   const total = (state.correct || 0) + (state.wrong || 0) + (state.skipped || 0);
   if (!total) return;
+  if (state._statsSaved) return;
+  state._statsSaved = true;
   const day = getDayKey();
   const dir = state.lang === 'ru' ? 'ru' : 'fr';
   const row = db.dailyStats[day] || { frWords: 0, frCorrect: 0, ruWords: 0, ruCorrect: 0 };
