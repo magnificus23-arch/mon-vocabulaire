@@ -2241,9 +2241,24 @@ async function syncFromCloud() {
     const res = await fetch(SYNC_URL);
     const parsed = await res.json();
     if (!parsed.lessons || !Array.isArray(parsed.lessons)) throw new Error();
-    db = parsed;
-    if (!db.dailyStats || typeof db.dailyStats !== "object") db.dailyStats = {};
-    save();
+const localStats = db.dailyStats || {};
+db = parsed;
+if (!db.dailyStats || typeof db.dailyStats !== 'object') db.dailyStats = {};
+for (const day in localStats) {
+  if (!db.dailyStats[day]) {
+    db.dailyStats[day] = localStats[day];
+  } else {
+    const l = localStats[day];
+    const r = db.dailyStats[day];
+    db.dailyStats[day] = {
+      frWords:   Math.max(l.frWords   || 0, r.frWords   || 0),
+      frCorrect: Math.max(l.frCorrect || 0, r.frCorrect || 0),
+      ruWords:   Math.max(l.ruWords   || 0, r.ruWords   || 0),
+      ruCorrect: Math.max(l.ruCorrect || 0, r.ruCorrect || 0),
+    };
+  }
+}
+save();
     showView("folders");
     showToast("☁️ Данные загружены из облака");
   } catch (e) {
