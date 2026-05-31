@@ -863,16 +863,16 @@ function load() {
 let statsChart = null;
 function getDayKey(ts){ const d = ts ? new Date(ts) : new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
 function ensureDailyStats(){ if(!db.dailyStats||typeof db.dailyStats!=='object') db.dailyStats={}; }
-function recordQuizDailyStats(state){
+function recordQuizDailyStats(state) {
   ensureDailyStats();
-  if(!state) return;
-  const total = (state.correct||0) + (state.wrong||0) + (state.skipped||0);
-  if(!total) return;
+  if (!state) return;
+  const total = (state.correct || 0) + (state.wrong || 0) + (state.skipped || 0);
+  if (!total) return;
   const day = getDayKey();
   const dir = state.lang === 'ru' ? 'ru' : 'fr';
-  const row = db.dailyStats[day] || { frWords:0, frCorrect:0, ruWords:0, ruCorrect:0 };
-  row[dir+'Words'] = total;
-  row[dir+'Correct'] = state.correct||0;
+  const row = db.dailyStats[day] || { frWords: 0, frCorrect: 0, ruWords: 0, ruCorrect: 0 };
+  row[dir + 'Words'] = (row[dir + 'Words'] || 0) + total;
+  row[dir + 'Correct'] = (row[dir + 'Correct'] || 0) + (state.correct || 0);
   db.dailyStats[day] = row;
   save();
 }
