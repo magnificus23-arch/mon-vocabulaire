@@ -2493,7 +2493,7 @@ function parseCSVLine(line) {
 
 </script>
 
-  <!-- Info Modal -->
+ <!-- Info Modal -->
   <div id="info-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:var(--space-4)" onclick="if(event.target===this)closeInfoModal()">
     <div style="background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-6);max-width:600px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto">
       <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4)">ℹ️ Справка</h3>
@@ -2501,7 +2501,7 @@ function parseCSVLine(line) {
       <div style="margin-bottom:var(--space-5)">
         <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);margin-bottom:var(--space-2);color:var(--color-primary)">📋 Промпт для составления словаря с ИИ</div>
         <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3)">Приложите текст и отправьте этот промпт ИИ-ассистенту — он подготовит CSV-файл, который можно импортировать в урок.</p>
-       <pre id="ai-prompt-text" style="display:none !important;height:0 !important;min-height:0 !important;padding:0 !important;margin:0 !important;border:none !important;overflow:hidden !important;background:var(--color-surface-2);border:2px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4);font-size:var(--text-xs);line-height:1.6;white-space:pre-wrap;word-break:break-word;font-family:var(--font-body);color:var(--color-text);margin-bottom:var(--space-2)">Подготовь словарь для человека, изучающего язык. Словарь нужен в виде файла в формате CSV с пятью столбцами, оформленного по образцу:
+        <pre id="ai-prompt-text" style="display:none !important;height:0 !important;min-height:0 !important;padding:0 !important;margin:0 !important;border:none !important;overflow:hidden !important;background:var(--color-surface-2);border:2px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-4);font-size:var(--text-xs);line-height:1.6;white-space:pre-wrap;word-break:break-word;font-family:var(--font-body);color:var(--color-text);margin-bottom:var(--space-2)">Подготовь словарь для человека, изучающего язык. Словарь нужен в виде файла в формате CSV с пятью столбцами, оформленного по образцу:
 французское	часть речи	транскрипция	перевод	вес
 Parler	v.	paʁ.le	Говорить	1
 
@@ -2513,85 +2513,92 @@ Parler	v.	paʁ.le	Говорить	1
         </button>
       </div>
 
-<div style="background:var(--color-surface);border-radius:var(--radius-xl);padding:var(--space-6);max-width:600px;width:100%;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto">
-  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4)">📖 Как пользоваться словарём</h3>
+      <div style="height:1px;background:var(--color-divider);margin:var(--space-4) 0"></div>
 
-  <!-- СТРУКТУРА -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">🗂 Структура: папки и уроки</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div>Словарь организован в два уровня: <strong style="color:var(--color-text)">папки</strong> (обозначаются буквой A–Z) → <strong style="color:var(--color-text)">уроки</strong> внутри папки.</div>
-      <div>Удобная схема: папка = тематический блок или уровень (например, <em>A — Базовая лексика</em>), урок = конкретная тема (A1 — Еда, A2 — Цвета).</div>
-      <div>Создать папку или урок можно кнопкой <strong style="color:var(--color-text)">+</strong> на соответствующем экране. У каждого урока есть <strong style="color:var(--color-text)">код</strong> (например, A1) и <strong style="color:var(--color-text)">название</strong>.</div>
-      <div>На карточке урока видно: сколько слов всего, сколько <span style="color:var(--duo-green-dark)">освоено</span> (вес &gt; 1.5) и сколько <span style="color:var(--duo-red-dark)">сложных</span> (вес &lt; 0.5). Прогресс-бар показывает % освоенных слов.</div>
-    </div>
-  </div>
+      <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4)">📖 Как пользоваться словарём</h3>
 
-  <!-- СЛОВА -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">✏️ Добавление слов</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div><strong style="color:var(--color-text)">Вручную</strong> — кнопка <strong style="color:var(--color-text)">+</strong> внутри урока. Поля: французское слово, часть речи, транскрипция (необязательно), перевод на русский.</div>
-      <div><strong style="color:var(--color-text)">Импорт CSV</strong> — кнопка CSV ↑ внутри урока. Формат строки: <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">слово,часть речи,транскрипция,перевод,вес</code>. Вес необязателен, по умолчанию 1.0. Первую строку с заголовками система распознаёт и пропускает автоматически.</div>
-      <div><strong style="color:var(--color-text)">Экспорт CSV</strong> — кнопка CSV ↓ сохраняет все слова урока в файл для резервной копии или переноса.</div>
-      <div>Слово можно редактировать прямо в таблице — нажмите на нужное поле. Вес можно изменить вручную, нажав на значок веса рядом со словом (диапазон 0.01–2.0).</div>
-    </div>
+      <!-- СТРУКТУРА -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">🗂 Структура: папки и уроки</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div>Словарь организован в два уровня: <strong style="color:var(--color-text)">папки</strong> (обозначаются буквой A–Z) → <strong style="color:var(--color-text)">уроки</strong> внутри папки.</div>
+          <div>Удобная схема: папка = тематический блок или уровень (например, <em>A — Базовая лексика</em>), урок = конкретная тема (A1 — Еда, A2 — Цвета).</div>
+          <div>Создать папку или урок можно кнопкой <strong style="color:var(--color-text)">+</strong> на соответствующем экране. У каждого урока есть <strong style="color:var(--color-text)">код</strong> (например, A1) и <strong style="color:var(--color-text)">название</strong>.</div>
+          <div>На карточке урока видно: сколько слов всего, сколько <span style="color:var(--duo-green-dark)">освоено</span> (вес &gt; 1.5) и сколько <span style="color:var(--duo-red-dark)">сложных</span> (вес &lt; 0.5). Прогресс-бар показывает % освоенных слов.</div>
+        </div>
+      </div>
+
+      <!-- СЛОВА -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">✏️ Добавление слов</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div><strong style="color:var(--color-text)">Вручную</strong> — кнопка <strong style="color:var(--color-text)">+</strong> внутри урока. Поля: французское слово, часть речи, транскрипция (необязательно), перевод на русский.</div>
+          <div><strong style="color:var(--color-text)">Импорт CSV</strong> — кнопка CSV ↑ внутри урока. Формат строки: <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">слово,часть речи,транскрипция,перевод,вес</code>. Вес необязателен, по умолчанию 1.0. Первую строку с заголовками система распознаёт и пропускает автоматически.</div>
+          <div><strong style="color:var(--color-text)">Экспорт CSV</strong> — кнопка CSV ↓ сохраняет все слова урока в файл для резервной копии или переноса.</div>
+          <div>Слово можно редактировать прямо в таблице — нажмите на нужное поле. Вес можно изменить вручную, нажав на значок веса рядом со словом (диапазон 0.01–2.0).</div>
           <div><strong style="color:var(--color-text)">Удаление дублей</strong> — кнопка с иконкой двух пересекающихся кругов в панели урока. Находит слова с одинаковым французским словом внутри урока, показывает их списком с чекбоксами — вы сами выбираете, какие именно удалить.</div>
-  </div>
+        </div>
+      </div>
 
-  <!-- КВИЗ -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">🎯 Квиз</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div>Квиз запускается кнопкой ▶ внутри урока, из папки (сразу все уроки) или через меню «Allons-y!» (выбрать уроки вручную через номера: <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">1, 3-5, 7</code>).</div>
-      <div><strong style="color:var(--color-text)">Направление:</strong> FR→RU (видите французское слово, вводите перевод) или RU→FR (наоборот).</div>
-      <div><strong style="color:var(--color-text)">Фокус на N словах</strong> — квиз будет работать только с N словами с наименьшим весом (самые слабые). Удобно для точечной проработки.</div>
-      <div><strong style="color:var(--color-text)">Исключить слова с весом выше</strong> — убирает из квиза уже хорошо освоенные слова.</div>
-    </div>
-  </div>
+      <!-- КВИЗ -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">🎯 Квиз</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div>Квиз запускается кнопкой ▶ внутри урока, из папки (сразу все уроки) или через меню «Allons-y!» (выбрать уроки вручную через номера: <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">A1 — один урок, A — вся папка, A1,B3 — несколько, A1-B2 — диапазон</code>).</div>
+          <div><strong style="color:var(--color-text)">Направление:</strong> FR→RU (видите французское слово, вводите перевод) или RU→FR (наоборот).</div>
+          <div><strong style="color:var(--color-text)">Фокус на N словах</strong> — квиз будет работать только с N словами с наименьшим весом (самые слабые). Удобно для точечной проработки.</div>
+          <div><strong style="color:var(--color-text)">Исключить слова с весом выше</strong> — убирает из квиза уже хорошо освоенные слова.</div>
+        </div>
+      </div>
 
-  <!-- РЕЖИМЫ -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--duo-blue-dark);margin-bottom:var(--space-2)">⚡ Режимы квиза</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div><strong style="color:var(--color-text)">Поток</strong> — бесконечный режим. Слова показываются с учётом веса: слабые чаще, сильные реже. Квиз идёт до нажатия «Стоп».</div>
-      <div><strong style="color:var(--color-text)">Таймер</strong> — квиз на заданное время (в минутах). По истечении времени показывается результат.</div>
-      <div><strong style="color:var(--color-text)">Стопка</strong> — фиксированное число слов за один подход. Каждое слово показывается ровно один раз.</div>
-      <div><strong style="color:var(--color-text)">Тест</strong> — все слова по одному разу, в конце итоговый результат. Вес слов не обновляется.</div>
-      <div><strong style="color:var(--color-text)">Режим изучения</strong> — мягкий режим: слова за ошибку снижаются меньше, за правильный ответ растут медленнее. Подходит для первого знакомства с новой темой.</div>
-      <div><strong style="color:var(--color-text)">Автопроигрывание</strong> — произносит французское слово вслух при каждом новом вопросе (требует разрешения браузера на звук).</div>
-    </div>
-  </div>
+      <!-- РЕЖИМЫ -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--duo-blue-dark);margin-bottom:var(--space-2)">⚡ Режимы квиза</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div><strong style="color:var(--color-text)">Поток</strong> — бесконечный режим. Слова показываются с учётом веса: слабые чаще, сильные реже. Квиз идёт до нажатия «Стоп».</div>
+          <div><strong style="color:var(--color-text)">Таймер</strong> — квиз на заданное время (в минутах). По истечении времени показывается результат.</div>
+          <div><strong style="color:var(--color-text)">Стопка</strong> — фиксированное число слов за один подход. Каждое слово показывается ровно один раз.</div>
+          <div><strong style="color:var(--color-text)">Тест</strong> — все слова по одному разу, в конце итоговый результат. Вес слов не обновляется.</div>
+          <div><strong style="color:var(--color-text)">Режим изучения</strong> — мягкий режим: слова за ошибку снижаются меньше, за правильный ответ растут медленнее. Подходит для первого знакомства с новой темой.</div>
+          <div><strong style="color:var(--color-text)">Автопроигрывание</strong> — произносит французское слово вслух при каждом новом вопросе (требует разрешения браузера на звук).</div>
+        </div>
+      </div>
 
-  <!-- ВЕС -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--duo-green-dark);margin-bottom:var(--space-2)">⚖️ Система весов</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div>Каждое слово имеет <strong style="color:var(--color-text)">вес от 0.01 до 2.0</strong>. Новые слова получают вес 1.0. Чем ниже вес — тем чаще слово появляется в квизе.</div>
-      <div>После правильного ответа вес <span style="color:var(--duo-green-dark)">растёт</span>, после ошибки — <span style="color:var(--duo-red-dark)">снижается</span>. Чем дольше серия правильных ответов, тем сильнее рост.</div>
-      <div>Слово считается <strong style="color:var(--duo-green-dark)">освоенным</strong> при весе &gt; 1.5, <strong style="color:var(--duo-red-dark)">сложным</strong> — при весе &lt; 0.5. При весе 2.0 и серии 5 правильных ответов подряд слово «заморожено» и временно уходит из квиза.</div>
-      <div>Кнопка <strong style="color:var(--color-text)">↺ 1</strong> внутри урока сбрасывает веса всех слов до 1.0.</div>
-      <div>Коэффициенты изменения веса настраиваются в <strong style="color:var(--color-text)">Настройках</strong> (иконка ⚙️ в меню). Отдельные множители для обычного и мягкого режима, для серий 0 / 1 / 2+ ответов подряд.</div>
-    </div>
-  </div>
+      <!-- ВЕС -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--duo-green-dark);margin-bottom:var(--space-2)">⚖️ Система весов</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div>Каждое слово имеет <strong style="color:var(--color-text)">вес от 0.01 до 2.0</strong>. Новые слова получают вес 1.0. Чем ниже вес — тем чаще слово появляется в квизе.</div>
+          <div>После правильного ответа вес <span style="color:var(--duo-green-dark)">растёт</span>, после ошибки — <span style="color:var(--duo-red-dark)">снижается</span>. Чем дольше серия правильных ответов, тем сильнее рост.</div>
+          <div>Слово считается <strong style="color:var(--duo-green-dark)">освоенным</strong> при весе &gt; 1.5, <strong style="color:var(--duo-red-dark)">сложным</strong> — при весе &lt; 0.5. При весе 2.0 и серии 5 правильных ответов подряд слово «заморожено» и временно уходит из квиза.</div>
+          <div>Кнопка <strong style="color:var(--color-text)">↺ 1</strong> внутри урока сбрасывает веса всех слов до 1.0.</div>
+          <div>Коэффициенты изменения веса настраиваются в <strong style="color:var(--color-text)">Настройках</strong> (иконка ⚙️ в меню). Отдельные множители для обычного и мягкого режима, для серий 0 / 1 / 2+ ответов подряд.</div>
+        </div>
+      </div>
 
-  <!-- СТАТИСТИКА -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">📊 Статистика</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div>Раздел «Статистика» (меню → 📊) показывает график по дням: сколько слов пройдено в направлении FR→RU и RU→FR, и процент правильных ответов по каждому направлению.</div>
-      <div>Диапазон дат настраивается вручную или кнопками «7 дней», «30 дней», «90 дней», «Всё время».</div>
-    </div>
-  </div>
+      <!-- СТАТИСТИКА -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">📊 Статистика</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div>Раздел «Статистика» (меню → 📊) показывает график по дням: сколько слов пройдено в направлении FR→RU и RU→FR, и процент правильных ответов по каждому направлению.</div>
+          <div>Диапазон дат настраивается вручную или кнопками «7 дней», «30 дней», «90 дней», «Всё время».</div>
+        </div>
+      </div>
 
-  <!-- СИНХРОНИЗАЦИЯ -->
-  <div style="margin-bottom:var(--space-5)">
-    <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">💾 Резервные копии (JSON)</div>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
-      <div><strong style="color:var(--color-text)">Экспорт JSON</strong> — сохраняет полную резервную копию всех данных (слова, папки, уроки, веса, статистика) в один файл на устройство. Делайте это регулярно — это единственный способ не потерять данные при смене браузера или устройства.</div>
-      <div><strong style="color:var(--color-text)">Импорт JSON</strong> — восстанавливает данные из файла. <strong style="color:var(--duo-red-dark)">Внимание:</strong> импорт полностью заменяет текущие данные в браузере.</div>
-      <div><strong style="color:var(--color-text)">Ручное редактирование JSON</strong> — файл можно открыть в любом текстовом редакторе. Структура: объект с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">lessons</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">folders</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">dailyStats</code>. Каждый урок содержит массив <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">words</code> — список слов с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">fr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">pos</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">tr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">ru</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">w</code> (вес, число). Можно добавлять, редактировать и удалять слова прямо в файле, после чего импортировать обратно.</div>
-      <div>Удобный способ массово добавить слова: попросить ИИ сгенерировать нужный фрагмент JSON в правильном формате и вставить его в файл перед импортом.</div>
+      <!-- РЕЗЕРВНЫЕ КОПИИ -->
+      <div style="margin-bottom:var(--space-5)">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:var(--text-sm);color:var(--color-primary);margin-bottom:var(--space-2)">💾 Резервные копии (JSON)</div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+          <div><strong style="color:var(--color-text)">Экспорт JSON</strong> — сохраняет полную резервную копию всех данных (слова, папки, уроки, веса, статистика) в один файл на устройство. Делайте это регулярно — это единственный способ не потерять данные при смене браузера или устройства.</div>
+          <div><strong style="color:var(--color-text)">Импорт JSON</strong> — восстанавливает данные из файла. <strong style="color:var(--duo-red-dark)">Внимание:</strong> импорт полностью заменяет текущие данные в браузере.</div>
+          <div><strong style="color:var(--color-text)">Ручное редактирование JSON</strong> — файл можно открыть в любом текстовом редакторе. Структура: объект с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">lessons</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">folders</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">dailyStats</code>. Каждый урок содержит массив <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">words</code> — список слов с полями <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">fr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">pos</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">tr</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">ru</code>, <code style="background:var(--color-surface-2);padding:1px 5px;border-radius:4px">w</code> (вес, число). Можно добавлять, редактировать и удалять слова прямо в файле, после чего импортировать обратно.</div>
+          <div>Удобный способ массово добавить слова: попросить ИИ сгенерировать нужный фрагмент JSON в правильном формате и вставить его в файл перед импортом.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:var(--space-4)">
+        <button class="btn btn-primary" onclick="closeInfoModal()">Понятно</button>
+      </div>
     </div>
   </div>
 
