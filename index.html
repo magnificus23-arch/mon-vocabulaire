@@ -2728,21 +2728,31 @@ document.addEventListener("click", function(e) {
 function enforceMobileKeyboard() {
   if (!quizState || quizState.finished) return;
   const inp = document.getElementById('quiz-answer-input');
-  if (inp && !inp.disabled && !inp.readOnly) {
-    inp.focus();
-  }
+  if (!inp || inp.disabled) return;
+  inp.readOnly = false;
+  inp.focus();
+  inp.click();
 }
 
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'visible') {
-    setTimeout(enforceMobileKeyboard, 300);
+    setTimeout(enforceMobileKeyboard, 100);
+    setTimeout(enforceMobileKeyboard, 500);
+    setTimeout(enforceMobileKeyboard, 1000);
   }
 });
 
-document.getElementById('quiz-game').addEventListener('click', function(e) {
-  if (e.target.id !== 'quiz-answer-input') {
-    setTimeout(enforceMobileKeyboard, 50);
-  }
+document.addEventListener('touchstart', function() {
+  if (!quizState || quizState.finished) return;
+  setTimeout(enforceMobileKeyboard, 50);
+}, { passive: true });
+
+window.addEventListener('focus', function() {
+  setTimeout(enforceMobileKeyboard, 200);
+});
+
+window.addEventListener('pageshow', function() {
+  setTimeout(enforceMobileKeyboard, 300);
 });
   </script>
 </body>
