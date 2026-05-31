@@ -2140,6 +2140,7 @@ function stopQuiz() { if(quizTimerInterval){clearInterval(quizTimerInterval);qui
 
 function showPraiseCard() {
   recordQuizDailyStats(quizState);
+  syncToCloud();
   const phrase = PRAISE_PHRASES[Math.floor(Math.random()*PRAISE_PHRASES.length)];
   document.getElementById('quiz-stats-summary').innerHTML = `
     <span class="stat-pill stat-pill-green">🎉 Все слова достигли порога</span>
