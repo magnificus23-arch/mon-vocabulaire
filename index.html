@@ -9,375 +9,212 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
+/* ===== WINDOWS 98 DESIGN SYSTEM ===== */
 :root {
-  --duo-green:       #58cc02;
-  --duo-green-dark:  #46a302;
-  --duo-green-light: #d7f5b1;
-  --duo-blue:        #1cb0f6;
-  --duo-blue-dark:   #0a91d1;
-  --duo-blue-light:  #ddf4ff;
-  --duo-red:         #ff4b4b;
-  --duo-red-dark:    #d93636;
-  --duo-red-light:   #ffd9d9;
-  --duo-yellow:      #ffc800;
-  --duo-yellow-light:#fff5cc;
-  --duo-purple:      #ce82ff;
-  --duo-orange:      #ff9600;
+  /* Win98 palette */
+  --w98-gray:        #c0c0c0;
+  --w98-gray-dark:   #808080;
+  --w98-gray-darker: #404040;
+  --w98-gray-light:  #dfdfdf;
+  --w98-white:       #ffffff;
+  --w98-black:       #000000;
+  --w98-navy:        #000080;
+  --w98-title-end:   #1084d0;
+  --w98-blue:        #0000aa;
+  --w98-teal:        #008080;
+  --w98-green:       #008000;
+  --w98-red:         #ff0000;
+  --w98-yellow:      #ffff00;
+  --w98-selection:   #000080;
 
-  --color-bg:        #f7f7f7;
-  --color-surface:   #ffffff;
-  --color-surface-2: #f0f0f0;
-  --color-border:    #e5e5e5;
-  --color-divider:   #ebebeb;
-  --color-text:      #3c3c3c;
-  --color-text-muted:#777;
-  --color-text-faint:#aaa;
-  --color-primary:   var(--duo-green);
-  --color-primary-dark: var(--duo-green-dark);
-  --color-primary-light: var(--duo-green-light);
-  --color-error:     var(--duo-red);
-  --color-error-light: var(--duo-red-light);
-  --color-success:   var(--duo-green);
-  --color-success-light: var(--duo-green-light);
-  --color-warning:   var(--duo-yellow);
-  --color-warning-light: var(--duo-yellow-light);
+  /* Семантические алиасы — не меняем имена, чтобы не сломать JS */
+  --duo-green:        #008000;
+  --duo-green-dark:   #006400;
+  --duo-green-light:  #c8e6c9;
+  --duo-blue:         #000080;
+  --duo-blue-dark:    #00008b;
+  --duo-blue-light:   #c8d8f0;
+  --duo-red:          #cc0000;
+  --duo-red-dark:     #990000;
+  --duo-red-light:    #ffcccc;
+  --duo-yellow:       #c8a000;
+  --duo-yellow-light: #fff8c0;
+  --duo-purple:       #800080;
+  --duo-orange:       #c86000;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-full: 9999px;
+  --color-bg:         #008080; /* классический teal-рабочий стол */
+  --color-surface:    #c0c0c0;
+  --color-surface-2:  #d4d0c8;
+  --color-surface-offset: #b0b0b0;
+  --color-border:     #808080;
+  --color-divider:    #808080;
+  --color-text:       #000000;
+  --color-text-muted: #404040;
+  --color-text-faint: #808080;
+  --color-primary:    #000080;
+  --color-primary-dark: #00008b;
+  --color-primary-light: #c8d8f0;
+  --color-error:      #cc0000;
+  --color-error-light: #ffcccc;
+  --color-success:    #008000;
+  --color-success-light: #c8e6c9;
+  --color-warning:    #c8a000;
+  --color-warning-light: #fff8c0;
 
-  --shadow-sm: 0 2px 0 rgba(0,0,0,0.12);
-  --shadow-md: 0 4px 0 rgba(0,0,0,0.12);
-  --shadow-lg: 0 6px 20px rgba(0,0,0,0.12);
+  /* Win98 радиусы — нулевые, всё квадратное */
+  --radius-sm:   0px;
+  --radius-md:   0px;
+  --radius-lg:   0px;
+  --radius-xl:   0px;
+  --radius-full: 0px;
 
-  --transition: 160ms cubic-bezier(0.16,1,0.3,1);
+  /* Win98 рельефные тени */
+  --shadow-sm: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;
+  --shadow-md: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf;
+  --shadow-lg: 2px 2px 4px rgba(0,0,0,0.5);
+
+  /* Win98 утопленная рамка (для полей ввода) */
+  --inset-border: inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080, inset -2px -2px 0 #dfdfdf;
+
+  --transition: 0ms; /* Win98 не анимирует */
 
   --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;
   --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
   --space-12:3rem;--space-16:4rem;
 
-  --text-xs: clamp(0.75rem,0.7rem + 0.25vw,0.875rem);
-  --text-sm: clamp(0.875rem,0.8rem + 0.35vw,1rem);
-  --text-base: clamp(1rem,0.95rem + 0.25vw,1.125rem);
-  --text-lg: clamp(1.125rem,1rem + 0.75vw,1.5rem);
-  --text-xl: clamp(1.5rem,1.2rem + 1.25vw,2rem);
+  --text-xs:   11px;
+  --text-sm:   11px;
+  --text-base: 11px;
+  --text-lg:   13px;
+  --text-xl:   16px;
 
-  --font-body: 'Nunito Sans', sans-serif;
-  --font-display: 'Nunito', sans-serif;
+  --font-body:    'MS Sans Serif', 'Microsoft Sans Serif', 'Tahoma', Arial, sans-serif;
+  --font-display: 'MS Sans Serif', 'Microsoft Sans Serif', 'Tahoma', Arial, sans-serif;
 }
+
+/* Тёмная тема — в Win98 стиле нет смысла, делаем HiContrast Black */
 [data-theme="dark"] {
-  --color-bg: #111;
-  --color-surface: #1e1e1e;
-  --color-surface-2: #2a2a2a;
-  --color-border: #333;
-  --color-divider: #2c2c2c;
-  --color-text: #f0f0f0;
-  --color-text-muted: #999;
-  --color-text-faint: #555;
-  --duo-green-light: #1a3a00;
-  --duo-red-light: #3a0000;
-  --duo-yellow-light: #3a2e00;
-  --duo-blue-light: #00243a;
-  --color-primary-light: #1a3a00;
-  --color-error-light: #3a0000;
-  --color-success-light: #1a3a00;
-  --color-warning-light: #3a2e00;
-  --shadow-sm: 0 2px 0 rgba(0,0,0,0.4);
-  --shadow-md: 0 4px 0 rgba(0,0,0,0.4);
-  --shadow-lg: 0 6px 20px rgba(0,0,0,0.5);
+  --color-bg:         #000000;
+  --color-surface:    #000000;
+  --color-surface-2:  #1a1a1a;
+  --color-surface-offset: #111;
+  --color-border:     #ffffff;
+  --color-divider:    #808080;
+  --color-text:       #ffffff;
+  --color-text-muted: #c0c0c0;
+  --color-text-faint: #808080;
+  --color-primary:    #00a0ff;
+  --duo-green:        #00ff00;
+  --duo-green-light:  #003300;
+  --duo-green-dark:   #00cc00;
+  --duo-blue:         #0080ff;
+  --duo-blue-light:   #001a33;
+  --duo-red:          #ff4040;
+  --duo-red-light:    #330000;
+  --duo-yellow-light: #333300;
+  --shadow-sm: inset -1px -1px 0 #fff, inset 1px 1px 0 #888;
+  --shadow-md: inset -1px -1px 0 #fff, inset 1px 1px 0 #888;
+  --inset-border: inset 1px 1px 0 #fff, inset -1px -1px 0 #888;
 }
 
+/* ===== BASE ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;}
-body{font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);background:var(--color-bg);min-height:100dvh;line-height:1.5;}
+html{-webkit-font-smoothing:none;-moz-osx-font-smoothing:unset;font-smooth:never;scroll-behavior:auto;}
+body{
+  font-family:var(--font-body);
+  font-size:var(--text-base);
+  color:var(--color-text);
+  background:var(--color-bg);
+  min-height:100dvh;
+  line-height:1.4;
+  image-rendering: pixelated;
+}
 input,button,textarea,select{font:inherit;color:inherit;}
-button{cursor:pointer;background:none;border:none;}
+button{cursor:default;background:none;border:none;}
 img{display:block;max-width:100%;}
-:focus-visible{outline:2px solid var(--duo-blue);outline-offset:3px;border-radius:var(--radius-sm);}
+:focus-visible{outline:1px dotted #000;outline-offset:0;}
+::selection{background:var(--w98-selection);color:#fff;}
 
-/* Header */
+/* ===== WIN98 УТИЛИТЫ ===== */
+/* Выпуклая рамка (окна, кнопки) */
+.win98-raised {
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #000000;
+  border-bottom: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+}
+/* Утопленная рамка (поля ввода, панели) */
+.win98-inset {
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #dfdfdf;
+}
+
+/* ===== ШАПКА как панель задач Win98 ===== */
 .app-header{
-  background:var(--color-surface);
-  border-bottom:2px solid var(--color-border);
-  padding:var(--space-3) var(--space-6);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #808080;
+  padding: 3px 8px;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:100;
-  gap:var(--space-3);
+  gap:var(--space-2);
+  min-height: 36px;
 }
-.logo{display:flex;align-items:center;gap:var(--space-2);text-decoration:none;color:var(--color-text);cursor:pointer;}
-.logo-text{font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;color:var(--duo-green);}
-.header-actions{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
-
-/* Buttons */
-.btn{
-  display:inline-flex;align-items:center;gap:var(--space-2);
-  padding:var(--space-2) var(--space-4);
-  border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:700;
-  border:2px solid transparent;white-space:nowrap;
-  transition:filter var(--transition),transform var(--transition),box-shadow var(--transition);
+.logo{
+  display:flex;align-items:center;gap:4px;
+  text-decoration:none;color:var(--color-text);cursor:default;
+}
+.logo-text{
   font-family:var(--font-display);
+  font-size:11px;
+  font-weight:bold;
+  color:#000000;
 }
-.btn:active{transform:translateY(2px);}
-.btn-primary{background:var(--duo-green);color:#fff;border-color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);}
-.btn-primary:hover{filter:brightness(1.05);}
-.btn-primary:active{box-shadow:none;}
-.btn-blue{background:var(--duo-blue);color:#fff;border-color:var(--duo-blue-dark);box-shadow:0 4px 0 var(--duo-blue-dark);}
-.btn-blue:hover{filter:brightness(1.05);}
-.btn-blue:active{box-shadow:none;}
-.btn-secondary{background:var(--color-surface);color:var(--color-text);border-color:var(--color-border);box-shadow:0 4px 0 var(--color-border);}
-.btn-secondary:hover{background:var(--color-surface-2);}
-.btn-secondary:active{box-shadow:none;}
-.btn-ghost{color:var(--color-text-muted);border-color:transparent;}
-.btn-ghost:hover{background:var(--color-surface-2);color:var(--color-text);}
-.btn-danger{color:var(--duo-red);border-color:transparent;}
-.btn-danger:hover{background:var(--duo-red-light);color:var(--duo-red-dark);}
-.btn-sm{padding:var(--space-1) var(--space-3);font-size:var(--text-xs);}
-.btn-icon{padding:var(--space-2);border-radius:var(--radius-md);}
-.allons-btn{background:var(--duo-green);color:#fff;border-color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);padding:var(--space-2) var(--space-5);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;border-radius:var(--radius-full);border-width:2px;display:inline-flex;align-items:center;gap:var(--space-2);}
-.allons-btn:hover{filter:brightness(1.05);}
-.allons-btn:active{box-shadow:none;transform:translateY(2px);}
+.header-actions{display:flex;gap:3px;align-items:center;flex-wrap:wrap;}
 
-/* Main */
-.main{max-width:960px;margin:0 auto;padding:var(--space-8) var(--space-4);}
-
-/* Lesson grid */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-6);}
-.section-header h1{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;}
-.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:var(--space-4);}
-.active-ctrl{background:var(--color-surface)!important;box-shadow:var(--shadow-sm);color:var(--color-primary)!important;}
-.lesson-list{display:flex;flex-direction:column;gap:var(--space-2);}
-.lesson-list-row{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);
-  background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-lg);
-  cursor:pointer;transition:all var(--transition);}
-.lesson-list-row:hover{background:var(--color-surface-2);box-shadow:var(--shadow-sm);transform:translateY(-1px);}
-.mastered-lesson{border-color:#d4a900!important;background:linear-gradient(135deg,#fffbe6 0%,var(--color-surface) 100%)!important;}
-.pct-bar{flex:1;height:6px;background:var(--color-surface-offset);border-radius:var(--radius-full);overflow:hidden;min-width:50px;max-width:100px;}
-.pct-fill{height:100%;border-radius:var(--radius-full);transition:width .4s;}
-.lesson-card{
-  background:var(--color-surface);
-  border:2px solid var(--color-border);
-  border-radius:var(--radius-xl);
-  padding:var(--space-5);
-  cursor:pointer;
-  transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition);
-  box-shadow:var(--shadow-sm);
+/* ===== КНОПКИ в стиле Win98 ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:4px;
+  padding: 3px 10px;
+  background: #c0c0c0;
+  border-top:    2px solid #ffffff;
+  border-left:   2px solid #ffffff;
+  border-right:  2px solid #000000;
+  border-bottom: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  font-size: 11px;
+  font-weight: normal;
+  font-family: var(--font-body);
+  white-space:nowrap;
+  cursor: default;
+  border-radius: 0;
+  min-height: 23px;
+  color: #000;
+  transition: none;
+  text-decoration: none;
 }
-.lesson-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--duo-green);}
-.lesson-card-num{font-size:var(--text-xs);color:var(--duo-green);font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-1);}
-.lesson-card-title{font-family:var(--font-display);font-weight:800;font-size:var(--text-base);margin-bottom:var(--space-2);}
-.lesson-card-meta{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:2px var(--space-2);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;}
-.badge-green{background:var(--duo-green-light);color:var(--duo-green-dark);}
-.badge-red{background:var(--duo-red-light);color:var(--duo-red-dark);}
-.badge-blue{background:var(--duo-blue-light);color:var(--duo-blue-dark);}
-.badge-yellow{background:var(--duo-yellow-light);color:#7a5500;}
-.lesson-card-actions{display:flex;gap:var(--space-1);margin-top:var(--space-4);justify-content:flex-end;}
-/* Folders */
-.folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);margin-bottom:var(--space-6);}
-.folder-card{background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-6);cursor:pointer;transition:all var(--transition);position:relative;}
-.folder-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--duo-green);}
-.folder-card-letter{font-family:var(--font-display);font-size:2.2rem;font-weight:900;color:var(--duo-green);line-height:1;margin-bottom:var(--space-1);}
-.folder-card-name{font-family:var(--font-display);font-weight:800;font-size:var(--text-base);margin-bottom:var(--space-3);}
-.folder-card-meta{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
-.folder-card-actions{position:absolute;top:var(--space-3);right:var(--space-3);display:flex;gap:var(--space-1);opacity:0;transition:opacity var(--transition);}
-.folder-card:hover .folder-card-actions{opacity:1;}
-
-/* Lesson detail */
-.lesson-nav{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-6);}
-.lesson-nav h2{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;flex:1;}
-
-/* Sort bar */
-.sort-bar{display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);flex-wrap:wrap;}
-.sort-bar label{font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
-.sort-select{padding:var(--space-1) var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-surface);cursor:pointer;}
-.sort-select:focus{border-color:var(--duo-blue);outline:none;}
-.sort-dir-btn{padding:var(--space-1) var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-surface);}
-.sort-dir-btn:hover{border-color:var(--duo-blue);color:var(--duo-blue);}
-
-/* Words */
-.words-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-3);}
-.words-section-header h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:800;}
-.word-list-header{
-  display:grid;grid-template-columns:2.5rem 1.5fr 0.9fr 1.1fr 1.5fr auto;
-  gap:var(--space-3);padding:var(--space-2) var(--space-4);
-  font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;
-  text-transform:uppercase;letter-spacing:0.06em;
-  border-bottom:2px solid var(--color-divider);margin-bottom:var(--space-2);
+.btn:hover{ background: #c0c0c0; }
+.btn:active, .btn.active-ctrl{
+  border-top:    2px solid #808080;
+  border-left:   2px solid #808080;
+  border-right:  2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+  box-shadow: none;
+  padding: 4px 9px 2px 11px;
 }
-.word-list{display:flex;flex-direction:column;gap:var(--space-2);}
-.word-row{
-  display:grid;grid-template-columns:2.5rem 1.5fr 0.9fr 1.1fr 1.5fr auto;
-  gap:var(--space-3);align-items:center;
-  padding:var(--space-3) var(--space-4);
-  background:var(--color-surface);
-  border:2px solid var(--color-border);
-  border-radius:var(--radius-lg);
+.btn-primary{
+  background:#c0c0c0;
+  color:#000;
+  /* Жирная внешняя рамка у кнопки по умолчанию */
+  outline: 1px solid #000;
+  outline-offset: 1px;
 }
-.allwords-hdr{display:grid;grid-template-columns:2.5rem 0.55fr 1.1fr 0.75fr 0.9fr 1.1fr auto;gap:var(--space-3);align-items:center;padding:var(--space-2) var(--space-4);font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--color-border);margin-bottom:var(--space-2);}
-.allwords-row{display:grid;grid-template-columns:2.5rem 0.55fr 1.1fr 0.75fr 0.9fr 1.1fr auto;gap:var(--space-3);align-items:center;padding:var(--space-2) var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:var(--space-1);}
-.word-row.editing{border-color:var(--duo-blue);background:var(--duo-blue-light);}
-.word-num{font-size:var(--text-xs);color:var(--color-text-muted);text-align:center;font-weight:700;}
-.word-fr{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;}
-.word-tr{font-size:var(--text-xs);color:var(--color-text-muted);}
-.word-ru{font-size:var(--text-base);}
-.word-actions{display:flex;gap:var(--space-1);align-items:center;}
-.word-weight{
-  font-size:var(--text-xs);padding:2px var(--space-2);
-  border-radius:var(--radius-full);font-weight:800;
-  display:inline-block;white-space:nowrap;
-}
-.weight-good{background:var(--duo-green-light);color:var(--duo-green-dark);}
-.weight-bad{background:var(--duo-red-light);color:var(--duo-red-dark);}
-.weight-neutral{background:var(--color-surface-2);color:var(--color-text-muted);}
-
-.word-input{
-  background:var(--color-surface);border:2px solid var(--color-border);
-  border-radius:var(--radius-md);padding:var(--space-1) var(--space-2);
-  font-size:var(--text-sm);width:100%;
-}
-.word-input:focus{border-color:var(--duo-blue);outline:none;}
-
-/* New word form */
-.new-word-form{
-  background:var(--duo-blue-light);border:2px dashed var(--duo-blue);
-  border-radius:var(--radius-xl);padding:var(--space-4);margin-top:var(--space-4);display:none;
-}
-.new-word-form.visible{display:block;}
-.new-word-form h4{font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;margin-bottom:var(--space-3);color:var(--duo-blue-dark);}
-.new-word-fields{display:grid;grid-template-columns:2fr 2fr 3fr;gap:var(--space-3);margin-bottom:var(--space-3);}
-.form-group label{display:block;font-size:var(--text-xs);color:var(--color-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-1);}
-.form-group input,.modal-input{
-  width:100%;padding:var(--space-2) var(--space-3);
-  background:var(--color-surface);border:2px solid var(--color-border);
-  border-radius:var(--radius-md);font-size:var(--text-sm);
-}
-.form-group input:focus,.modal-input:focus{border-color:var(--duo-blue);outline:none;}
-.form-actions{display:flex;gap:var(--space-2);}
-
-/* Quiz */
-.quiz-panel{
-  position:fixed;inset:0;background:transparent;
-  display:none;align-items:center;justify-content:center;
-  z-index:10;padding:var(--space-4);
-}
-.quiz-panel.active{display:flex;}
-.quiz-box{
-  background:var(--color-surface);border:2px solid var(--color-border);
-  border-radius:var(--radius-xl);padding:var(--space-8);
-  max-width:560px;width:100%;box-shadow:var(--shadow-lg);
-  max-height:90vh;overflow-y:auto;
-}
-.quiz-box h2{font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;margin-bottom:var(--space-6);}
-.quiz-setup-row{display:flex;flex-direction:column;gap:var(--space-4);margin-bottom:var(--space-6);}
-.quiz-setup-row>div>label.section-label{font-size:var(--text-sm);font-weight:800;margin-bottom:var(--space-2);display:block;font-family:var(--font-display);}
-.radio-group{display:flex;gap:var(--space-3);}
-.radio-group label{font-size:var(--text-sm);display:flex;align-items:center;gap:var(--space-1);cursor:pointer;font-weight:600;}
-input[type="text"].quiz-input{
-  padding:var(--space-2) var(--space-3);background:var(--color-surface-2);
-  border:2px solid var(--color-border);border-radius:var(--radius-md);
-  font-size:var(--text-sm);width:100%;
-}
-input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
-.checkbox-label{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);cursor:pointer;font-weight:600;}
-.checkbox-label input{width:18px;height:18px;cursor:pointer;accent-color:var(--duo-green);}
-
-/* Quiz game */
-.quiz-progress{font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3);display:flex;justify-content:space-between;align-items:center;font-weight:700;}
-.quiz-progress-bar{height:8px;background:var(--color-surface-2);border-radius:var(--radius-full);margin-bottom:var(--space-6);overflow:hidden;}
-.quiz-progress-fill{height:100%;background:var(--duo-green);border-radius:var(--radius-full);transition:width 0.4s ease;}
-.quiz-word-btn{
-  width:100%;padding:var(--space-6);
-  font-family:var(--font-display);font-size:var(--text-xl);font-weight:900;
-  background:var(--color-surface-2);
-  border:2px solid var(--color-border);border-radius:var(--radius-xl);
-  margin-bottom:var(--space-4);
-  transition:all var(--transition);
-  box-shadow:var(--shadow-sm);
-  text-align:center; user-select:none;
-}
-.quiz-word-btn.correct{background:var(--duo-green-light);border-color:var(--duo-green);color:var(--duo-green-dark);box-shadow:0 4px 0 var(--duo-green-dark);}
-.quiz-word-btn.wrong{background:var(--duo-red-light);border-color:var(--duo-red);color:var(--duo-red-dark);box-shadow:0 4px 0 var(--duo-red-dark);}
-.quiz-word-btn.revealed{background:var(--duo-yellow-light);border-color:var(--duo-yellow);color:#7a5500;box-shadow:0 4px 0 #c09000;}
-.quiz-answer-row{display:flex;gap:var(--space-2);margin-bottom:var(--space-3);}
-.quiz-answer-row input{
-  flex:1;padding:var(--space-3);
-  background:var(--color-surface-2);border:2px solid var(--color-border);
-  border-radius:var(--radius-lg);font-size:var(--text-base);font-weight:600;
-}
-.quiz-answer-row input:focus{border-color:var(--duo-blue);outline:none;background:var(--duo-blue-light);}
-.quiz-article-btns{display:none;gap:var(--space-2);margin-bottom:var(--space-2);}
-.quiz-article-btns.visible{display:flex;}
-.btn-article-un{background:rgba(85,145,199,0.13);border:1.5px solid rgba(85,145,199,0.35);color:var(--color-text);border-radius:var(--radius-md);padding:var(--space-2) var(--space-5);font-size:var(--text-sm);font-weight:700;cursor:pointer;transition:background var(--transition),border-color var(--transition);}
-.btn-article-un:hover{background:rgba(85,145,199,0.25);border-color:rgba(85,145,199,0.6);}
-.btn-article-une { background: rgba(210,100,90,0.11); border: 1.5px solid rgba(210,100,90,0.32); color: var(--color-text); border-radius: var(--radius-md); padding: var(--space-2) var(--space-5); font-size: var(--text-sm); font-weight: 700; cursor: pointer; transition: background var(--transition), border-color var(--transition); }
-.btn-article-une:hover { background: rgba(230,170,130,0.32); border-color: rgba(210,150,100,0.65); }
-.quiz-backdrop{position:fixed;inset:0;background:rgba(240,237,230,0.92);backdrop-filter:blur(2px);z-index:9;}
-[data-theme="dark"] .quiz-backdrop{background:rgba(23,22,20,0.93);}
-.correct-answer{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);min-height:1.5em;font-weight:600;}
-.quiz-row-hidden{display:none !important;}
-.quiz-controls{display:flex;gap:var(--space-2);justify-content:space-between;flex-wrap:wrap;margin-top:var(--space-2);}
-
-/* Quiz stats — word list */
-.stats-summary{display:flex;gap:var(--space-4);margin-bottom:var(--space-6);flex-wrap:wrap;}
-.stat-pill{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-weight:800;font-size:var(--text-sm);}
-.stat-pill-green{background:var(--duo-green-light);color:var(--duo-green-dark);}
-.stat-pill-red{background:var(--duo-red-light);color:var(--duo-red-dark);}
-.stat-pill-blue{background:var(--duo-blue-light);color:var(--duo-blue-dark);}
-.quiz-result-list{display:flex;flex-direction:column;gap:var(--space-2);max-height:340px;overflow-y:auto;margin-bottom:var(--space-6);}
-.quiz-result-row{
-  display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);
-  padding:var(--space-3) var(--space-4);
-  background:var(--color-surface-2);border-radius:var(--radius-lg);
-  border:2px solid var(--color-border);
-}
-.quiz-result-row .word-fr{font-family:var(--font-display);font-weight:800;}
-.quiz-result-row .word-ru{color:var(--color-text-muted);font-size:var(--text-sm);}
-
-/* Modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:300;padding:var(--space-4);}
-.modal-overlay.active{display:flex;}
-.modal{background:var(--color-surface);border:2px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);max-width:420px;width:100%;box-shadow:var(--shadow-lg);}
-.modal h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:900;margin-bottom:var(--space-4);}
-.modal .form-group{margin-bottom:var(--space-4);}
-.modal-actions{display:flex;gap:var(--space-2);justify-content:flex-end;}
-
-/* Empty state */
-.empty-state{text-align:center;padding:var(--space-16) var(--space-8);color:var(--color-text-muted);}
-.empty-state-icon{font-size:3rem;margin-bottom:var(--space-4);}
-.empty-state p{max-width:36ch;margin:0 auto var(--space-6);font-size:var(--text-sm);font-weight:600;}
-
-/* Toast */
-.toast{
-  position:fixed;bottom:var(--space-6);right:var(--space-6);z-index:400;
-  background:var(--color-text);color:var(--color-bg);
-  padding:var(--space-3) var(--space-5);border-radius:var(--radius-full);
-  font-size:var(--text-sm);font-weight:700;box-shadow:var(--shadow-lg);
-  opacity:0;transform:translateY(8px);
-  transition:all 0.2s ease;pointer-events:none;
-}
-.toast.show{opacity:1;transform:translateY(0);}
-
-/* Theme toggle */
-.theme-toggle{padding:var(--space-2);border-radius:var(--radius-md);color:var(--color-text-muted);}
-.theme-toggle:hover{background:var(--color-surface-2);color:var(--color-text);}
-
-/* Nav tabs */
-.nav-tabs{display:flex;gap:var(--space-2);margin-bottom:var(--space-6);}
-.nav-tab{padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:800;font-family:var(--font-display);color:var(--color-text-muted);border:2px solid transparent;transition:all var(--transition);}
-.nav-tab:hover{background:var(--color-surface-2);}
-.nav-tab.active{background:var(--duo-green-light);color:var(--duo-green-dark);border-color:var(--duo-green);}
-
-@media(max-width:600px){
-  .word-row{grid-template-columns:1.5rem 1fr 1fr auto;gap:var(--space-2);padding:var(--space-2);}
-  .word-tr,.word-list-header{display:none;}
-  .new-word-fields{grid-template-columns:1fr;}
-  .app-header{padding:var(--space-3);}
-  .header-actions{gap:var(--space-1);}
-}
-    .toolbar-row{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-4);}
-</style>
+.btn-primary:active{outline:1px solid #000;}
+.btn-blue{backgr
 </head>
 <body>
 <div id="lock-screen" style="position:fixed;inset:0;background:var(--color-bg);display:flex;align-items:center;justify-content:center;z-index:9999;padding:var(--space-4)">
