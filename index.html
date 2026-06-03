@@ -476,16 +476,6 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
       <h1>Все слова</h1>
       <span id="allwords-count" style="font-size:var(--text-sm);color:var(--color-text-muted);font-weight:700"></span>
     </div>
-    <div class="sort-bar">
-      <label>Сортировка:</label>
-      <select class="sort-select" id="allwords-sort" onchange="renderAllWords()">
-        <option value="num">По номеру</option>
-        <option value="alpha">По алфавиту (фр.)</option>
-        <option value="weight">По весу</option>
-        <option value="lesson">По уроку</option>
-      </select>
-      <button class="sort-dir-btn" id="allwords-dir-btn" onclick="toggleSortDir('allwords')">↓ Убыв.</button>
-    </div>
     <div class="allwords-hdr">
       <span>#</span><span>Урок</span><span>Французское</span><span>Ч.речи</span><span>Транскрипция</span><span>Перевод</span><span>Вес</span>
     </div>
@@ -548,6 +538,12 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
 <div class="words-section-header">
   <div></div>
      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+  <select class="sort-select" id="lesson-sort" onchange="renderWords()" style="margin-right:var(--space-1)">
+    <option value="num">№</option>
+    <option value="alpha">A–Z</option>
+    <option value="weight">Вес</option>
+  </select>
+  <button class="sort-dir-btn" id="lesson-dir-btn" onclick="toggleSortDir('lesson')">↑</button>
   <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт CSV">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     CSV
@@ -1339,7 +1335,8 @@ function deleteLesson(id) {
 function openLesson(id) {
   currentLessonId = id;
   const l = db.lessons.find(x=>x.id===id);
-  document.getElementById('lesson-detail-title').textContent = `Урок ${l.num||l.id} — ${l.name}`;
+  document.getElementById('lesson-detail-title').innerHTML =
+  '<span style="color:var(--color-text-muted);font-size:var(--text-base);font-weight:700;margin-right:var(--space-2)">' + (l.num||l.id) + '</span>' + l.name;
   document.getElementById('new-word-form').classList.remove('visible');
   showView('lesson');
 }
