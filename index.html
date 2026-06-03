@@ -2226,6 +2226,7 @@ function exportData() {
 const SYNC_URL = "https://wet-mantis-87.magnificus23-arch.deno.net";
 
 async function syncToCloud() {
+  if (isGuestMode) return;
   try {
     const cloned = JSON.parse(JSON.stringify(db));
     await fetch(SYNC_URL, {
@@ -2240,6 +2241,7 @@ async function syncToCloud() {
 }
 
 async function syncFromCloud() {
+  if (isGuestMode) return;
   try {
     const res = await fetch(SYNC_URL);
     const parsed = await res.json();
