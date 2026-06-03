@@ -537,14 +537,17 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
 
 <div class="words-section-header">
   <div></div>
-     <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
-  <select class="sort-select" id="lesson-sort" onchange="renderWords()" style="margin-right:var(--space-1)">
-    <option value="num">№</option>
-    <option value="alpha">A–Z</option>
-    <option value="weight">Вес</option>
-  </select>
-  <button class="sort-dir-btn" id="lesson-dir-btn" onclick="toggleSortDir('lesson')">↑</button>
-  <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт CSV">
+<div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center;justify-content:space-between">
+  <div style="display:flex;gap:var(--space-2);align-items:center">
+    <select class="sort-select" id="lesson-sort" onchange="renderWords()">
+      <option value="num">№</option>
+      <option value="alpha">A–Z</option>
+      <option value="weight">Вес</option>
+    </select>
+    <button class="sort-dir-btn" id="lesson-dir-btn" onclick="toggleSortDir('lesson')">↑</button>
+  </div>
+  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+    <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт CSV">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     CSV
   </button>
@@ -572,9 +575,6 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
 </div>
     </div>
 
-    <div class="word-list-header">
-      <span>#</span><span>Французское</span><span>Ч.речи</span><span>Транскрипция</span><span>Перевод</span><span></span>
-    </div>
     <div class="word-list" id="word-list"></div>
 
     <div class="new-word-form" id="new-word-form">
