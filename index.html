@@ -545,34 +545,34 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
       </button>
     </div>
 
-    <div class="words-section-header">
-      <h3>Слова</h3>
-      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
-        <button class="btn btn-primary btn-sm" onclick="openLessonQuizSetup()" title="Квиз по этому уроку">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Квиз по уроку
-        </button>
-        <button class="btn btn-blue btn-sm" onclick="toggleAddWord()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Добавить слово
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="resetLessonWeights(currentLessonId)" title="Сбросить все веса урока до 1">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          Вес=1
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт из CSV">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Импорт CSV
-        </button>
-        <input type="file" id="csv-import-input" accept=".csv" style="display:none">
-        <button class="btn btn-ghost btn-sm" onclick="exportLessonCSV()" title="Экспорт в CSV">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Экспорт CSV
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="openDuplicatesModal()" title="Удалить дубли">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/></svg>
-</button>
-      </div>
+<div class="words-section-header">
+  <div></div>
+     <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+  <button class="btn btn-ghost btn-sm" onclick="openCsvImportModal()" title="Импорт CSV">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    CSV
+  </button>
+  <input type="file" id="csv-import-input" accept=".csv" style="display:none">
+  <button class="btn btn-ghost btn-sm" onclick="exportLessonCSV()" title="Экспорт CSV">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    CSV
+  </button>
+  <button class="btn btn-ghost btn-sm" onclick="resetLessonWeights(currentLessonId)" title="Сбросить веса">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+    Вес
+  </button>
+  <button class="btn btn-ghost btn-sm" onclick="openDuplicatesModal()" title="Удаление дублей">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/></svg>
+  </button>
+  <button class="btn btn-ghost btn-sm" onclick="toggleAddWord()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    + слово
+  </button>
+  <button class="btn btn-primary btn-sm" onclick="openLessonQuizSetup()" title="Квиз по уроку">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    Квиз по уроку
+  </button>
+</div>
     </div>
 
     <div class="sort-bar">
