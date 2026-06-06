@@ -1151,9 +1151,22 @@ function renderLessons() {
   return lessonSortKey(a).localeCompare(lessonSortKey(b));
 });
 
-  const backBtn = `<div class='toolbar-row'>
-    ${currentFolderLetter!=='__all__' ? `<button class='btn btn-primary btn-sm' onclick='openCreateLesson()'>+ Новый урок</button>
-    <button class='btn btn-secondary btn-sm' onclick='openFolderQuizSetup(currentFolderLetter)'>▶ Квиз папки</button>` : ''}
+const backBtn = `<div class='toolbar-row' style='justify-content:space-between;grid-column:1/-1'>
+    <div style='display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap'>
+      <button class='btn btn-secondary btn-sm' onclick='showView("folders")'>← Папки</button>
+      <div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
+        <button class='btn btn-ghost btn-sm ${lessonsSort==="num"?"active-ctrl":""}' id='lsort-num' onmousedown='event.preventDefault()' onclick='setLessonsSort("num")' style='font-size:var(--text-xs);font-weight:700'>№</button>
+        <button class='btn btn-ghost btn-sm ${lessonsSort==="pct"?"active-ctrl":""}' id='lsort-pct' onmousedown='event.preventDefault()' onclick='setLessonsSort("pct")' style='font-size:var(--text-xs);font-weight:700'>%</button>
+      </div>
+      <div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
+        <button class='btn btn-ghost btn-sm ${lessonsViewMode==="cards"?"active-ctrl":""}' id='lview-cards' onmousedown='event.preventDefault()' onclick='setLessonsView("cards")' style='font-size:var(--text-xs)'>▦</button>
+        <button class='btn btn-ghost btn-sm ${lessonsViewMode==="list"?"active-ctrl":""}' id='lview-list' onmousedown='event.preventDefault()' onclick='setLessonsView("list")' style='font-size:var(--text-xs)'>☰</button>
+      </div>
+    </div>
+    <div style='display:flex;gap:var(--space-2);align-items:center'>
+      ${currentFolderLetter!=='__all__' ? `<button class='btn btn-secondary btn-sm' onclick='openCreateLesson()'>+ Новый урок</button>` : ''}
+      <button class='btn btn-primary btn-sm' onclick='openFolderQuizSetup(currentFolderLetter)'>▶ Квиз папки</button>
+    </div>
   </div>`
 
   grid.className = lessonsViewMode==='list' ? 'lesson-list' : 'lesson-grid';
