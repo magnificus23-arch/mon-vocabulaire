@@ -1466,8 +1466,9 @@ function addWord() {
 
 // ===== ALL WORDS VIEW =====
 function renderAllWords() {
-  const sortBy = document.getElementById('allwords-sort').value;
-  sortState.allwords.by = sortBy;
+ const sortEl = document.getElementById('allwords-sort');
+const sortBy = sortEl ? sortEl.value : (sortState.allwords.by || 'fr');
+sortState.allwords.by = sortBy;
   const allWords = db.lessons.flatMap(l => l.words.map(w => ({...w, lessonId:l.id, lessonNum:l.num||l.id, lessonName:l.name})));
   document.getElementById('allwords-count').textContent = allWords.length + ' ' + wordForm(allWords.length);
   const list = document.getElementById('allwords-list');
