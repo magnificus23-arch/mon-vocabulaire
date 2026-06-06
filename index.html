@@ -1180,9 +1180,9 @@ const backBtn = `<div class='toolbar-row' style='justify-content:space-between;g
     const pct = getLessonPct(l);
     const isMastered = wc>0 && pct===100;
     const masteredCls = isMastered ? ' mastered-lesson' : '';
-    const pctColor = isMastered ? '#2e8077' : 'var(--duo-green)';
+    const pctColor = isMastered ? '#fff' : 'var(--duo-green)';
     const pctBar = wc ? `<div class='pct-bar'><div class='pct-fill' style='width:${pct}%;background:${pctColor}'></div></div>` : '';
-    const pctLabel = wc ? `<span style='font-size:var(--text-xs);font-weight:700;color:${isMastered?'#2e8077':'var(--color-text-muted)'}'>${pct}%</span>` : '';
+    const pctLabel = wc ? `<span style='font-size:var(--text-xs);font-weight:700;color:${isMastered?'#fff':'var(--color-text-muted)'}'>${pct}%</span>` : '';
     const actBtns = `<button class='btn btn-ghost btn-sm' onclick='event.stopPropagation();openRenameLesson(${l.id})' title='Переименовать'>✏️</button>`
                   + `<button class='btn btn-danger btn-sm' onclick='event.stopPropagation();deleteLesson(${l.id})' title='Удалить'>🗑</button>`;
     if(lessonsViewMode==='list'){
