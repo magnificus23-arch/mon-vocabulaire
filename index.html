@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mon Vocabulaire</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --duo-green:       #58cc02;
-  --duo-green-dark:  #46a302;
-  --duo-green-light: #d7f5b1;
+    --duo-green: #4a9fa5;
+    --duo-green-dark: #357a80;
+    --duo-green-light: #d6eef0;
   --duo-blue:        #1cb0f6;
   --duo-blue-dark:   #0a91d1;
   --duo-blue-light:  #ddf4ff;
@@ -76,13 +77,13 @@
   --color-text: #f0f0f0;
   --color-text-muted: #999;
   --color-text-faint: #555;
-  --duo-green-light: #1a3a00;
+    --duo-green-light: #0d2f32;
   --duo-red-light: #3a0000;
   --duo-yellow-light: #3a2e00;
   --duo-blue-light: #00243a;
-  --color-primary-light: #1a3a00;
+    --color-primary-light: #0d2f32;
   --color-error-light: #3a0000;
-  --color-success-light: #1a3a00;
+    --color-success-light: #0d2f32;
   --color-warning-light: #3a2e00;
   --shadow-sm: 0 2px 0 rgba(0,0,0,0.4);
   --shadow-md: 0 4px 0 rgba(0,0,0,0.4);
@@ -387,14 +388,14 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
     <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-6)">Введите пароль для входа</div>
     <input id="lock-input" type="password" placeholder="Пароль" style="width:100%;padding:var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-base);margin-bottom:var(--space-3);background:var(--color-surface);color:var(--color-text);outline:none" onkeydown="if(event.key==='Enter')checkPassword()">
     <div id="lock-error" style="color:#ff4b4b;font-size:var(--text-xs);font-weight:700;margin-bottom:var(--space-3);display:none">Неверный пароль</div>
-    <button onclick="checkPassword()" style="width:100%;padding:var(--space-3);background:#58cc02;color:#fff;border:2px solid #46a302;border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer;box-shadow:0 4px 0 #46a302">Войти</button>
+    <button onclick="checkPassword()" style="width:100%;padding:var(--space-3);background:#4a9fa5;color:#fff;border:2px solid #357a80;border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer;box-shadow:0 4px 0 #357a80">Войти</button>
 <button onclick="enterGuestMode()" style="width:100%;padding:var(--space-3);margin-top:8px;background:transparent;color:var(--color-text-muted);border:2px solid var(--color-border);border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer">Войти как гость</button>
   </div>
 </div>
 <header class="app-header">
   <div class="logo" onclick="showView('folders')">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="logo">
-      <rect width="32" height="32" rx="10" fill="#58cc02"/>
+      <rect width="32" height="32" rx="10" fill="#4a9fa5"/>
       <text x="5" y="23" font-family="Nunito,sans-serif" font-weight="900" font-size="18" fill="white">fr</text>
     </svg>
     <span class="logo-text">vocabulaire</span>
