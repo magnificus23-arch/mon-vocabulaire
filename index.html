@@ -822,6 +822,7 @@ let lessonModalMode = 'create'; // 'create' | 'rename'
 let sortState = { lesson: { by:'num', dir:-1 }, allwords: { by:'num', dir:-1 } };
 let quizState = null;
 let lessonsSort="num";
+  let lessonsSortDir = 1  // 1 = по возрастанию, -1 = по убыванию
 let lessonsViewMode="cards";
 const PRAISE_PHRASES = ["Ты разнёсла этот квиз в багетную крошку!", "Французский уже слегка тебя побаивается.", "Très bien! Даже сова бы кивнула с уважением.", "Слова капитулируют. Продолжай наступление.", "Ого. Это уже не учёба, это стиль.", "Сегодня мозг говорит тебе: merci.", "Ты звучишь всё ближе к маленькому парижскому чуду.", "Квиз повержен. Круассан заслужен.", "Словарь в восторге от твоих решений.", "Это было подозрительно хорошо.", "Французские слова выстроились в очередь, чтобы запомниться тобой.", "Ещё немного — и начнёшь спорить с Duolingo о методике.", "Magnifique! Ошибки нервно вышли из чата.", "Ты не учишь слова. Ты их приручаешь.", "Очень сильно. Очень красиво. Очень по-французски.", "Если бы у памяти были аплодисменты, сейчас был бы овационный зал.", "Сова довольна. И это немного пугает.", "Слова усвоены настолько, что уже сами тебя вспоминают.", "Вот это темп. Бонжур, дисциплина!", "Похоже, сегодня у тебя режим monstre sacré.", "Серьёзно? Ты опять победила квиз?", "С такой точностью можно открывать мини-академию французского.", "Это не повторение, это элегантная доминация.", "Très chic. Très smart. Très ты.", "Слова пытались запутать тебя, но передумали.", "Великолепно. Даже произношение где-то внутри улыбнулось.", "Сегодня твоя память работает как швейцарские часы, но с французским акцентом.", "Ещё одна блестящая победа над хаосом слов.", "Париж где-то незаметно одобрительно поднял бровь.", "Мозг сказал: ещё. Я сказал: bravo.", "Ты уверенно превращаешь сложное в знакомое.", "Кто тут главный по словам? Очевидно, ты.", "Уровень: baguettemancer.", "Словам уже неловко быть для тебя сложными.", "Слишком хорошо. Почти незаконно.", "Эта партия квиза закончилась твоим триумфом.", "У тебя явно роман с французской лексикой.", "Нейроны танцуют cancan.", "Да это просто словесный фейерверк.", "Квиз сказал oui и сдался.", "Ты снова доказала, что регулярность — магия.", "Так держать. Это уже красивый навык, а не случайность.", "Вау. Очень уверенная работа.", "Если бы слова могли краснеть, они бы уже это сделали.", "Отлично. Ты прошла это как будто так и было задумано.", "Память прокачана. Французский принят.", "Твои повторения сегодня были особенно меткими.", "Квиз закрыт, вопросы исчерпаны, ты великолепна.", "На сегодня французский официально приручён.", "Сильное выступление. Сова ставит лайк мысленно."];
 
@@ -1030,9 +1031,12 @@ function getLessonPct(l){
   return Math.round(l.words.filter(w=>w.weight>getThresh('threshMastered',1.5)).length/l.words.length*100);
 }
 function setLessonsSort(mode){
-  lessonsSort=mode;
-  document.getElementById("lsort-num").classList.toggle("active-ctrl",mode==="num");
-  document.getElementById("lsort-pct").classList.toggle("active-ctrl",mode==="pct");
+  if (lessonsSort === mode) {
+    lessonsSortDir = lessonsSortDir === 1 ? -1 : 1;
+  } else {
+    lessonsSort = mode;
+    lessonsSortDir = 1;
+  }
   renderLessons();
 }
 function setLessonsView(mode){
@@ -1132,26 +1136,20 @@ function renderLessons() {
   let _ls = currentFolderLetter==='__all__'
     ? [...db.lessons]
     : db.lessons.filter(l=>l.folder===currentFolderLetter);
-  _ls.sort((a,b)=>{
+_ls.sort((a,b)=>{
   if (lessonsSort === 'pct') {
     const diff = getLessonPct(b) - getLessonPct(a);
-    if (diff !== 0) return diff;
+    if (diff !== 0) return diff * lessonsSortDir;
   }
-  return lessonSortKey(a).localeCompare(lessonSortKey(b));
+  return lessonSortKey(a).localeCompare(lessonSortKey(b)) * lessonsSortDir;
 });
 
 const backBtn = `<div class='toolbar-row' style='justify-content:space-between;grid-column:1/-1'>
-    <div style='display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap'>
-      <button class='btn btn-secondary btn-sm' onclick='currentFolderLetter=null;renderLessons()'>📁 Папки</button>
-      <div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
-        <button class='btn btn-ghost btn-sm ${lessonsSort==="num"?"active-ctrl":""}' id='lsort-num' onmousedown='event.preventDefault()' onclick='setLessonsSort("num")' style='font-size:var(--text-xs);font-weight:700'>№</button>
-        <button class='btn btn-ghost btn-sm ${lessonsSort==="pct"?"active-ctrl":""}' id='lsort-pct' onmousedown='event.preventDefault()' onclick='setLessonsSort("pct")' style='font-size:var(--text-xs);font-weight:700'>%</button>
-      </div>
-      <div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
-        <button class='btn btn-ghost btn-sm ${lessonsViewMode==="cards"?"active-ctrl":""}' id='lview-cards' onmousedown='event.preventDefault()' onclick='setLessonsView("cards")' style='font-size:var(--text-xs)'>▦</button>
-        <button class='btn btn-ghost btn-sm ${lessonsViewMode==="list"?"active-ctrl":""}' id='lview-list' onmousedown='event.preventDefault()' onclick='setLessonsView("list")' style='font-size:var(--text-xs)'>☰</button>
-      </div>
-    </div>
+<div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
+  <button class='btn btn-ghost btn-sm ${lessonsSort==="num"?"active-ctrl":""}' id='lsort-num' onmousedown='event.preventDefault()' onclick='setLessonsSort("num")' style='font-size:var(--text-xs);font-weight:700'>№</button>
+  <button class='btn btn-ghost btn-sm ${lessonsSort==="pct"?"active-ctrl":""}' id='lsort-pct' onmousedown='event.preventDefault()' onclick='setLessonsSort("pct")' style='font-size:var(--text-xs);font-weight:700'>%</button>
+  <button class='btn btn-ghost btn-sm' onmousedown='event.preventDefault()' onclick='lessonsSortDir*=-1;renderLessons()' style='font-size:var(--text-xs);font-weight:700'>${lessonsSortDir===1?"↑":"↓"}</button>
+</div>
     <div style='display:flex;gap:var(--space-2);align-items:center'>
       ${currentFolderLetter!=='__all__' ? `<button class='btn btn-secondary btn-sm' onclick='openCreateLesson()'>+ Новый урок</button>` : ''}
       <button class='btn btn-primary btn-sm' onclick='openFolderQuizSetup(currentFolderLetter)'>▶ Квиз папки</button>
