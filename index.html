@@ -469,9 +469,15 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
       <h1>Все слова</h1>
       <span id="allwords-count" style="font-size:var(--text-sm);color:var(--color-text-muted);font-weight:700"></span>
     </div>
-    <div class="allwords-hdr">
-      <span>#</span><span>Урок</span><span>Французское</span><span>Ч.речи</span><span>Транскрипция</span><span>Перевод</span><span>Вес</span>
-    </div>
+    <div style="display:flex;gap:var(--space-2);align-items:center;margin-bottom:var(--space-4)">
+  <select class="sort-select" id="allwords-sort" onchange="renderAllWords()">
+    <option value="fr">A–Z (фр.)</option>
+    <option value="ru">A–Z (рус.)</option>
+    <option value="weight">Вес</option>
+    <option value="lesson">Урок</option>
+  </select>
+  <button class="sort-dir-btn" id="allwords-dir-btn" onclick="toggleSortDir('allwords')">↑</button>
+</div>
     <div class="word-list" id="allwords-list"></div>
     <div class="empty-state" id="allwords-empty" style="display:none">
       <div class="empty-state-icon">✏️</div>
@@ -1467,7 +1473,7 @@ function addWord() {
 // ===== ALL WORDS VIEW =====
 function renderAllWords() {
  const sortEl = document.getElementById('allwords-sort');
-const sortBy = sortEl ? sortEl.value : (sortState.allwords.by || 'fr');
+const sortBy = document.getElementById('allwords-sort').value;
 sortState.allwords.by = sortBy;
   const allWords = db.lessons.flatMap(l => l.words.map(w => ({...w, lessonId:l.id, lessonNum:l.num||l.id, lessonName:l.name})));
   document.getElementById('allwords-count').textContent = allWords.length + ' ' + wordForm(allWords.length);
