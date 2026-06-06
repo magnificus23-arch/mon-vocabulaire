@@ -449,13 +449,7 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
   <div id="view-lessons" style="display:none">
     
     <div class="section-header">
-      <h1>Мои уроки</h1>
-    </div>
-   
-      <div style="display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px">
-        <button class="btn btn-ghost btn-sm active-ctrl" id="lview-cards" onmousedown="event.preventDefault()" onclick="setLessonsView('cards')" style="font-size:var(--text-xs)">⊞ Карточки</button>
-        <button class="btn btn-ghost btn-sm" id="lview-list" onmousedown="event.preventDefault()" onclick="setLessonsView('list')" style="font-size:var(--text-xs)">☰ Список</button>
-      </div>
+<h1>Мои уроки</h1>
     </div>
     <div class="lesson-grid" id="lesson-grid"></div>
     <div class="empty-state" id="lessons-empty" style="display:none">
@@ -1148,7 +1142,7 @@ function renderLessons() {
 
 const backBtn = `<div class='toolbar-row' style='justify-content:space-between;grid-column:1/-1'>
     <div style='display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap'>
-      <button class='btn btn-secondary btn-sm' onclick='showView("folders")'>← Папки</button>
+      <button class='btn btn-secondary btn-sm' onclick='currentFolderLetter=null;renderLessons()'>📁 Папки</button>
       <div style='display:flex;gap:2px;background:var(--color-surface-2);border-radius:var(--radius-md);padding:3px'>
         <button class='btn btn-ghost btn-sm ${lessonsSort==="num"?"active-ctrl":""}' id='lsort-num' onmousedown='event.preventDefault()' onclick='setLessonsSort("num")' style='font-size:var(--text-xs);font-weight:700'>№</button>
         <button class='btn btn-ghost btn-sm ${lessonsSort==="pct"?"active-ctrl":""}' id='lsort-pct' onmousedown='event.preventDefault()' onclick='setLessonsSort("pct")' style='font-size:var(--text-xs);font-weight:700'>%</button>
