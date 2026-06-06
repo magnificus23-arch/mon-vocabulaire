@@ -11,9 +11,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
 :root {
-    --duo-green: #4a9fa5;
-    --duo-green-dark: #357a80;
-    --duo-green-light: #d6eef0;
+    --duo-green: #58cc02;
+    --duo-green-dark: #46a302;
+    --duo-green-light: #d7f5b1;
   --duo-blue:        #1cb0f6;
   --duo-blue-dark:   #0a91d1;
   --duo-blue-light:  #ddf4ff;
@@ -77,13 +77,13 @@
   --color-text: #f0f0f0;
   --color-text-muted: #999;
   --color-text-faint: #555;
-    --duo-green-light: #0d2f32;
+    --duo-green-light: #1a3a00;
   --duo-red-light: #3a0000;
   --duo-yellow-light: #3a2e00;
   --duo-blue-light: #00243a;
-    --color-primary-light: #0d2f32;
+    --color-primary-light: #1a3a00;
   --color-error-light: #3a0000;
-    --color-success-light: #0d2f32;
+    --color-success-light: #1a3a00;
   --color-warning-light: #3a2e00;
   --shadow-sm: 0 2px 0 rgba(0,0,0,0.4);
   --shadow-md: 0 4px 0 rgba(0,0,0,0.4);
@@ -154,7 +154,7 @@ img{display:block;max-width:100%;}
   cursor:pointer;transition:all var(--transition);}
 .lesson-list-row:hover{background:var(--color-surface-2);box-shadow:var(--shadow-sm);transform:translateY(-1px);}
 .mastered-lesson { border-color: #7bbfb5 !important; background: #e8f5f3 !important; }
-[data-theme="dark"] .mastered-lesson { border-color: #4a9fa5 !important; background: #0d2e2c !important; }
+[data-theme="dark"] .mastered-lesson { border-color: #58cc02 !important; background: #0d2e2c !important; }
 .pct-bar{flex:1;height:6px;background:var(--color-surface-offset);border-radius:var(--radius-full);overflow:hidden;min-width:50px;max-width:100px;}
 .pct-fill{height:100%;border-radius:var(--radius-full);transition:width .4s;}
 .lesson-card{
@@ -172,7 +172,7 @@ img{display:block;max-width:100%;}
 .lesson-card-meta{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:2px var(--space-2);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;}
 .badge-mastered { background: #fff; border: 1.5px solid #7bbfb5; color: #2e8077; font-weight: 800; }
-[data-theme="dark"] .badge-mastered { background: #0d2e2c; border-color: #4a9fa5; color: #6ecfc6; }
+[data-theme="dark"] .badge-mastered { background: #0d2e2c; border-color: #58cc02; color: #6ecfc6; }
 .badge-red{background:var(--duo-red-light);color:var(--duo-red-dark);}
 .badge-blue{background:var(--duo-blue-light);color:var(--duo-blue-dark);}
 .badge-yellow{background:var(--duo-yellow-light);color:#7a5500;}
@@ -391,14 +391,14 @@ input[type="text"].quiz-input:focus{border-color:var(--duo-blue);outline:none;}
     <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-6)">Введите пароль для входа</div>
     <input id="lock-input" type="password" placeholder="Пароль" style="width:100%;padding:var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-base);margin-bottom:var(--space-3);background:var(--color-surface);color:var(--color-text);outline:none" onkeydown="if(event.key==='Enter')checkPassword()">
     <div id="lock-error" style="color:#ff4b4b;font-size:var(--text-xs);font-weight:700;margin-bottom:var(--space-3);display:none">Неверный пароль</div>
-    <button onclick="checkPassword()" style="width:100%;padding:var(--space-3);background:#4a9fa5;color:#fff;border:2px solid #357a80;border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer;box-shadow:0 4px 0 #357a80">Войти</button>
+    <button onclick="checkPassword()" style="width:100%;padding:var(--space-3);background:#58cc02;color:#fff;border:2px solid #46a302;border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer;box-shadow:0 4px 0 #46a302">Войти</button>
 <button onclick="enterGuestMode()" style="width:100%;padding:var(--space-3);margin-top:8px;background:transparent;color:var(--color-text-muted);border:2px solid var(--color-border);border-radius:var(--radius-full);font-family:var(--font-display);font-size:var(--text-sm);font-weight:800;cursor:pointer">Войти как гость</button>
   </div>
 </div>
 <header class="app-header">
   <div class="logo" onclick="showView('folders')">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="logo">
-      <rect width="32" height="32" rx="10" fill="#4a9fa5"/>
+      <rect width="32" height="32" rx="10" fill="#58cc02"/>
       <text x="5" y="23" font-family="Nunito,sans-serif" font-weight="900" font-size="18" fill="white">fr</text>
     </svg>
     <span class="logo-text">vocabulaire</span>
