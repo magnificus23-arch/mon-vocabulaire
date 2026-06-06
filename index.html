@@ -1134,7 +1134,7 @@ function renderLessons() {
           <span class='badge badge-blue'>${lcount} ${lcount===1?'урок':lcount<5?'урока':'уроков'}</span>
           <span class='badge badge-blue'>${wc} ${wordForm(wc)}</span>
           ${bad?`<span class='badge badge-red'>⚠ ${bad}</span>`:''}
-          ${good?`<span class='badge badge-green'>★ ${good}</span>`:''}
+          
         </div>
         <button class='btn btn-primary btn-sm' onclick='event.stopPropagation();openFolderQuizSetup("${f.letter}")'>▶ Квиз папки</button>
       </div>`;
@@ -1191,7 +1191,7 @@ const backBtn = `<div class='toolbar-row' style='justify-content:space-between;g
         <div style='flex:1;font-weight:700;font-size:var(--text-sm)'>${esc(l.name)}</div>
         <span class='badge ${isMastered ? "badge-mastered" : "badge-blue"}' style='white-space:nowrap'>${good}/${wc}</span>
         ${bad?`<span class='badge badge-red'>⚠ ${bad}</span>`:''}
-        ${good?`<span class='badge badge-green'>★ ${good}</span>`:''}
+        
         ${pctLabel}${pctBar}
         <div style='display:flex;gap:var(--space-1)'>${actBtns}</div>
       </div>`;
@@ -1201,9 +1201,8 @@ const backBtn = `<div class='toolbar-row' style='justify-content:space-between;g
       <div class='lesson-card-title'>${esc(l.name)}</div>
       <div style='display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2)'>${pctBar}${pctLabel}</div>
       <div class='lesson-card-meta'>
-        <span class='badge badge-blue'>${wc} ${wordForm(wc)}</span>
-        ${bad?`<span class='badge badge-red'>⚠ ${bad} сложных</span>`:''}
-        ${good?`<span class='badge badge-green'>★ ${good} освоено</span>`:''}
+<span class='badge ${isMastered ? "badge-mastered" : "badge-blue"}' style='white-space:nowrap'>${good}/${wc}</span>
+${bad?`<span class='badge badge-red'>${bad} сложных</span>`:''}
       </div>
       <div class='lesson-card-actions'>${actBtns}</div>
     </div>`;
