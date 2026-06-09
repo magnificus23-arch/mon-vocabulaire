@@ -1877,7 +1877,8 @@ function updateQuizProgress() {
       total = quizState.words.length;
     } else {
       // flow/timer с ограничением по весу — прогнозируемое число ответов
-      if (!quizState._projectedTotal) {
+      const needRecalc = !quizState._projectedTotal || totalAnswered >= quizState._projectedTotal;
+      if (needRecalc) {
         const cfg = db.settings || {};
         const excludeAbove = quizState.excludeAbove < 999 ? quizState.excludeAbove : null;
         const studyMode = document.getElementById('quiz-study-mode')?.checked;
@@ -1903,7 +1904,8 @@ function updateQuizProgress() {
             projected += steps;
           }
         }
-        quizState._projectedTotal = Math.max(projected, totalAnswered + 1);
+        const newProjected = Math.max(projected, totalAnswered + 1);
+        quizState._projectedTotal = Math.max(newProjected, quizState._projectedTotal ?? 0);
       }
       total = quizState._projectedTotal;
     }
