@@ -1877,33 +1877,34 @@ function updateQuizProgress() {
       total = quizState.words.length;
     } else {
       // flow/timer с ограничением по весу — прогнозируемое число ответов
-      const cfg = db.settings || {};
-      const excludeAbove = quizState.excludeAbove < 999 ? quizState.excludeAbove : null;
-      const studyMode = document.getElementById('quiz-study-mode')?.checked;
-      let projected = totalAnswered;
-      const eligible = getEligibleQuizWords();
-      if (eligible) {
-        for (const w of eligible) {
-          let weight = w.weight;
-          let streak = 0;
-          let steps = 0;
-          const limit = excludeAbove !== null ? excludeAbove : 2.0;
-          while (weight < limit && steps < 20) {
-            let mult;
-            if (studyMode) {
-              mult = streak === 0 ? (cfg.studyCorrect0 ?? 1.1) : streak === 1 ? (cfg.studyCorrect1 ?? 1.1) : (cfg.studyCorrect2 ?? 1.3);
-            } else {
-              mult = streak === 0 ? (cfg.normCorrect0 ?? 1.2) : streak === 1 ? (cfg.normCorrect1 ?? 1.5) : (cfg.normCorrect2 ?? 2.0);
+            if (!quizState._projectedTotal) {
+        const cfg = db.settings || {};
+        const excludeAbove = quizState.excludeAbove < 999 ? quizState.excludeAbove : null;
+        const studyMode = document.getElementById('quiz-study-mode')?.checked;
+        let projected = totalAnswered;
+        const eligible = getEligibleQuizWords();
+        if (eligible) {
+          for (const w of eligible) {
+            let weight = w.weight;
+            let streak = 0;
+            let steps = 0;
+            const limit = excludeAbove !== null ? excludeAbove : 2.0;
+            while (weight < limit && steps < 20) {
+              let mult;
+              if (studyMode) {
+                mult = streak === 0 ? (cfg.studyCorrect0 ?? 1.1) : streak === 1 ? (cfg.studyCorrect1 ?? 1.1) : (cfg.studyCorrect2 ?? 1.3);
+              } else {
+                mult = streak === 0 ? (cfg.normCorrect0 ?? 1.2) : streak === 1 ? (cfg.normCorrect1 ?? 1.5) : (cfg.normCorrect2 ?? 2.0);
+              }
+              weight = Math.min(2.0, weight * mult);
+              streak = Math.min(streak + 1, 2);
+              steps++;
             }
-            weight = Math.min(2.0, weight * mult);
-            streak = Math.min(streak + 1, 2);
-            steps++;
+            projected += steps;
           }
-          projected += steps;
         }
+        quizState._projectedTotal = Math.max(projected, totalAnswered + 1);
       }
-      const newTotal = Math.max(projected, totalAnswered + 1);
-      quizState._projectedTotal = Math.max(newTotal, quizState._projectedTotal ?? 0);
       total = quizState._projectedTotal;
     }
 
@@ -2140,7 +2141,7 @@ function updateWordWeight(wordId,correct) {
     }
     dbWord.weight = Math.max(0.01, Math.min(2.0, dbWord.weight * mult));
   }
-  quizState._projectedTotal = 0;
+    if (!correct) quizState._projectedTotal = 0;
   dbWord.lastSeen=Date.now();
   dbWord.history=(dbWord.history||[]);
   dbWord.history.push({ts:Date.now(),correct,weight:dbWord.weight});
